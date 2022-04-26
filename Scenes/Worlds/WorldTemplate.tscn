@@ -14,11 +14,9 @@ height = 0.1
 depth = 50.0
 
 [node name="Player" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.50941, 0 )
 
 [node name="PlayerTemplate" parent="Player" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05266, 0 )
-
-[node name="Camera" parent="Player/PlayerTemplate" index="2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.41806, -0.8 )
 
 [editable path="Player/PlayerTemplate"]
