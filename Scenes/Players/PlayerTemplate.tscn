@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Player/PlayerTemplate.gd" type="Script" id=1]
 
@@ -10,12 +10,77 @@ height = 3.0
 
 [sub_resource type="CylinderShape" id=3]
 
+[sub_resource type="CubeMesh" id=4]
+size = Vector3( 0.1, 0.2, 1.5 )
+
+[sub_resource type="Animation" id=6]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Head/Camera/Hand/Shotgun:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Head/Camera/Hand/Shotgun:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "ShotgunFire"
+length = 0.3
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Head/Camera/Hand/Shotgun:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.12, 0.24, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 0.2 ), Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "ShotgunReload"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("Head/Camera/Hand/Shotgun:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 180, 0, 0 ), Vector3( 360, 0, 0 ) ]
+}
+
 [node name="PlayerTemplate" type="KinematicBody"]
 collision_layer = 2
 script = ExtResource( 1 )
+walk_speed = 30
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+visible = false
 mesh = SubResource( 1 )
 material/0 = null
 
@@ -28,11 +93,37 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.50182, 0 )
 shape = SubResource( 3 )
 
 [node name="Head" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.51215, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
 
 [node name="Camera" type="Camera" parent="Head"]
+current = true
+
+[node name="RayCast" type="RayCast" parent="Head/Camera"]
+enabled = true
+cast_to = Vector3( 0, 0, -200 )
+
+[node name="Hand" type="Spatial" parent="Head/Camera"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.348378, -0.347503, -0.647769 )
+
+[node name="Shotgun" type="MeshInstance" parent="Head/Camera/Hand"]
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="WeaponAnimationPlayer" type="AnimationPlayer" parent="Head/Camera/Hand"]
+root_node = NodePath("../../../..")
+anims/RESET = SubResource( 6 )
+anims/ShotgunFire = SubResource( 5 )
+anims/ShotgunReload = SubResource( 7 )
+
+[node name="ReloadTimer" type="Timer" parent="Head/Camera/Hand"]
+wait_time = 0.8
+one_shot = true
 
 [node name="GroundCheck" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0 )
 enabled = true
 cast_to = Vector3( 0, -1.5, 0 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="timeout" from="Head/Camera/Hand/ReloadTimer" to="." method="_on_ReloadTimer_timeout"]
