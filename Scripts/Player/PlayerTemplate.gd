@@ -41,13 +41,22 @@ onready var tween = $Tween
 
 
 #SHOOTING
+
+export var default_weapon_position : Vector3
+export var ads_weapon_position : Vector3
+const ADS_LERP = 20
+
 onready var weap_anim_player = $Head/Camera/Hand/WeaponAnimationPlayer
-export var clip_size_max = 2
-var clip_size_current = clip_size_max
+
 onready var reload_timer = $Head/Camera/Hand/ReloadTimer
 onready var raycast = $Head/Camera/RayCast
+onready var hand = $Head/Camera/Hand
 onready var bullet_hole = preload("res://Scenes/Weapons/BulletHole.tscn")
-export var bullet_hole_list = ["Walls", "Floors"]
+export var bullet_hole_list = ["Walls", "Boxes"]
+
+onready var weapon_sounds = $Head/WeaponSounds
+var fire_shotgun = preload("res://Resources/Sounds/Guns/Guns/ShotgunFired.wav")
+var reload_shotgun = preload("res://Resources/Sounds/Guns/Guns/shotgun_pump.wav")
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -62,18 +71,36 @@ func _input(event):
 func _physics_process(delta):
 	move_player(delta)
 	fire()
+	check_ads(delta)
+
+func check_ads(delta):
+	if Input.is_action_pressed("fire_weapon_2") and !reload_timer.time_left > 0:
+		ads_zoom(delta, ads_weapon_position)
+	else:
+		ads_zoom(delta, default_weapon_position)
+
+func ads_zoom(delta, vision):
+	hand.transform.origin = hand.transform.origin.linear_interpolate(vision, ADS_LERP * delta)
 
 func fire():
 	if Input.is_action_pressed("fire_weapon") and !weap_anim_player.is_playing():
-		if clip_size_current > 0:
+		if GlobalGameHandler.clip_size_current > 0:
 			if not weap_anim_player.is_playing():
-				clip_size_current -= 1
+				GlobalGameHandler.clip_size_current -= 1
+				weapon_sounds.stream = fire_shotgun
+				weapon_sounds.pitch_scale = rand_range(1, 1.5)
+				weapon_sounds.play()
+				get_tree().call_group("HUD", "fired")
 				if raycast.get_collider():
-					if bullet_hole_list.has(raycast.get_collider().name):
+					var target = raycast.get_collider()
+					if bullet_hole_list.has(target.name):
 						var bullet_hole_instance = bullet_hole.instance()
 						raycast.get_collider().add_child(bullet_hole_instance)
 						bullet_hole_instance.global_transform.origin = raycast.get_collision_point()
 						bullet_hole_instance.look_at(raycast.get_collision_point() + raycast.get_collision_normal(), Vector3.UP)
+					elif target.is_in_group("Enemy"):
+						target.health -= GlobalGameHandler.weapon_damage
+						target.impact_point = raycast.get_collision_normal()
 			weap_anim_player.play("ShotgunFire")
 		else:
 			reload()
@@ -81,21 +108,30 @@ func fire():
 	elif Input.is_action_just_released("fire_weapon") and !weap_anim_player.is_playing():
 		weap_anim_player.stop()
 	
-	if Input.is_action_pressed("reload_weapon") and !weap_anim_player.is_playing():
+	if Input.is_action_pressed("reload_weapon") and !weap_anim_player.is_playing() and !Input.is_action_pressed("fire_weapon_2"):
 		reload()
 
 func reload():
-	weap_anim_player.play("ShotgunReload")
-	reload_timer.start()
+	if GlobalGameHandler.current_bullets > 0:
+		if GlobalGameHandler.clip_size_current > 0:
+			GlobalGameHandler.current_bullets = GlobalGameHandler.current_bullets - (GlobalGameHandler.clip_size_max - GlobalGameHandler.clip_size_current)
+		else:
+			GlobalGameHandler.current_bullets -= GlobalGameHandler.clip_size_max
+		weapon_sounds.stream = reload_shotgun
+		weapon_sounds.pitch_scale = 1
+		weapon_sounds.play()
+		get_tree().call_group("HUD", "fired")
+		get_tree().call_group("HUD", "reloaded")
+		weap_anim_player.play("ShotgunReload")
+		reload_timer.start()
 
 func _on_ReloadTimer_timeout():
-	clip_size_current = clip_size_max
+	GlobalGameHandler.clip_size_current = GlobalGameHandler.clip_size_max
+	get_tree().call_group("HUD", "fired")
 
 func move_player(delta):
 	direction = Vector3()
-	
 	full_contact = ground_check.is_colliding()
-	
 	if not is_on_floor():
 		gravity_vec += Vector3.DOWN * gravity * delta
 		h_acceleration = air_acceleration

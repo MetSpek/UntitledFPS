@@ -1,6 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/Player/PlayerTemplate.gd" type="Script" id=1]
+[ext_resource path="res://Resources/Textures/UITextures/Crosshair.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/UI/HUD.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Resources/Textures/UITextures/Hitmark.png" type="Texture" id=4]
 
 [sub_resource type="CapsuleMesh" id=1]
 mid_height = 3.0
@@ -77,6 +80,8 @@ tracks/0/keys = {
 collision_layer = 2
 script = ExtResource( 1 )
 walk_speed = 30
+default_weapon_position = Vector3( 0.35, -0.3, -0.6 )
+ads_weapon_position = Vector3( 0, -0.2, -0.6 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
@@ -101,9 +106,35 @@ current = true
 [node name="RayCast" type="RayCast" parent="Head/Camera"]
 enabled = true
 cast_to = Vector3( 0, 0, -200 )
+collision_mask = 13
+collide_with_areas = true
+
+[node name="Crosshair" type="TextureRect" parent="Head/Camera"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+texture = ExtResource( 2 )
+
+[node name="Hitmark" type="TextureRect" parent="Head/Camera"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+texture = ExtResource( 4 )
+
+[node name="Hitmark" type="AudioStreamPlayer3D" parent="Head/Camera/Hitmark"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
 
 [node name="Hand" type="Spatial" parent="Head/Camera"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.348378, -0.347503, -0.647769 )
 
 [node name="Shotgun" type="MeshInstance" parent="Head/Camera/Hand"]
 mesh = SubResource( 4 )
@@ -118,6 +149,13 @@ anims/ShotgunReload = SubResource( 7 )
 [node name="ReloadTimer" type="Timer" parent="Head/Camera/Hand"]
 wait_time = 0.8
 one_shot = true
+
+[node name="HUD" parent="Head/Camera" instance=ExtResource( 3 )]
+
+[node name="WeaponSounds" type="AudioStreamPlayer3D" parent="Head"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.30052, 0 )
+attenuation_model = 1
+max_db = -5.0
 
 [node name="GroundCheck" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0 )
