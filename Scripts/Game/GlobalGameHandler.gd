@@ -11,7 +11,7 @@ var weapon_reload_animation
 
 var shotgun = {
 	"name" : "Shotgun",
-	"damage" : 10,
+	"damage" : 20,
 	"clip_size" : 2,
 	"vertical_recoil" : 2,
 	"horizontal_recoil" : .01,
@@ -21,7 +21,7 @@ var shotgun = {
 
 var smg ={
 	"name" : "Smg",
-	"damage" : 2,
+	"damage" : 4,
 	"clip_size" : 25,
 	"vertical_recoil" : 1,
 	"horizontal_recoil" : .05,
@@ -31,7 +31,7 @@ var smg ={
 
 var assault ={
 	"name" : "Assault",
-	"damage" : 4,
+	"damage" : 7,
 	"clip_size" : 30,
 	"vertical_recoil" : .5,
 	"horizontal_recoil" : .01,
@@ -41,7 +41,7 @@ var assault ={
 
 var pistol ={
 	"name" : "Pistol",
-	"damage" : 7,
+	"damage" : 10,
 	"clip_size" : 7,
 	"vertical_recoil" : .0001,
 	"horizontal_recoil" : 0,
@@ -67,8 +67,6 @@ func _physics_process(delta):
 
 func switch_weapon():
 	currently_holding = weapons[currently_holding_index]
-	print(currently_holding.name)
-	print(currently_holding.fire_animation)
 	set_weapon_variables()
 
 func set_weapon_variables():

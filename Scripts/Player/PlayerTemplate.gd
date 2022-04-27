@@ -4,14 +4,14 @@ extends KinematicBody
 export var walk_speed = 15
 export var sprint_speed = 25
 export var crouch_speed = 5
-export var slide_movement_speed = 35
+export var slide_movement_speed = 40
 var slide_speed = slide_movement_speed
 var speed
 
 export var crouching_speed = 20
 export var slide_treshhold = 16
 
-export var sliding_speed = 20
+export var sliding_speed = 40
 
 export var normal_height = 1.5
 export var crouch_height = 0
@@ -38,11 +38,11 @@ onready var head = $Head
 onready var camera = $Head/Camera
 onready var pcap = $CollisionShape
 onready var ground_check = $GroundCheck
+onready var head_check = $Head/HeadCheck
 onready var tween = $Tween
 
 
 #SHOOTING
-
 export var default_weapon_position : Vector3
 export var ads_weapon_position : Vector3
 const ADS_LERP = 20
@@ -62,6 +62,10 @@ export var bullet_hole_list = ["Walls", "Boxes"]
 onready var hitmark = $Head/Camera/Hitmark
 onready var hitmark_sound = $HitmarkSound
 onready var hitmark_timer = $Head/Camera/Hitmark/HitmarkTimer
+
+#HEALTH
+export var health = 100
+
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -123,8 +127,6 @@ func fire():
 				horizontal_recoil = -horizontal_recoil
 				horizontal_heatmap += horizontal_recoil
 				raycast.rotation_degrees.y = horizontal_heatmap
-				
-				
 				GlobalGameHandler.clip_size_current -= 1
 				get_tree().call_group("HUD", "fired")
 				if raycast.get_collider():
@@ -135,16 +137,12 @@ func fire():
 						bullet_hole_instance.global_transform.origin = raycast.get_collision_point()
 						bullet_hole_instance.look_at(raycast.get_collision_point() + raycast.get_collision_normal(), Vector3.UP)
 					elif target.is_in_group("Enemy"):
-						if (raycast.get_collision_point().y + raycast.get_collision_normal().y) - target.transform.origin.y > 0.5:
-							target.health -= GlobalGameHandler.currently_holding.damage * 2
-							hitmark.modulate = "ff0000"
-						else:
+						if !target.is_dead:
 							target.health -= GlobalGameHandler.currently_holding.damage
-							hitmark.modulate = "ffffff"
-						hitmark.visible = true
-						hitmark_sound.play()
-						hitmark_timer.start()
-						target.impact_point = raycast.get_collision_normal()
+							hitmark.visible = true
+							hitmark_sound.play()
+							hitmark_timer.start()
+							target.impact_point = raycast.get_collision_normal()
 			weap_anim_player.play(GlobalGameHandler.currently_holding.fire_animation)
 		elif !weap_anim_player.is_playing():
 			reload()
@@ -159,7 +157,7 @@ func fire():
 			vertical_heatmap = 0
 			raycast.rotation_degrees.y = 0
 	
-	if Input.is_action_pressed("reload_weapon") and !weap_anim_player.is_playing() and !Input.is_action_pressed("fire_weapon_2"):
+	if Input.is_action_pressed("reload_weapon") and !weap_anim_player.is_playing():
 		reload()
 
 func _on_WeaponAnimationPlayer_animation_finished(anim_name):
@@ -187,8 +185,16 @@ func _on_ReloadTimer_timeout():
 	get_tree().call_group("HUD", "fired")
 
 func move_player(delta):
+	var head_bonked = false
 	direction = Vector3()
 	full_contact = ground_check.is_colliding()
+	
+	if head_check.is_colliding():
+		head_bonked = true
+		print("BONK")
+	else:
+		head_bonked = false
+	
 	if not is_on_floor():
 		gravity_vec += Vector3.DOWN * gravity * delta
 		h_acceleration = air_acceleration
@@ -203,6 +209,9 @@ func move_player(delta):
 		head.translation.y  += crouching_speed * delta
 		head.translation.y  = clamp(head.translation.y, crouch_height, normal_height)
 		gravity_vec = Vector3.UP * jump
+	
+	if head_bonked:
+		gravity_vec.y = -2
 	
 	if Input.is_action_pressed("move_forward"):
 		direction -= transform.basis.z
@@ -236,11 +245,12 @@ func move_player(delta):
 			head.translation.y -= crouching_speed * delta
 			head.translation.y  = clamp(head.translation.y, crouch_height, normal_height)
 	elif Input.is_action_just_released("crouch"):
-		tween.interpolate_property(head, "translation:y", crouch_height, normal_height, .1,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-		tween.start()
-		pcap.shape.height = 3
-		speed = walk_speed
-		
+			tween.interpolate_property(head, "translation:y", crouch_height, normal_height, .1,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			tween.start()
+			pcap.shape.height = 3
+			speed = walk_speed
+			slide_speed = slide_movement_speed
+			
 	
 	
 	

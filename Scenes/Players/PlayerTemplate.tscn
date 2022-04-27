@@ -1,10 +1,13 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Scripts/Player/PlayerTemplate.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Textures/UITextures/Crosshair.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/UI/HUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Resources/Textures/UITextures/Hitmark.png" type="Texture" id=4]
 [ext_resource path="res://Resources/Sounds/Guns/Misc/Hitmark.wav" type="AudioStream" id=5]
+[ext_resource path="res://Scripts/Player/Hand.gd" type="Script" id=6]
+[ext_resource path="res://Resources/Sounds/Guns/Misc/Kill.wav" type="AudioStream" id=7]
+[ext_resource path="res://Scripts/Player/KillSound.gd" type="Script" id=8]
 
 [sub_resource type="CapsuleMesh" id=1]
 mid_height = 3.0
@@ -318,6 +321,9 @@ tracks/1/keys = {
 "values": [ Vector3( 0, -0.112873, 0.090286 ), Vector3( 0, -0.4, 0 ), Vector3( 0, -0.4, 0 ), Vector3( 0, -0.113, 0.09 ) ]
 }
 
+[sub_resource type="SphereShape" id=21]
+radius = 0.01
+
 [node name="PlayerTemplate" type="KinematicBody"]
 collision_layer = 2
 script = ExtResource( 1 )
@@ -378,6 +384,9 @@ texture = ExtResource( 4 )
 wait_time = 0.1
 
 [node name="Hand" type="Spatial" parent="Head/Camera"]
+script = ExtResource( 6 )
+sway_left = Vector3( 0, -0.1, 0 )
+sway_right = Vector3( 0, 0.1, 0 )
 
 [node name="Shotgun" type="MeshInstance" parent="Head/Camera/Hand"]
 visible = false
@@ -412,6 +421,11 @@ material/0 = SubResource( 10 )
 
 [node name="HUD" parent="Head/Camera" instance=ExtResource( 3 )]
 
+[node name="HeadCheck" type="RayCast" parent="Head"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0931909, 0 )
+enabled = true
+cast_to = Vector3( 0, 1, 0 )
+
 [node name="GroundCheck" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0 )
 enabled = true
@@ -423,6 +437,11 @@ cast_to = Vector3( 0, -1.5, 0 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
 stream = ExtResource( 5 )
 max_db = -5.0
+
+[node name="KillSound" type="AudioStreamPlayer3D" parent="." groups=["KillSound"]]
+stream = ExtResource( 7 )
+max_db = -5.0
+script = ExtResource( 8 )
 
 [node name="WeaponReloadTimer" type="Timer" parent="."]
 wait_time = 0.8
@@ -438,6 +457,13 @@ anims/ShotgunFire = SubResource( 5 )
 anims/ShotgunReload = SubResource( 7 )
 anims/SmgFire = SubResource( 11 )
 anims/SmgReload = SubResource( 12 )
+
+[node name="LaserFocus" type="Area" parent="."]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="LaserFocus"]
+shape = SubResource( 21 )
 
 [connection signal="timeout" from="Head/Camera/Hitmark/HitmarkTimer" to="." method="_on_HitmarkTimer_timeout"]
 [connection signal="timeout" from="WeaponReloadTimer" to="." method="_on_ReloadTimer_timeout"]
