@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/Player/PlayerTemplate.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Textures/UITextures/Crosshair.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/UI/HUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Resources/Textures/UITextures/Hitmark.png" type="Texture" id=4]
+[ext_resource path="res://Resources/Sounds/Guns/Misc/Hitmark.wav" type="AudioStream" id=5]
 
 [sub_resource type="CapsuleMesh" id=1]
 mid_height = 3.0
@@ -12,9 +13,13 @@ mid_height = 3.0
 height = 3.0
 
 [sub_resource type="CylinderShape" id=3]
+height = 0.5
 
 [sub_resource type="CubeMesh" id=4]
 size = Vector3( 0.1, 0.2, 1.5 )
+
+[sub_resource type="SpatialMaterial" id=8]
+albedo_color = Color( 0.407843, 0.294118, 0.0588235, 1 )
 
 [sub_resource type="Animation" id=6]
 length = 0.001
@@ -93,8 +98,8 @@ material/0 = null
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 shape = SubResource( 2 )
 
-[node name="CollisionShape2" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.50182, 0 )
+[node name="Foot" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.23908, 0 )
 shape = SubResource( 3 )
 
 [node name="Head" type="Spatial" parent="."]
@@ -121,6 +126,7 @@ margin_bottom = 20.0
 texture = ExtResource( 2 )
 
 [node name="Hitmark" type="TextureRect" parent="Head/Camera"]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -131,14 +137,14 @@ margin_right = 20.0
 margin_bottom = 20.0
 texture = ExtResource( 4 )
 
-[node name="Hitmark" type="AudioStreamPlayer3D" parent="Head/Camera/Hitmark"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
+[node name="HitmarkTimer" type="Timer" parent="Head/Camera/Hitmark"]
+wait_time = 0.1
 
 [node name="Hand" type="Spatial" parent="Head/Camera"]
 
 [node name="Shotgun" type="MeshInstance" parent="Head/Camera/Hand"]
 mesh = SubResource( 4 )
-material/0 = null
+material/0 = SubResource( 8 )
 
 [node name="WeaponAnimationPlayer" type="AnimationPlayer" parent="Head/Camera/Hand"]
 root_node = NodePath("../../../..")
@@ -152,11 +158,6 @@ one_shot = true
 
 [node name="HUD" parent="Head/Camera" instance=ExtResource( 3 )]
 
-[node name="WeaponSounds" type="AudioStreamPlayer3D" parent="Head"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.30052, 0 )
-attenuation_model = 1
-max_db = -5.0
-
 [node name="GroundCheck" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0 )
 enabled = true
@@ -164,4 +165,10 @@ cast_to = Vector3( 0, -1.5, 0 )
 
 [node name="Tween" type="Tween" parent="."]
 
+[node name="HitmarkSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
+stream = ExtResource( 5 )
+max_db = -5.0
+
+[connection signal="timeout" from="Head/Camera/Hitmark/HitmarkTimer" to="." method="_on_HitmarkTimer_timeout"]
 [connection signal="timeout" from="Head/Camera/Hand/ReloadTimer" to="." method="_on_ReloadTimer_timeout"]

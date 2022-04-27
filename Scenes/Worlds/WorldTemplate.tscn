@@ -68,6 +68,13 @@ height = 4.0
 depth = 4.0
 material = SubResource( 2 )
 
+[node name="Box3" type="CSGBox" parent="Enviroment/Boxes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 2, 3 )
+width = 4.0
+height = 4.0
+depth = 4.0
+material = SubResource( 2 )
+
 [node name="Box2" type="CSGBox" parent="Enviroment/Boxes"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 3, 3 )
 width = 4.0
@@ -89,6 +96,6 @@ transform = Transform( 1, 0, 0, 0, -5.96046e-08, 1, 0, -1, -5.96046e-08, 0, 32, 
 [node name="Enemies" type="Spatial" parent="."]
 
 [node name="EnemyTemplate" parent="Enemies" instance=ExtResource( 4 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -23, 3, -2.38419e-07 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -22, 7, 3 )
 
 [editable path="Player/PlayerTemplate"]

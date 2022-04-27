@@ -25,7 +25,7 @@ var shoot_sound = preload("res://Resources/Sounds/Guns/Guns/Bullet.ogg")
 
 func _ready():
 	player = get_node("/root").find_node("PlayerTemplate", true, false)
-	player_head = player.find_node("CollisionShape2", true, false)
+	player_head = player.find_node("Foot", true, false)
 
 func _physics_process(delta):
 	if health <= 0:

@@ -15,7 +15,7 @@ export var sliding_speed = 20
 
 export var normal_height = 1.5
 export var crouch_height = 0
-export var slide_height = -2
+export var slide_height = -1
 
 
 var h_acceleration = 6
@@ -36,6 +36,7 @@ var gravity_vec = Vector3()
 
 onready var head = $Head
 onready var camera = $Head/Camera
+onready var pcap = $CollisionShape
 onready var ground_check = $GroundCheck
 onready var tween = $Tween
 
@@ -54,9 +55,9 @@ onready var hand = $Head/Camera/Hand
 onready var bullet_hole = preload("res://Scenes/Weapons/BulletHole.tscn")
 export var bullet_hole_list = ["Walls", "Boxes"]
 
-onready var weapon_sounds = $Head/WeaponSounds
-var fire_shotgun = preload("res://Resources/Sounds/Guns/Guns/ShotgunFired.wav")
-var reload_shotgun = preload("res://Resources/Sounds/Guns/Guns/shotgun_pump.wav")
+onready var hitmark = $Head/Camera/Hitmark
+onready var hitmark_sound = $HitmarkSound
+onready var hitmark_timer = $Head/Camera/Hitmark/HitmarkTimer
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -87,9 +88,6 @@ func fire():
 		if GlobalGameHandler.clip_size_current > 0:
 			if not weap_anim_player.is_playing():
 				GlobalGameHandler.clip_size_current -= 1
-				weapon_sounds.stream = fire_shotgun
-				weapon_sounds.pitch_scale = rand_range(1, 1.5)
-				weapon_sounds.play()
 				get_tree().call_group("HUD", "fired")
 				if raycast.get_collider():
 					var target = raycast.get_collider()
@@ -99,11 +97,22 @@ func fire():
 						bullet_hole_instance.global_transform.origin = raycast.get_collision_point()
 						bullet_hole_instance.look_at(raycast.get_collision_point() + raycast.get_collision_normal(), Vector3.UP)
 					elif target.is_in_group("Enemy"):
-						target.health -= GlobalGameHandler.weapon_damage
+						print(raycast.get_collision_point().y - target.global_transform.origin.y)
+						if raycast.get_collision_point().y - target.global_transform.origin.y > 0.5:
+							print("HEADSHOT")
+							target.health -= GlobalGameHandler.weapon_damage * 2
+							hitmark.modulate = "ff0000"
+						else:
+							target.health -= GlobalGameHandler.weapon_damage
+							hitmark.modulate = "ffffff"
+						hitmark.visible = true
+						hitmark_sound.play()
+						hitmark_timer.start()
 						target.impact_point = raycast.get_collision_normal()
+						
 			weap_anim_player.play("ShotgunFire")
-		else:
-			reload()
+			if GlobalGameHandler.clip_size_current == 0:
+				reload()
 			
 	elif Input.is_action_just_released("fire_weapon") and !weap_anim_player.is_playing():
 		weap_anim_player.stop()
@@ -117,9 +126,6 @@ func reload():
 			GlobalGameHandler.current_bullets = GlobalGameHandler.current_bullets - (GlobalGameHandler.clip_size_max - GlobalGameHandler.clip_size_current)
 		else:
 			GlobalGameHandler.current_bullets -= GlobalGameHandler.clip_size_max
-		weapon_sounds.stream = reload_shotgun
-		weapon_sounds.pitch_scale = 1
-		weapon_sounds.play()
 		get_tree().call_group("HUD", "fired")
 		get_tree().call_group("HUD", "reloaded")
 		weap_anim_player.play("ShotgunReload")
@@ -169,16 +175,19 @@ func move_player(delta):
 		if h_velocity.z < -slide_treshhold or h_velocity.z > slide_treshhold or h_velocity.x < -slide_treshhold or h_velocity.x > slide_treshhold:
 			head.translation.y -= crouching_speed * delta
 			head.translation.y  = clamp(head.translation.y, slide_height, normal_height)
+			pcap.shape.height = crouch_height
 			slide_speed -= 0.1
 			speed = slide_speed
 		else:
 			speed = crouch_speed
 			slide_speed = slide_movement_speed
+			pcap.shape.height = slide_height
 			head.translation.y -= crouching_speed * delta
 			head.translation.y  = clamp(head.translation.y, crouch_height, normal_height)
 	elif Input.is_action_just_released("crouch"):
 		tween.interpolate_property(head, "translation:y", crouch_height, normal_height, .1,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		tween.start()
+		pcap.shape.height = 3
 		speed = walk_speed
 		
 	
@@ -193,4 +202,5 @@ func move_player(delta):
 	move_and_slide(movement, Vector3.UP)
 
 
-
+func _on_HitmarkTimer_timeout():
+	hitmark.visible = false
