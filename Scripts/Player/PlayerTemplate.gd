@@ -47,9 +47,9 @@ export var default_weapon_position : Vector3
 export var ads_weapon_position : Vector3
 const ADS_LERP = 20
 
-onready var weap_anim_player = $Head/Camera/Hand/WeaponAnimationPlayer
+onready var weap_anim_player = $WeaponAnimations
 
-onready var reload_timer = $Head/Camera/Hand/ReloadTimer
+onready var reload_timer = $WeaponReloadTimer
 onready var raycast = $Head/Camera/RayCast
 onready var hand = $Head/Camera/Hand
 onready var bullet_hole = preload("res://Scenes/Weapons/BulletHole.tscn")
@@ -97,9 +97,7 @@ func fire():
 						bullet_hole_instance.global_transform.origin = raycast.get_collision_point()
 						bullet_hole_instance.look_at(raycast.get_collision_point() + raycast.get_collision_normal(), Vector3.UP)
 					elif target.is_in_group("Enemy"):
-						print(raycast.get_collision_point().y - target.global_transform.origin.y)
-						if raycast.get_collision_point().y - target.global_transform.origin.y > 0.5:
-							print("HEADSHOT")
+						if (raycast.get_collision_point().y + raycast.get_collision_normal().y) - target.transform.origin.y > 0.5:
 							target.health -= GlobalGameHandler.weapon_damage * 2
 							hitmark.modulate = "ff0000"
 						else:
@@ -111,13 +109,16 @@ func fire():
 						target.impact_point = raycast.get_collision_normal()
 						
 			weap_anim_player.play("ShotgunFire")
-			if GlobalGameHandler.clip_size_current == 0:
-				reload()
+			
 			
 	elif Input.is_action_just_released("fire_weapon") and !weap_anim_player.is_playing():
 		weap_anim_player.stop()
 	
 	if Input.is_action_pressed("reload_weapon") and !weap_anim_player.is_playing() and !Input.is_action_pressed("fire_weapon_2"):
+		reload()
+
+func _on_WeaponAnimationPlayer_animation_finished(anim_name):
+	if GlobalGameHandler.clip_size_current == 0:
 		reload()
 
 func reload():
@@ -204,3 +205,6 @@ func move_player(delta):
 
 func _on_HitmarkTimer_timeout():
 	hitmark.visible = false
+
+
+

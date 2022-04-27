@@ -62,7 +62,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.12, 0.24, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 0.2 ), Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ) ]
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0.01, 0.2 ), Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ) ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -146,16 +146,6 @@ wait_time = 0.1
 mesh = SubResource( 4 )
 material/0 = SubResource( 8 )
 
-[node name="WeaponAnimationPlayer" type="AnimationPlayer" parent="Head/Camera/Hand"]
-root_node = NodePath("../../../..")
-anims/RESET = SubResource( 6 )
-anims/ShotgunFire = SubResource( 5 )
-anims/ShotgunReload = SubResource( 7 )
-
-[node name="ReloadTimer" type="Timer" parent="Head/Camera/Hand"]
-wait_time = 0.8
-one_shot = true
-
 [node name="HUD" parent="Head/Camera" instance=ExtResource( 3 )]
 
 [node name="GroundCheck" type="RayCast" parent="."]
@@ -170,5 +160,15 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
 stream = ExtResource( 5 )
 max_db = -5.0
 
+[node name="WeaponReloadTimer" type="Timer" parent="."]
+wait_time = 0.8
+one_shot = true
+
+[node name="WeaponAnimations" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 6 )
+anims/ShotgunFire = SubResource( 5 )
+anims/ShotgunReload = SubResource( 7 )
+
 [connection signal="timeout" from="Head/Camera/Hitmark/HitmarkTimer" to="." method="_on_HitmarkTimer_timeout"]
-[connection signal="timeout" from="Head/Camera/Hand/ReloadTimer" to="." method="_on_ReloadTimer_timeout"]
+[connection signal="timeout" from="WeaponReloadTimer" to="." method="_on_ReloadTimer_timeout"]
+[connection signal="animation_finished" from="WeaponAnimations" to="." method="_on_WeaponAnimationPlayer_animation_finished"]

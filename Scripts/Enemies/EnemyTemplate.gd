@@ -15,24 +15,28 @@ var player_head
 var can_shoot = false
 
 onready var death_timer = $DeathTimer
-onready var raycast = $Vision
+onready var raycast = $Head/Vision
 onready var bullet_cooldown = $BulletCooldown
 var bullet_projectile = preload("res://Scenes/Weapons/BulletProjectile.tscn")
-onready var bullet_origin = $BulletOrigin
+onready var bullet_origin = $Head/BulletOrigin
+onready var head = $Head
+onready var body = $Body
+
 
 onready var enemy_sound = $EnemySound
 var shoot_sound = preload("res://Resources/Sounds/Guns/Guns/Bullet.ogg")
 
 func _ready():
 	player = get_node("/root").find_node("PlayerTemplate", true, false)
-	player_head = player.find_node("Foot", true, false)
+	player_head = player.find_node("Head", true, false)
+
 
 func _physics_process(delta):
 	if health <= 0:
 		if !is_dead:
 			dead()
 	else:
-		raycast.look_at_from_position(global_transform.origin, player.global_transform.origin, Vector3.UP)
+		raycast.look_at_from_position(global_transform.origin, player_head.global_transform.origin, Vector3.UP)
 		check_LOS()
 		rotate_to_player()
 
@@ -41,25 +45,24 @@ func check_LOS():
 	if raycast.get_collider() == player:
 		if raycast.rotation_degrees.y < fov_distance and raycast.rotation_degrees.y > -fov_distance:
 			is_looking_at_player = true
-			axis_lock_angular_x = false
 		else:
 			is_looking_at_player = false
-			axis_lock_angular_x = true
 	else:
 		is_looking_at_player = false
-		axis_lock_angular_x = true
 		
 
 func rotate_to_player():
 	if is_looking_at_player:
-		look_at(player.global_transform.origin, Vector3.UP)
+		head.look_at(player_head.global_transform.origin, Vector3.UP)
+		body.look_at(player_head.global_transform.origin, Vector3.UP)
+		body.rotation.x = clamp(body.rotation.x, 0, 0)
 		shoot_at_player()
 
 
 func shoot_at_player():
 	if is_looking_at_player and can_shoot:
 		var bullet = bullet_projectile.instance()
-		var dir = global_transform.origin.direction_to(player_head.global_transform.origin)
+		var dir = global_transform.origin.direction_to(player_head.global_transform.origin - Vector3(0,3,0))
 		get_tree().get_root().get_node("WorldTemplate").add_child(bullet)
 		bullet.global_transform.origin = bullet_origin.global_transform.origin
 		bullet.apply_central_impulse(dir * bullet_speed)
