@@ -4,7 +4,7 @@ extends RigidBody
 export var health = 20
 export var fov_distance = 30
 
-export var knockback_force = 50
+export var knockback_force = 10
 export var bullet_speed = 100
 
 var is_dead = false
