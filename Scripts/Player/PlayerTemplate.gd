@@ -27,7 +27,7 @@ var full_contact = false
 
 export var mouse_sensitivity = 0.05
 export var normal_fov = 70
-export var sprint_fov = 70
+export var sprint_fov = 80
 
 var direction = Vector3()
 var h_velocity = Vector3()
@@ -62,9 +62,12 @@ export var bullet_hole_list = ["Walls", "Boxes"]
 onready var hitmark = $Head/Camera/Hitmark
 onready var hitmark_sound = $HitmarkSound
 onready var hitmark_timer = $Head/Camera/Hitmark/HitmarkTimer
+onready var crosshair = $Head/Camera/Crosshair
+var ads_fov = 50
+
 
 #HEALTH
-export var health = 100
+export var health = 120
 
 
 func _ready():
@@ -91,12 +94,19 @@ func _physics_process(delta):
 
 func check_ads(delta):
 	if Input.is_action_pressed("fire_weapon_2") and !reload_timer.time_left > 0:
-		ads_zoom(delta, ads_weapon_position)
+		ads_zoom(delta, ads_weapon_position, normal_fov, ads_fov)
+		crosshair.visible = false
+		
 	else:
-		ads_zoom(delta, default_weapon_position)
+		ads_zoom(delta, default_weapon_position, ads_fov, normal_fov)
+		crosshair.visible = true
+		
+		
 
-func ads_zoom(delta, vision):
+func ads_zoom(delta, vision, fov_from, fov_to):
 	hand.transform.origin = hand.transform.origin.linear_interpolate(vision, ADS_LERP * delta)
+	tween.interpolate_property(camera, "fov", camera.fov, fov_to, .1,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.start()
 
 func show_right_weapon():
 	for gun in hand.get_children():
@@ -255,6 +265,7 @@ func move_player(delta):
 	
 	
 	direction = direction.normalized()
+		
 	h_velocity = h_velocity.linear_interpolate(direction * speed, h_acceleration * delta)
 	movement.z = h_velocity.z + gravity_vec.z
 	movement.x = h_velocity.x + gravity_vec.x

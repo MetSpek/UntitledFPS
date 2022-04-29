@@ -2,6 +2,8 @@ extends RigidBody
 
 
 export var health = 20
+export var money_worth = 1
+export var xp_worth = 5
 export var damage = 10
 export var fov_distance = 30
 export var move_speed = 10
@@ -87,6 +89,7 @@ func shoot_at_player():
 	if is_looking_at_player and can_shoot and able_to_shoot:
 		enemy_animation.play("LaserShoot")
 		raycast.get_collider().health -= damage
+		get_tree().call_group("HealthBar", "set_health")
 		can_shoot = false
 		enemy_sound.stream = shoot_sound
 		enemy_sound.play()
@@ -107,6 +110,8 @@ func dead():
 	gravity_scale = 1
 	apply_central_impulse(-impact_point * knockback_force)
 	death_timer.start()
+	
+	GlobalGameHandler.enemy_killed(money_worth, xp_worth)
 
 
 

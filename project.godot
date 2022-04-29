@@ -17,6 +17,12 @@ config/icon="res://icon.png"
 [autoload]
 
 GlobalGameHandler="*res://Scripts/Game/GlobalGameHandler.gd"
+PlayerData="*res://Scripts/Player/PlayerData.gd"
+
+[display]
+
+window/size/width=1920
+window/size/height=1080
 
 [input]
 

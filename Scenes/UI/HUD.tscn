@@ -1,43 +1,20 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Resources/Themes/main_theme.tres" type="Theme" id=1]
-[ext_resource path="res://Resources/Themes/Fonts/Pixels.tres" type="DynamicFont" id=2]
-[ext_resource path="res://Scripts/UI/HUD.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/UI/BulletCount.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/UI/PlayerData.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/UI/HealthBar.tscn" type="PackedScene" id=4]
 
 [node name="HUD" type="Control" groups=["HUD"]]
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 1 )
-script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -70.0
-margin_top = -60.0
-grow_horizontal = 0
-grow_vertical = 0
-rect_scale = Vector2( 0.75, 0.75 )
+[node name="HealthBar" parent="." instance=ExtResource( 4 )]
 
-[node name="CurrentBullets" type="Label" parent="HBoxContainer"]
-margin_right = 20.0
-margin_bottom = 59.0
-text = "0"
+[node name="BulletCount" parent="." instance=ExtResource( 2 )]
 
-[node name="Slash" type="Label" parent="HBoxContainer"]
-margin_left = 24.0
-margin_right = 44.0
-margin_bottom = 59.0
-text = "/"
-
-[node name="TotalBullets" type="Label" parent="HBoxContainer"]
-margin_left = 48.0
-margin_right = 68.0
-margin_bottom = 59.0
-custom_fonts/font = ExtResource( 2 )
-text = "0"
+[node name="PlayerData" parent="." instance=ExtResource( 3 )]
