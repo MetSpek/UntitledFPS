@@ -22,7 +22,7 @@ var h_acceleration = 6
 var air_acceleration = 1
 var normal_acceleration = 6
 export var gravity = 20
-export var jump = 10
+export var jump = 12
 var full_contact = false
 
 export var mouse_sensitivity = 0.05
@@ -40,6 +40,8 @@ onready var pcap = $CollisionShape
 onready var ground_check = $GroundCheck
 onready var head_check = $Head/HeadCheck
 onready var tween = $Tween
+onready var raycast_foot = $Foot/Foot
+onready var raycast_knee = $CollisionShape/Knee
 
 
 #SHOOTING
@@ -260,7 +262,8 @@ func move_player(delta):
 			pcap.shape.height = 3
 			speed = walk_speed
 			slide_speed = slide_movement_speed
-			
+	
+	
 	
 	
 	
@@ -269,7 +272,12 @@ func move_player(delta):
 	h_velocity = h_velocity.linear_interpolate(direction * speed, h_acceleration * delta)
 	movement.z = h_velocity.z + gravity_vec.z
 	movement.x = h_velocity.x + gravity_vec.x
-	movement.y = gravity_vec.y
+	
+	
+	if raycast_foot.is_colliding() and not is_on_floor() and not raycast_knee.is_colliding() and not raycast_foot.get_collider().name == "Walls":
+		movement.y = 12
+	else:
+		movement.y = gravity_vec.y
 	
 	move_and_slide(movement, Vector3.UP)
 

@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="Untitled Fps"
-run/main_scene="res://Scenes/Worlds/WorldTemplate.tscn"
+run/main_scene="res://Scenes/Worlds/MainMenu.tscn"
 config/icon="res://icon.png"
 
 [autoload]

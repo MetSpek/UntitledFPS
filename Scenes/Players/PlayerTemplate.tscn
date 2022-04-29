@@ -349,9 +349,19 @@ material/0 = null
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 shape = SubResource( 2 )
 
+[node name="Knee" type="RayCast" parent="CollisionShape"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.28735e-09, 0.0523283 )
+enabled = true
+cast_to = Vector3( 0, -2, 0 )
+
 [node name="Foot" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.23908, 0 )
 shape = SubResource( 3 )
+
+[node name="Foot" type="RayCast" parent="Foot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.227631, 0 )
+enabled = true
+cast_to = Vector3( 0, 0, -2 )
 
 [node name="Head" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
