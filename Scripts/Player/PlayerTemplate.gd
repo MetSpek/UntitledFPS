@@ -65,6 +65,8 @@ onready var hitmark = $Head/Camera/Hitmark
 onready var hitmark_sound = $HitmarkSound
 onready var hitmark_timer = $Head/Camera/Hitmark/HitmarkTimer
 onready var crosshair = $Head/Camera/Crosshair
+onready var interaction_raycast = $Head/Camera/Interaction
+var is_interacting = false
 var ads_fov = 50
 
 
@@ -86,13 +88,12 @@ func _input(event):
 		switch_weapon(1)
 	elif Input.is_action_pressed("previous_weapon"):
 		switch_weapon(-1)
-		
-		
+
 func _physics_process(delta):
 	move_player(delta)
 	fire()
 	check_ads(delta)
-
+	check_interaction()
 
 func check_ads(delta):
 	if Input.is_action_pressed("fire_weapon_2") and !reload_timer.time_left > 0:
@@ -102,8 +103,17 @@ func check_ads(delta):
 	else:
 		ads_zoom(delta, default_weapon_position, ads_fov, normal_fov)
 		crosshair.visible = true
-		
-		
+
+func check_interaction():
+	if interaction_raycast.is_colliding():
+		get_tree().call_group("UpgradePole", "glow")
+		is_interacting = true
+	else:
+		get_tree().call_group("UpgradePole", "hide")
+		is_interacting = false
+	
+	if is_interacting and Input.is_action_just_pressed("interacting"):
+		get_tree().call_group("UpgradePole", "interact")
 
 func ads_zoom(delta, vision, fov_from, fov_to):
 	hand.transform.origin = hand.transform.origin.linear_interpolate(vision, ADS_LERP * delta)
@@ -203,10 +213,10 @@ func move_player(delta):
 	
 	if head_check.is_colliding():
 		head_bonked = true
-		print("BONK")
 	else:
 		head_bonked = false
-	
+
+
 	if not is_on_floor():
 		gravity_vec += Vector3.DOWN * gravity * delta
 		h_acceleration = air_acceleration
@@ -280,7 +290,6 @@ func move_player(delta):
 		movement.y = gravity_vec.y
 	
 	move_and_slide(movement, Vector3.UP)
-
 
 func _on_HitmarkTimer_timeout():
 	hitmark.visible = false

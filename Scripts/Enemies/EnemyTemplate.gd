@@ -11,7 +11,9 @@ export var min_time = 3
 export var max_time = 5
 
 export var able_to_shoot = true
+export var able_to_move = true
 export var can_respawn = false
+export var can_die = true
 export var knockback_force = 50
 
 export var bullet_speed = 100
@@ -57,7 +59,7 @@ func _physics_process(delta):
 		move_enemy()
 
 func move_enemy():
-	if move_timer.time_left == 0:
+	if move_timer.time_left == 0 and able_to_move:
 		var dir = Vector3(rand_range(-1,1),rand_range(-0.5,0.5),rand_range(-1,1) * move_speed)
 		self.apply_central_impulse(dir)
 		if !is_looking_at_player:
@@ -102,16 +104,17 @@ func _on_BulletCooldown_timeout():
 
 
 func dead():
-	laser_line.height = 0.01
-	get_tree().call_group("KillSound", "play_sound")
-	is_dead = true
-	axis_lock_angular_x = false
-	axis_lock_angular_z = false
-	gravity_scale = 1
-	apply_central_impulse(-impact_point * knockback_force)
-	death_timer.start()
-	
-	GlobalGameHandler.enemy_killed(money_worth, xp_worth)
+	if can_die:
+		laser_line.height = 0.01
+		get_tree().call_group("KillSound", "play_sound")
+		is_dead = true
+		axis_lock_angular_x = false
+		axis_lock_angular_z = false
+		gravity_scale = 1
+		apply_central_impulse(-impact_point * knockback_force)
+		death_timer.start()
+		
+		GlobalGameHandler.enemy_killed(money_worth, xp_worth)
 
 
 

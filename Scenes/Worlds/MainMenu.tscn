@@ -1,26 +1,196 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Scenes/Worlds/WorldTemplate.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Players/PlayerTemplate.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Resources/Materials/Prototype/DarkMaterial.tres" type="Material" id=3]
 [ext_resource path="res://Resources/Materials/Prototype/PurpleMaterial.tres" type="Material" id=4]
+[ext_resource path="res://Scenes/Enemies/EnemyTemplate.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Resources/Materials/Prototype/OrangeMaterial.tres" type="Material" id=6]
+[ext_resource path="res://Resources/Materials/Prototype/RedMaterial.tres" type="Material" id=7]
+[ext_resource path="res://Scripts/World/Items/UpgradePole.gd" type="Script" id=8]
+
+[sub_resource type="BoxShape" id=11]
+extents = Vector3( 0.5, 0.5, 0.5 )
+
+[sub_resource type="CylinderShape" id=9]
+radius = 0.5
+height = 7.0
+
+[sub_resource type="SpatialMaterial" id=10]
+flags_transparent = true
+albedo_color = Color( 1, 0, 0, 0.407843 )
+emission_enabled = true
+emission = Color( 1, 0, 0, 1 )
+emission_energy = 5.38
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="Animation" id=1]
+resource_name = "LaserShoot"
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Laser/Laser/LaserCylinder:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.02, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.05, 0.7, 0.05 ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Laser/Laser/LaserCylinder:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.05 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "LaserShoot"
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Laser/Laser/LaserCylinder:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.02, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.05, 0.7, 0.05 ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Laser/Laser/LaserCylinder:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.05 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "LaserShoot"
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Laser/Laser/LaserCylinder:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.02, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.05, 0.7, 0.05 ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Laser/Laser/LaserCylinder:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.05 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "LaserShoot"
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Laser/Laser/LaserCylinder:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.02, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.05, 0.7, 0.05 ]
+}
+
+[sub_resource type="Animation" id=8]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Laser/Laser/LaserCylinder:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.05 ]
+}
 
 [node name="MainMenu" instance=ExtResource( 1 )]
 
 [node name="Floor" type="CSGBox" parent="Enviroment/Floors" index="0"]
-width = 32.0
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 0 )
+width = 116.0
 depth = 32.0
 material = ExtResource( 3 )
 
-[node name="Floor2" type="CSGBox" parent="Enviroment/Floors" index="1"]
+[node name="Floor3" type="CSGBox" parent="Enviroment/Floors" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -31 )
+width = 34.0
+depth = 32.0
+material = ExtResource( 3 )
+
+[node name="Floor5" type="CSGBox" parent="Enviroment/Floors" index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, -4, 0 )
+width = 17.0
+height = 10.0
+depth = 30.0
+material = ExtResource( 3 )
+
+[node name="Floor4" type="CSGBox" parent="Enviroment/Floors" index="3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 11, -31 )
+width = 34.0
+depth = 32.0
+material = ExtResource( 3 )
+
+[node name="Floor2" type="CSGBox" parent="Enviroment/Floors" index="4"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11, 0 )
-width = 32.0
+width = 200.0
+depth = 32.0
+material = ExtResource( 3 )
+
+[node name="Floor6" type="CSGBox" parent="Enviroment/Floors" index="5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -58, -10, 0 )
+width = 84.0
 depth = 32.0
 material = ExtResource( 3 )
 
 [node name="Wall" type="CSGBox" parent="Enviroment/Walls" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, -15.5 )
-width = 32.0
+width = 200.0
 height = 9.0
 depth = 1.0
 material = ExtResource( 4 )
@@ -32,14 +202,49 @@ width = 7.0
 height = 7.0
 material = ExtResource( 4 )
 
-[node name="Wall2" type="CSGBox" parent="Enviroment/Walls" index="1"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 15.5 )
+[node name="Wall11" type="CSGBox" parent="Enviroment/Walls" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -58, -4, -15.5 )
+width = 84.0
+height = 10.0
+depth = 1.0
+material = ExtResource( 4 )
+
+[node name="Wall12" type="CSGBox" parent="Enviroment/Walls" index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -58, -4, 15.5 )
+width = 84.0
+height = 10.0
+depth = 1.0
+material = ExtResource( 4 )
+
+[node name="Wall10" type="CSGBox" parent="Enviroment/Walls" index="3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 5.5, -46.5 )
 width = 32.0
 height = 9.0
 depth = 1.0
 material = ExtResource( 4 )
 
-[node name="Wall3" type="CSGBox" parent="Enviroment/Walls" index="2"]
+[node name="Wall2" type="CSGBox" parent="Enviroment/Walls" index="4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 15.5 )
+width = 200.0
+height = 9.0
+depth = 1.0
+material = ExtResource( 4 )
+
+[node name="Wall5" type="CSGBox" parent="Enviroment/Walls" index="5"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 25.5, 2.5, 0 )
+width = 32.0
+height = 3.0
+depth = 1.0
+material = ExtResource( 4 )
+
+[node name="Wall6" type="CSGBox" parent="Enviroment/Walls" index="6"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 25.5, 8.5, 0 )
+width = 32.0
+height = 3.0
+depth = 1.0
+material = ExtResource( 4 )
+
+[node name="Wall3" type="CSGBox" parent="Enviroment/Walls" index="7"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 15.5, 5.5, 0 )
 width = 30.0
 height = 9.0
@@ -53,7 +258,28 @@ width = 7.0
 height = 7.0
 material = ExtResource( 4 )
 
-[node name="Wall4" type="CSGBox" parent="Enviroment/Walls" index="3"]
+[node name="Wall8" type="CSGBox" parent="Enviroment/Walls" index="8"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 17, 5.5, -31.5 )
+width = 31.0
+height = 9.0
+depth = 1.0
+material = ExtResource( 4 )
+
+[node name="Wall9" type="CSGBox" parent="Enviroment/Walls" index="9"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -16, 5.5, -31.5 )
+width = 31.0
+height = 9.0
+depth = 1.0
+material = ExtResource( 4 )
+
+[node name="Wall7" type="CSGBox" parent="Enviroment/Walls" index="10"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 99.5, 5.5, 0 )
+width = 30.0
+height = 9.0
+depth = 1.0
+material = ExtResource( 4 )
+
+[node name="Wall4" type="CSGBox" parent="Enviroment/Walls" index="11"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15.5, 5.5, 0 )
 width = 30.0
 height = 9.0
@@ -67,7 +293,211 @@ width = 7.0
 height = 7.0
 material = ExtResource( 4 )
 
+[node name="Wall13" type="CSGBox" parent="Enviroment/Walls" index="12"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -99.5, 0.5, 0 )
+width = 30.0
+height = 19.0
+depth = 1.0
+material = ExtResource( 4 )
+
+[node name="CSGBox" type="CSGBox" parent="Enviroment/Boxes" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -64, -4, -10 )
+width = 10.0
+height = 10.0
+depth = 10.0
+material = ExtResource( 6 )
+
+[node name="CSGBox3" type="CSGBox" parent="Enviroment/Boxes" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 2, -64, -4, 5 )
+width = 10.0
+height = 1.0
+depth = 10.0
+material = ExtResource( 6 )
+
+[node name="CSGBox2" type="CSGBox" parent="Enviroment/Boxes" index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -94, -4, 10 )
+width = 10.0
+height = 10.0
+depth = 10.0
+material = ExtResource( 6 )
+
+[node name="CSGPolygon" type="CSGPolygon" parent="Enviroment/Ramps" index="0"]
+transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.86467e-07, 0, -10.14, -33, 0, 5 )
+polygon = PoolVector2Array( 0, -9, 0, 1, 1, 1, 22, -9 )
+material = ExtResource( 6 )
+
+[node name="UpgradePole" type="Spatial" parent="Enviroment/Items" index="0" groups=["UpgradePole"]]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15, 0, -32 )
+script = ExtResource( 8 )
+
+[node name="UpgradePoleBase" type="CSGBox" parent="Enviroment/Items/UpgradePole" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
+use_collision = true
+height = 1.0
+material = ExtResource( 6 )
+
+[node name="UpgradePolePole" type="CSGBox" parent="Enviroment/Items/UpgradePole" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
+width = 1.0
+depth = 1.0
+material = ExtResource( 6 )
+
+[node name="UpgradePoleButton" type="CSGCylinder" parent="Enviroment/Items/UpgradePole" index="2"]
+transform = Transform( 1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 4.24865, 0.101819 )
+radius = 0.5
+material = ExtResource( 7 )
+
+[node name="Area" type="Area" parent="Enviroment/Items/UpgradePole/UpgradePoleButton" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 8.27351e-16, 0, 8.27351e-16, 1, 0, 0, 0 )
+collision_layer = 64
+collision_mask = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="Enviroment/Items/UpgradePole/UpgradePoleButton/Area" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 8.27351e-16, 0, 8.27351e-16, 1, 0, 0, 0 )
+shape = SubResource( 11 )
+
+[node name="UpgradePoleTop" type="CSGBox" parent="Enviroment/Items/UpgradePole" index="3"]
+transform = Transform( 1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 4, 0 )
+height = 1.0
+material = ExtResource( 6 )
+
+[node name="BeginTeleporter" type="Spatial" parent="Enviroment/Items" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -42.5 )
+
+[node name="CSGCylinder" type="CSGCylinder" parent="Enviroment/Items/BeginTeleporter" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+radius = 3.5
+material = ExtResource( 6 )
+
+[node name="CSGCylinder2" type="CSGCylinder" parent="Enviroment/Items/BeginTeleporter" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, 0 )
+radius = 3.5
+material = ExtResource( 6 )
+
+[node name="Area" type="Area" parent="Enviroment/Items/BeginTeleporter" index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Enviroment/Items/BeginTeleporter/Area" index="0"]
+shape = SubResource( 9 )
+
+[node name="CSGCylinder3" type="CSGCylinder" parent="Enviroment/Items/BeginTeleporter" index="3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
+radius = 2.0
+height = 7.0
+material = SubResource( 10 )
+
 [node name="PlayerTemplate" parent="Player" index="0" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 13.5 )
 
+[node name="EnemyTemplate" parent="Enemies" index="0" instance=ExtResource( 5 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 34.5, 4.5, -10 )
+able_to_shoot = false
+able_to_move = false
+can_die = false
+
+[node name="RightEye" parent="Enemies/EnemyTemplate/Head/HeadMesh" index="0"]
+visible = false
+
+[node name="Vision" parent="Enemies/EnemyTemplate/Head" index="1"]
+visible = false
+
+[node name="BulletOrigin" parent="Enemies/EnemyTemplate/Head" index="2"]
+visible = false
+
+[node name="Laser" parent="Enemies/EnemyTemplate" index="6"]
+visible = false
+
+[node name="EnemyTemplate2" parent="Enemies" index="1" instance=ExtResource( 5 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 50, 4.5, -5 )
+able_to_shoot = false
+able_to_move = false
+can_die = false
+
+[node name="RightEye" parent="Enemies/EnemyTemplate2/Head/HeadMesh" index="0"]
+visible = false
+
+[node name="Vision" parent="Enemies/EnemyTemplate2/Head" index="1"]
+visible = false
+
+[node name="BulletOrigin" parent="Enemies/EnemyTemplate2/Head" index="2"]
+visible = false
+
+[node name="Laser" parent="Enemies/EnemyTemplate2" index="6"]
+visible = false
+
+[node name="EnemyAnimation" parent="Enemies/EnemyTemplate2" index="7"]
+anims/LaserShoot = SubResource( 1 )
+anims/RESET = SubResource( 2 )
+
+[node name="EnemyTemplate3" parent="Enemies" index="2" instance=ExtResource( 5 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 69, 3, -1 )
+able_to_shoot = false
+able_to_move = false
+can_die = false
+
+[node name="RightEye" parent="Enemies/EnemyTemplate3/Head/HeadMesh" index="0"]
+visible = false
+
+[node name="Vision" parent="Enemies/EnemyTemplate3/Head" index="1"]
+visible = false
+
+[node name="BulletOrigin" parent="Enemies/EnemyTemplate3/Head" index="2"]
+visible = false
+
+[node name="Laser" parent="Enemies/EnemyTemplate3" index="6"]
+visible = false
+
+[node name="EnemyAnimation" parent="Enemies/EnemyTemplate3" index="7"]
+anims/LaserShoot = SubResource( 3 )
+anims/RESET = SubResource( 4 )
+
+[node name="EnemyTemplate4" parent="Enemies" index="3" instance=ExtResource( 5 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 90.5, 1.5, 7 )
+able_to_shoot = false
+able_to_move = false
+can_die = false
+
+[node name="RightEye" parent="Enemies/EnemyTemplate4/Head/HeadMesh" index="0"]
+visible = false
+
+[node name="Vision" parent="Enemies/EnemyTemplate4/Head" index="1"]
+visible = false
+
+[node name="BulletOrigin" parent="Enemies/EnemyTemplate4/Head" index="2"]
+visible = false
+
+[node name="Laser" parent="Enemies/EnemyTemplate4" index="6"]
+visible = false
+
+[node name="EnemyAnimation" parent="Enemies/EnemyTemplate4" index="7"]
+anims/LaserShoot = SubResource( 5 )
+anims/RESET = SubResource( 6 )
+
+[node name="EnemyTemplate5" parent="Enemies" index="4" instance=ExtResource( 5 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 90.5, 7, 14 )
+able_to_shoot = false
+able_to_move = false
+can_die = false
+
+[node name="RightEye" parent="Enemies/EnemyTemplate5/Head/HeadMesh" index="0"]
+visible = false
+
+[node name="Vision" parent="Enemies/EnemyTemplate5/Head" index="1"]
+visible = false
+
+[node name="BulletOrigin" parent="Enemies/EnemyTemplate5/Head" index="2"]
+visible = false
+
+[node name="Laser" parent="Enemies/EnemyTemplate5" index="6"]
+visible = false
+
+[node name="EnemyAnimation" parent="Enemies/EnemyTemplate5" index="7"]
+anims/LaserShoot = SubResource( 7 )
+anims/RESET = SubResource( 8 )
+
 [editable path="Player/PlayerTemplate"]
+[editable path="Enemies/EnemyTemplate"]
+[editable path="Enemies/EnemyTemplate2"]
+[editable path="Enemies/EnemyTemplate3"]
+[editable path="Enemies/EnemyTemplate4"]
+[editable path="Enemies/EnemyTemplate5"]
