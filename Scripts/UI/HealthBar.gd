@@ -5,7 +5,7 @@ onready var health_under = $HealthBarUnder
 onready var update_tween = $UpdateTween
 onready var health_current = $HealthNumbers/HealthCurrent
 onready var health_max = $HealthNumbers/HealthMax
-var player
+onready var player
 
 
 export (Color) var healthy_color = Color.green
@@ -17,7 +17,6 @@ export (float, 0, 1, 0.05) var danger_zone = 0.3
 
 func _ready():
 	player = get_node("/root").find_node("PlayerTemplate", true, false)
-	set_max_health()
 
 func set_max_health():
 	health_over.max_value = player.health

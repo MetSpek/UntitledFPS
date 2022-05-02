@@ -1,0 +1,713 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/UI/Upgrades.gd" type="Script" id=1]
+[ext_resource path="res://Resources/Themes/main_theme.tres" type="Theme" id=2]
+
+[node name="Upgrades" type="Control" groups=["Upgrades"]]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 2 )
+script = ExtResource( 1 )
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.882353 )
+
+[node name="Exitbutton" type="Button" parent="Background"]
+margin_left = 40.0
+margin_top = 40.0
+margin_right = 440.0
+margin_bottom = 197.0
+rect_min_size = Vector2( 400, 0 )
+rect_scale = Vector2( 0.3, 0.3 )
+text = "Close"
+
+[node name="TitelLabel" type="Label" parent="Background"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -144.0
+margin_top = 40.0
+margin_right = 405.0
+margin_bottom = 191.0
+rect_scale = Vector2( 0.5, 0.5 )
+text = "Upgrades"
+
+[node name="MoneyLabel" type="Label" parent="Background"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 192.0
+margin_top = 48.0
+margin_right = 741.0
+margin_bottom = 199.0
+rect_scale = Vector2( 0.4, 0.4 )
+text = "$0"
+
+[node name="VBoxContainer" type="GridContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -896.0
+margin_top = -356.0
+margin_right = 2104.0
+margin_bottom = 1144.0
+rect_scale = Vector2( 0.3, 0.3 )
+custom_constants/vseparation = 750
+custom_constants/hseparation = 3000
+columns = 2
+
+[node name="Pistol" type="Control" parent="VBoxContainer"]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Pistol"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 2500, 0 )
+custom_constants/separation = 50
+alignment = 1
+
+[node name="PistolLabel" type="Label" parent="VBoxContainer/Pistol/VBoxContainer"]
+margin_right = 2500.0
+margin_bottom = 151.0
+text = "Pistol"
+align = 1
+
+[node name="PistolDamage" type="HBoxContainer" parent="VBoxContainer/Pistol/VBoxContainer"]
+margin_top = 201.0
+margin_right = 2500.0
+margin_bottom = 358.0
+custom_constants/separation = 50
+alignment = 2
+
+[node name="UpgradeLabel" type="Label" parent="VBoxContainer/Pistol/VBoxContainer/PistolDamage"]
+margin_left = 466.0
+margin_top = 3.0
+margin_right = 941.0
+margin_bottom = 154.0
+text = "Damage"
+
+[node name="PistolDamageLevel" type="Label" parent="VBoxContainer/Pistol/VBoxContainer/PistolDamage"]
+margin_left = 991.0
+margin_top = 3.0
+margin_right = 1399.0
+margin_bottom = 154.0
+text = "Level 0"
+
+[node name="PistolDamageButton" type="Button" parent="VBoxContainer/Pistol/VBoxContainer/PistolDamage"]
+margin_left = 1449.0
+margin_right = 2199.0
+margin_bottom = 157.0
+rect_min_size = Vector2( 750, 0 )
+text = "Upgrade"
+
+[node name="Cost" type="Label" parent="VBoxContainer/Pistol/VBoxContainer/PistolDamage"]
+margin_left = 2249.0
+margin_top = 3.0
+margin_right = 2500.0
+margin_bottom = 154.0
+text = "$ 50"
+
+[node name="PistolAmmo" type="HBoxContainer" parent="VBoxContainer/Pistol/VBoxContainer"]
+margin_top = 408.0
+margin_right = 2500.0
+margin_bottom = 565.0
+rect_min_size = Vector2( 1800, 0 )
+custom_constants/separation = 50
+alignment = 2
+
+[node name="UpgradeLabel" type="Label" parent="VBoxContainer/Pistol/VBoxContainer/PistolAmmo"]
+margin_left = 561.0
+margin_top = 3.0
+margin_right = 941.0
+margin_bottom = 154.0
+text = "Ammo"
+
+[node name="PistolAmmoLevel" type="Label" parent="VBoxContainer/Pistol/VBoxContainer/PistolAmmo"]
+margin_left = 991.0
+margin_top = 3.0
+margin_right = 1399.0
+margin_bottom = 154.0
+text = "Level 0"
+
+[node name="PistolAmmoButton" type="Button" parent="VBoxContainer/Pistol/VBoxContainer/PistolAmmo"]
+margin_left = 1449.0
+margin_right = 2199.0
+margin_bottom = 157.0
+rect_min_size = Vector2( 750, 0 )
+text = "Upgrade"
+
+[node name="Cost" type="Label" parent="VBoxContainer/Pistol/VBoxContainer/PistolAmmo"]
+margin_left = 2249.0
+margin_top = 3.0
+margin_right = 2500.0
+margin_bottom = 154.0
+text = "$ 50"
+
+[node name="Smg" type="Control" parent="VBoxContainer"]
+margin_left = 3000.0
+margin_right = 3000.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Smg"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 2500, 0 )
+custom_constants/separation = 50
+alignment = 1
+
+[node name="SmgLabel" type="Label" parent="VBoxContainer/Smg/VBoxContainer"]
+margin_right = 2500.0
+margin_bottom = 151.0
+text = "Submachine Gun"
+align = 1
+
+[node name="SmgDamage" type="HBoxContainer" parent="VBoxContainer/Smg/VBoxContainer"]
+margin_top = 201.0
+margin_right = 2500.0
+margin_bottom = 358.0
+custom_constants/separation = 50
+alignment = 2
+
+[node name="UpgradeLabel" type="Label" parent="VBoxContainer/Smg/VBoxContainer/SmgDamage"]
+margin_left = 466.0
+margin_top = 3.0
+margin_right = 941.0
+margin_bottom = 154.0
+text = "Damage"
+
+[node name="SmgDamageLevel" type="Label" parent="VBoxContainer/Smg/VBoxContainer/SmgDamage"]
+margin_left = 991.0
+margin_top = 3.0
+margin_right = 1399.0
+margin_bottom = 154.0
+text = "Level 0"
+
+[node name="SmgDamageButton" type="Button" parent="VBoxContainer/Smg/VBoxContainer/SmgDamage"]
+margin_left = 1449.0
+margin_right = 2199.0
+margin_bottom = 157.0
+rect_min_size = Vector2( 750, 0 )
+text = "Upgrade"
+
+[node name="Cost" type="Label" parent="VBoxContainer/Smg/VBoxContainer/SmgDamage"]
+margin_left = 2249.0
+margin_top = 3.0
+margin_right = 2500.0
+margin_bottom = 154.0
+text = "$ 50"
+
+[node name="SmgAmmo" type="HBoxContainer" parent="VBoxContainer/Smg/VBoxContainer"]
+margin_top = 408.0
+margin_right = 2500.0
+margin_bottom = 565.0
+rect_min_size = Vector2( 1800, 0 )
+custom_constants/separation = 50
+alignment = 2
+
+[node name="UpgradeLabel" type="Label" parent="VBoxContainer/Smg/VBoxContainer/SmgAmmo"]
+margin_left = 561.0
+margin_top = 3.0
+margin_right = 941.0
+margin_bottom = 154.0
+text = "Ammo"
+
+[node name="SmgAmmoLevel" type="Label" parent="VBoxContainer/Smg/VBoxContainer/SmgAmmo"]
+margin_left = 991.0
+margin_top = 3.0
+margin_right = 1399.0
+margin_bottom = 154.0
+text = "Level 0"
+
+[node name="SmgAmmoButton" type="Button" parent="VBoxContainer/Smg/VBoxContainer/SmgAmmo"]
+margin_left = 1449.0
+margin_right = 2199.0
+margin_bottom = 157.0
+rect_min_size = Vector2( 750, 0 )
+text = "Upgrade"
+
+[node name="Cost" type="Label" parent="VBoxContainer/Smg/VBoxContainer/SmgAmmo"]
+margin_left = 2249.0
+margin_top = 3.0
+margin_right = 2500.0
+margin_bottom = 154.0
+text = "$ 50"
+
+[node name="Assault" type="Control" parent="VBoxContainer"]
+margin_top = 750.0
+margin_bottom = 750.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Assault"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 2500, 0 )
+custom_constants/separation = 50
+alignment = 1
+
+[node name="AssaultLabel" type="Label" parent="VBoxContainer/Assault/VBoxContainer"]
+margin_right = 2500.0
+margin_bottom = 151.0
+text = "Assault Rifle"
+align = 1
+
+[node name="AssaultDamage" type="HBoxContainer" parent="VBoxContainer/Assault/VBoxContainer"]
+margin_top = 201.0
+margin_right = 2500.0
+margin_bottom = 358.0
+custom_constants/separation = 50
+alignment = 2
+
+[node name="UpgradeLabel" type="Label" parent="VBoxContainer/Assault/VBoxContainer/AssaultDamage"]
+margin_left = 466.0
+margin_top = 3.0
+margin_right = 941.0
+margin_bottom = 154.0
+text = "Damage"
+
+[node name="AssaultDamageLevel" type="Label" parent="VBoxContainer/Assault/VBoxContainer/AssaultDamage"]
+margin_left = 991.0
+margin_top = 3.0
+margin_right = 1399.0
+margin_bottom = 154.0
+text = "Level 0"
+
+[node name="AssaultDamageButton" type="Button" parent="VBoxContainer/Assault/VBoxContainer/AssaultDamage"]
+margin_left = 1449.0
+margin_right = 2199.0
+margin_bottom = 157.0
+rect_min_size = Vector2( 750, 0 )
+text = "Upgrade"
+
+[node name="Cost" type="Label" parent="VBoxContainer/Assault/VBoxContainer/AssaultDamage"]
+margin_left = 2249.0
+margin_top = 3.0
+margin_right = 2500.0
+margin_bottom = 154.0
+text = "$ 50"
+
+[node name="AssaultAmmo" type="HBoxContainer" parent="VBoxContainer/Assault/VBoxContainer"]
+margin_top = 408.0
+margin_right = 2500.0
+margin_bottom = 565.0
+rect_min_size = Vector2( 1800, 0 )
+custom_constants/separation = 50
+alignment = 2
+
+[node name="UpgradeLabel" type="Label" parent="VBoxContainer/Assault/VBoxContainer/AssaultAmmo"]
+margin_left = 561.0
+margin_top = 3.0
+margin_right = 941.0
+margin_bottom = 154.0
+text = "Ammo"
+
+[node name="AssaultAmmoLevel" type="Label" parent="VBoxContainer/Assault/VBoxContainer/AssaultAmmo"]
+margin_left = 991.0
+margin_top = 3.0
+margin_right = 1399.0
+margin_bottom = 154.0
+text = "Level 0"
+
+[node name="AssaultAmmoButton" type="Button" parent="VBoxContainer/Assault/VBoxContainer/AssaultAmmo"]
+margin_left = 1449.0
+margin_right = 2199.0
+margin_bottom = 157.0
+rect_min_size = Vector2( 750, 0 )
+text = "Upgrade"
+
+[node name="Cost" type="Label" parent="VBoxContainer/Assault/VBoxContainer/AssaultAmmo"]
+margin_left = 2249.0
+margin_top = 3.0
+margin_right = 2500.0
+margin_bottom = 154.0
+text = "$ 50"
+
+[node name="Sniper" type="Control" parent="VBoxContainer"]
+margin_left = 3000.0
+margin_top = 750.0
+margin_right = 3000.0
+margin_bottom = 750.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Sniper"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 2500, 0 )
+custom_constants/separation = 50
+alignment = 1
+
+[node name="SniperLabel" type="Label" parent="VBoxContainer/Sniper/VBoxContainer"]
+margin_right = 2500.0
+margin_bottom = 151.0
+text = "Sniper Rifle"
+align = 1
+
+[node name="SniperDamage" type="HBoxContainer" parent="VBoxContainer/Sniper/VBoxContainer"]
+margin_top = 201.0
+margin_right = 2500.0
+margin_bottom = 358.0
+custom_constants/separation = 50
+alignment = 2
+
+[node name="UpgradeLabel" type="Label" parent="VBoxContainer/Sniper/VBoxContainer/SniperDamage"]
+margin_left = 466.0
+margin_top = 3.0
+margin_right = 941.0
+margin_bottom = 154.0
+text = "Damage"
+
+[node name="SniperDamageLevel" type="Label" parent="VBoxContainer/Sniper/VBoxContainer/SniperDamage"]
+margin_left = 991.0
+margin_top = 3.0
+margin_right = 1399.0
+margin_bottom = 154.0
+text = "Level 0"
+
+[node name="SniperDamageButton" type="Button" parent="VBoxContainer/Sniper/VBoxContainer/SniperDamage"]
+margin_left = 1449.0
+margin_right = 2199.0
+margin_bottom = 157.0
+rect_min_size = Vector2( 750, 0 )
+text = "Upgrade"
+
+[node name="Cost" type="Label" parent="VBoxContainer/Sniper/VBoxContainer/SniperDamage"]
+margin_left = 2249.0
+margin_top = 3.0
+margin_right = 2500.0
+margin_bottom = 154.0
+text = "$ 50"
+
+[node name="SniperAmmo" type="HBoxContainer" parent="VBoxContainer/Sniper/VBoxContainer"]
+margin_top = 408.0
+margin_right = 2500.0
+margin_bottom = 565.0
+rect_min_size = Vector2( 1800, 0 )
+custom_constants/separation = 50
+alignment = 2
+
+[node name="UpgradeLabel" type="Label" parent="VBoxContainer/Sniper/VBoxContainer/SniperAmmo"]
+margin_left = 561.0
+margin_top = 3.0
+margin_right = 941.0
+margin_bottom = 154.0
+text = "Ammo"
+
+[node name="SniperAmmoLevel" type="Label" parent="VBoxContainer/Sniper/VBoxContainer/SniperAmmo"]
+margin_left = 991.0
+margin_top = 3.0
+margin_right = 1399.0
+margin_bottom = 154.0
+text = "Level 0"
+
+[node name="SniperAmmoButton" type="Button" parent="VBoxContainer/Sniper/VBoxContainer/SniperAmmo"]
+margin_left = 1449.0
+margin_right = 2199.0
+margin_bottom = 157.0
+rect_min_size = Vector2( 750, 0 )
+text = "Upgrade"
+
+[node name="Cost" type="Label" parent="VBoxContainer/Sniper/VBoxContainer/SniperAmmo"]
+margin_left = 2249.0
+margin_top = 3.0
+margin_right = 2500.0
+margin_bottom = 154.0
+text = "$ 50"
+
+[node name="Player" type="Control" parent="VBoxContainer"]
+margin_top = 1500.0
+margin_bottom = 1500.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Player"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 2500, 0 )
+custom_constants/separation = 50
+alignment = 1
+
+[node name="PlayerLabel" type="Label" parent="VBoxContainer/Player/VBoxContainer"]
+margin_right = 2500.0
+margin_bottom = 151.0
+text = "Player"
+align = 1
+
+[node name="PlayerHealth" type="HBoxContainer" parent="VBoxContainer/Player/VBoxContainer"]
+margin_top = 201.0
+margin_right = 2500.0
+margin_bottom = 358.0
+custom_constants/separation = 50
+alignment = 2
+
+[node name="UpgradeLabel" type="Label" parent="VBoxContainer/Player/VBoxContainer/PlayerHealth"]
+margin_left = 565.0
+margin_top = 3.0
+margin_right = 941.0
+margin_bottom = 154.0
+text = "Health"
+
+[node name="PlayerHealthLevel" type="Label" parent="VBoxContainer/Player/VBoxContainer/PlayerHealth"]
+margin_left = 991.0
+margin_top = 3.0
+margin_right = 1399.0
+margin_bottom = 154.0
+text = "Level 0"
+
+[node name="PlayerHealthButton" type="Button" parent="VBoxContainer/Player/VBoxContainer/PlayerHealth"]
+margin_left = 1449.0
+margin_right = 2199.0
+margin_bottom = 157.0
+rect_min_size = Vector2( 750, 0 )
+text = "Upgrade"
+
+[node name="Cost" type="Label" parent="VBoxContainer/Player/VBoxContainer/PlayerHealth"]
+margin_left = 2249.0
+margin_top = 3.0
+margin_right = 2500.0
+margin_bottom = 154.0
+text = "$ 50"
+
+[node name="MovementSpeed" type="HBoxContainer" parent="VBoxContainer/Player/VBoxContainer"]
+margin_top = 408.0
+margin_right = 2500.0
+margin_bottom = 565.0
+rect_min_size = Vector2( 1800, 0 )
+custom_constants/separation = 50
+alignment = 2
+
+[node name="UpgradeLabel" type="Label" parent="VBoxContainer/Player/VBoxContainer/MovementSpeed"]
+margin_left = 582.0
+margin_top = 3.0
+margin_right = 941.0
+margin_bottom = 154.0
+text = "Speed"
+
+[node name="MovementSpeedLevel" type="Label" parent="VBoxContainer/Player/VBoxContainer/MovementSpeed"]
+margin_left = 991.0
+margin_top = 3.0
+margin_right = 1399.0
+margin_bottom = 154.0
+text = "Level 0"
+
+[node name="MovementSpeedButton" type="Button" parent="VBoxContainer/Player/VBoxContainer/MovementSpeed"]
+margin_left = 1449.0
+margin_right = 2199.0
+margin_bottom = 157.0
+rect_min_size = Vector2( 750, 0 )
+text = "Upgrade"
+
+[node name="Cost" type="Label" parent="VBoxContainer/Player/VBoxContainer/MovementSpeed"]
+margin_left = 2249.0
+margin_top = 3.0
+margin_right = 2500.0
+margin_bottom = 154.0
+text = "$ 50"
+
+[node name="SlideSpeed" type="HBoxContainer" parent="VBoxContainer/Player/VBoxContainer"]
+margin_top = 615.0
+margin_right = 2500.0
+margin_bottom = 772.0
+rect_min_size = Vector2( 1800, 0 )
+custom_constants/separation = 50
+alignment = 2
+
+[node name="UpgradeLabel" type="Label" parent="VBoxContainer/Player/VBoxContainer/SlideSpeed"]
+margin_left = 657.0
+margin_top = 3.0
+margin_right = 941.0
+margin_bottom = 154.0
+text = "Slide"
+
+[node name="SlideSpeedLevel" type="Label" parent="VBoxContainer/Player/VBoxContainer/SlideSpeed"]
+margin_left = 991.0
+margin_top = 3.0
+margin_right = 1399.0
+margin_bottom = 154.0
+text = "Level 0"
+
+[node name="SlideSpeedButton" type="Button" parent="VBoxContainer/Player/VBoxContainer/SlideSpeed"]
+margin_left = 1449.0
+margin_right = 2199.0
+margin_bottom = 157.0
+rect_min_size = Vector2( 750, 0 )
+text = "Upgrade"
+
+[node name="Cost" type="Label" parent="VBoxContainer/Player/VBoxContainer/SlideSpeed"]
+margin_left = 2249.0
+margin_top = 3.0
+margin_right = 2500.0
+margin_bottom = 154.0
+text = "$ 50"
+
+[node name="Jump" type="HBoxContainer" parent="VBoxContainer/Player/VBoxContainer"]
+margin_top = 822.0
+margin_right = 2500.0
+margin_bottom = 979.0
+rect_min_size = Vector2( 1800, 0 )
+custom_constants/separation = 50
+alignment = 2
+
+[node name="UpgradeLabel" type="Label" parent="VBoxContainer/Player/VBoxContainer/Jump"]
+margin_left = 616.0
+margin_top = 3.0
+margin_right = 941.0
+margin_bottom = 154.0
+text = "Jump"
+
+[node name="JumpLevel" type="Label" parent="VBoxContainer/Player/VBoxContainer/Jump"]
+margin_left = 991.0
+margin_top = 3.0
+margin_right = 1399.0
+margin_bottom = 154.0
+text = "Level 0"
+
+[node name="JumpButton" type="Button" parent="VBoxContainer/Player/VBoxContainer/Jump"]
+margin_left = 1449.0
+margin_right = 2199.0
+margin_bottom = 157.0
+rect_min_size = Vector2( 750, 0 )
+text = "Upgrade"
+
+[node name="Cost" type="Label" parent="VBoxContainer/Player/VBoxContainer/Jump"]
+margin_left = 2249.0
+margin_top = 3.0
+margin_right = 2500.0
+margin_bottom = 154.0
+text = "$ 50"
+
+[node name="Other" type="Control" parent="VBoxContainer"]
+margin_left = 3000.0
+margin_top = 1500.0
+margin_right = 3000.0
+margin_bottom = 1500.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Other"]
+margin_right = 2522.0
+margin_bottom = 772.0
+rect_min_size = Vector2( 2500, 0 )
+custom_constants/separation = 50
+alignment = 1
+
+[node name="OtherLabel" type="Label" parent="VBoxContainer/Other/VBoxContainer"]
+margin_right = 2522.0
+margin_bottom = 151.0
+text = "Other"
+align = 1
+
+[node name="StartingAmmo" type="HBoxContainer" parent="VBoxContainer/Other/VBoxContainer"]
+margin_top = 201.0
+margin_right = 2522.0
+margin_bottom = 358.0
+custom_constants/separation = 50
+alignment = 2
+
+[node name="UpgradeLabel" type="Label" parent="VBoxContainer/Other/VBoxContainer/StartingAmmo"]
+margin_left = 274.0
+margin_top = 3.0
+margin_right = 963.0
+margin_bottom = 154.0
+text = "Start Ammo"
+
+[node name="StartAmmoLevel" type="Label" parent="VBoxContainer/Other/VBoxContainer/StartingAmmo"]
+margin_left = 1013.0
+margin_top = 3.0
+margin_right = 1421.0
+margin_bottom = 154.0
+text = "Level 0"
+
+[node name="StartAmmoButton" type="Button" parent="VBoxContainer/Other/VBoxContainer/StartingAmmo"]
+margin_left = 1471.0
+margin_right = 2221.0
+margin_bottom = 157.0
+rect_min_size = Vector2( 750, 0 )
+text = "Upgrade"
+
+[node name="Cost" type="Label" parent="VBoxContainer/Other/VBoxContainer/StartingAmmo"]
+margin_left = 2271.0
+margin_top = 3.0
+margin_right = 2522.0
+margin_bottom = 154.0
+text = "$ 50"
+
+[node name="XpMultiplier" type="HBoxContainer" parent="VBoxContainer/Other/VBoxContainer"]
+margin_top = 408.0
+margin_right = 2522.0
+margin_bottom = 565.0
+rect_min_size = Vector2( 1800, 0 )
+custom_constants/separation = 50
+alignment = 2
+
+[node name="UpgradeLabel" type="Label" parent="VBoxContainer/Other/VBoxContainer/XpMultiplier"]
+margin_left = 234.0
+margin_top = 3.0
+margin_right = 963.0
+margin_bottom = 154.0
+text = "Xp Multiplier"
+
+[node name="XpMultiplierLevel" type="Label" parent="VBoxContainer/Other/VBoxContainer/XpMultiplier"]
+margin_left = 1013.0
+margin_top = 3.0
+margin_right = 1421.0
+margin_bottom = 154.0
+text = "Level 0"
+
+[node name="XpMultiplierButton" type="Button" parent="VBoxContainer/Other/VBoxContainer/XpMultiplier"]
+margin_left = 1471.0
+margin_right = 2221.0
+margin_bottom = 157.0
+rect_min_size = Vector2( 750, 0 )
+text = "Upgrade"
+
+[node name="Cost" type="Label" parent="VBoxContainer/Other/VBoxContainer/XpMultiplier"]
+margin_left = 2271.0
+margin_top = 3.0
+margin_right = 2522.0
+margin_bottom = 154.0
+text = "$ 50"
+
+[node name="MoneyMultiplier" type="HBoxContainer" parent="VBoxContainer/Other/VBoxContainer"]
+margin_top = 615.0
+margin_right = 2522.0
+margin_bottom = 772.0
+rect_min_size = Vector2( 1800, 0 )
+custom_constants/separation = 50
+alignment = 2
+
+[node name="UpgradeLabel" type="Label" parent="VBoxContainer/Other/VBoxContainer/MoneyMultiplier"]
+margin_top = 3.0
+margin_right = 963.0
+margin_bottom = 154.0
+text = "Money Multiplier"
+
+[node name="MoneyMultiplierLevel" type="Label" parent="VBoxContainer/Other/VBoxContainer/MoneyMultiplier"]
+margin_left = 1013.0
+margin_top = 3.0
+margin_right = 1421.0
+margin_bottom = 154.0
+text = "Level 0"
+
+[node name="MoneyMultiplierButton" type="Button" parent="VBoxContainer/Other/VBoxContainer/MoneyMultiplier"]
+margin_left = 1471.0
+margin_right = 2221.0
+margin_bottom = 157.0
+rect_min_size = Vector2( 750, 0 )
+text = "Upgrade"
+
+[node name="Cost" type="Label" parent="VBoxContainer/Other/VBoxContainer/MoneyMultiplier"]
+margin_left = 2271.0
+margin_top = 3.0
+margin_right = 2522.0
+margin_bottom = 154.0
+text = "$ 50"
+
+[connection signal="pressed" from="Background/Exitbutton" to="." method="_on_Exitbutton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Pistol/VBoxContainer/PistolDamage/PistolDamageButton" to="." method="_on_PistolDamageButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Pistol/VBoxContainer/PistolAmmo/PistolAmmoButton" to="." method="_on_PistolAmmoButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Smg/VBoxContainer/SmgDamage/SmgDamageButton" to="." method="_on_SmgDamageButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Smg/VBoxContainer/SmgAmmo/SmgAmmoButton" to="." method="_on_SmgAmmoButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Assault/VBoxContainer/AssaultDamage/AssaultDamageButton" to="." method="_on_AssaultDamageButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Assault/VBoxContainer/AssaultAmmo/AssaultAmmoButton" to="." method="_on_AssaultAmmoButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Sniper/VBoxContainer/SniperDamage/SniperDamageButton" to="." method="_on_SniperDamageButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Sniper/VBoxContainer/SniperAmmo/SniperAmmoButton" to="." method="_on_SniperAmmoButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Player/VBoxContainer/PlayerHealth/PlayerHealthButton" to="." method="_on_PlayerHealthButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Player/VBoxContainer/MovementSpeed/MovementSpeedButton" to="." method="_on_MovementSpeedButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Player/VBoxContainer/SlideSpeed/SlideSpeedButton" to="." method="_on_SlideSpeedButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Player/VBoxContainer/Jump/JumpButton" to="." method="_on_JumpButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Other/VBoxContainer/StartingAmmo/StartAmmoButton" to="." method="_on_StartAmmoButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Other/VBoxContainer/XpMultiplier/XpMultiplierButton" to="." method="_on_XpMultiplierButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Other/VBoxContainer/MoneyMultiplier/MoneyMultiplierButton" to="." method="_on_MoneyMultiplierButton_pressed"]

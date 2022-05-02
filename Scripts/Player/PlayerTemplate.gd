@@ -1,17 +1,17 @@
 extends KinematicBody
 
 #MOVEMENT
-export var walk_speed = 15
+onready var walk_speed = GlobalGameHandler.player_walk_speed
 export var sprint_speed = 25
 export var crouch_speed = 5
-export var slide_movement_speed = 40
-var slide_speed = slide_movement_speed
+onready var slide_movement_speed = GlobalGameHandler.player_slide_speed
+onready var slide_speed = slide_movement_speed
 var speed
 
 export var crouching_speed = 20
-export var slide_treshhold = 16
+export var slide_treshhold = 15
 
-export var sliding_speed = 40
+onready var sliding_speed = 40
 
 export var normal_height = 1.5
 export var crouch_height = 0
@@ -22,7 +22,7 @@ var h_acceleration = 6
 var air_acceleration = 1
 var normal_acceleration = 6
 export var gravity = 20
-export var jump = 12
+onready var jump = GlobalGameHandler.player_jump
 var full_contact = false
 
 export var mouse_sensitivity = 0.05
@@ -48,9 +48,9 @@ onready var raycast_knee = $CollisionShape/Knee
 export var default_weapon_position : Vector3
 export var ads_weapon_position : Vector3
 const ADS_LERP = 20
-var vertical_recoil = GlobalGameHandler.currently_holding.vertical_recoil
+onready var vertical_recoil = GlobalGameHandler.currently_holding.vertical_recoil
 var vertical_heatmap =0
-var horizontal_recoil = GlobalGameHandler.currently_holding.horizontal_recoil
+onready var horizontal_recoil = GlobalGameHandler.currently_holding.horizontal_recoil
 var horizontal_heatmap = 0
 
 onready var weap_anim_player = $WeaponAnimations
@@ -69,12 +69,12 @@ onready var interaction_raycast = $Head/Camera/Interaction
 var is_interacting = false
 var ads_fov = 50
 
-
 #HEALTH
-export var health = 120
+onready var health = GlobalGameHandler.player_health
 
 
 func _ready():
+	get_tree().call_group("HealthBar", "set_max_health")
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	speed = walk_speed
 	show_right_weapon()
@@ -285,7 +285,7 @@ func move_player(delta):
 	
 	
 	if raycast_foot.is_colliding() and not is_on_floor() and not raycast_knee.is_colliding() and not raycast_foot.get_collider().name == "Walls":
-		movement.y = 12
+		movement.y = 15
 	else:
 		movement.y = gravity_vec.y
 	

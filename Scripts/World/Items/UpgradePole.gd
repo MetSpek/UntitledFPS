@@ -14,4 +14,4 @@ func hide():
 	button.material.emission_energy = 0
 
 func interact():
-	print("boe")
+	get_tree().call_group("Upgrades", "show")

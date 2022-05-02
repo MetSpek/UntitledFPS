@@ -335,7 +335,6 @@ radius = 0.01
 [node name="PlayerTemplate" type="KinematicBody"]
 collision_layer = 2
 script = ExtResource( 1 )
-walk_speed = 30
 default_weapon_position = Vector3( 0.35, -0.3, -0.8 )
 ads_weapon_position = Vector3( 0, -0.145, -0.35 )
 
@@ -361,7 +360,7 @@ shape = SubResource( 3 )
 [node name="Foot" type="RayCast" parent="Foot"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.227631, 0 )
 enabled = true
-cast_to = Vector3( 0, 0, -2 )
+cast_to = Vector3( 0, 0, -1.5 )
 
 [node name="Head" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
