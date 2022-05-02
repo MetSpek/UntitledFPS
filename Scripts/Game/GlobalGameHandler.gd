@@ -56,11 +56,14 @@ var currently_holding_index = 0
 var currently_holding = weapons[currently_holding_index]
 
 #LEVEL
-var level = 1
+var level = 0
 var scaling_a = 1
 var scaling_b = 1.1
 var start_height = -.5
 var difficulty = 0
+
+
+var levels = ["res://Scenes/Worlds/MainMenu.tscn"]
 
 
 #PLAYER
@@ -170,4 +173,7 @@ func level_up_player():
 	else:
 		PlayerData.money += money_awarded[PlayerData.level - 1]
 	
-		
+func select_next_level():
+	get_tree().change_scene(levels[rand_range(0, levels.size() - 1)])
+	level += 1
+	get_tree().call_group("LevelHud", "update_label")
