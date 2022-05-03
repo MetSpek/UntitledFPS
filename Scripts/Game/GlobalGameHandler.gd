@@ -54,6 +54,10 @@ var weapons = [assault, smg, sniper, pistol]
 
 var currently_holding_index = 0
 var currently_holding = weapons[currently_holding_index]
+var current_pistol_clip
+var current_smg_clip
+var current_assault_clip
+var current_sniper_clip
 
 #LEVEL
 var level = 0
@@ -61,7 +65,6 @@ var scaling_a = 1
 var scaling_b = 1.1
 var start_height = -.5
 var difficulty = 0
-
 
 var levels = ["res://Scenes/Worlds/MainMenu.tscn"]
 
@@ -98,11 +101,16 @@ var xp_multiplier_values = [1,1.2,1.4,1.6,1.8,2,2.2,2.4,2.6,2.8,3]
 var money_multiplier_values = [1,1.2,1.4,1.6,1.8,2,2.2,2.4,2.6,2.8,3]
 
 func _ready():
+	current_pistol_clip = pistol_ammo_values[PlayerData.pistol_ammo_level]
+	current_smg_clip = smg_ammo_values[PlayerData.smg_ammo_level]
+	current_assault_clip = assault_ammo_values[PlayerData.assault_ammo_level]
+	current_sniper_clip = sniper_ammo_values[PlayerData.sniper_ammo_level]
 	set_weapon_variables()
 	set_difficulty()
 	set_weapon_values()
 	set_player_values()
 	current_bullets = player_starting_ammo
+	
 
 func _physics_process(delta):
 	if Input.is_action_just_pressed("close_game"):
@@ -134,15 +142,37 @@ func set_player_values():
 	player_money_multiplier = money_multiplier_values[PlayerData.money_multiplier_level]
 
 func switch_weapon():
+	store_ammo_values(currently_holding)
 	currently_holding = weapons[currently_holding_index]
 	set_weapon_variables()
 
+func store_ammo_values(current):
+	match current:
+		assault:
+			current_assault_clip = clip_size_current
+		smg:
+			current_smg_clip = clip_size_current
+		sniper:
+			current_sniper_clip = clip_size_current
+		pistol:
+			current_pistol_clip = clip_size_current
+
 func set_weapon_variables():
 	clip_size_max = currently_holding.clip_size
-	clip_size_current = clip_size_max
+	match currently_holding:
+		assault:
+			clip_size_current = current_assault_clip
+		smg:
+			clip_size_current = current_smg_clip
+		sniper:
+			clip_size_current = current_sniper_clip
+		pistol:
+			clip_size_current = current_pistol_clip
+	
 	weapon_damage = currently_holding.damage
 	weapon_fire_animation = currently_holding.fire_animation
 	weapon_reload_animation = currently_holding.reload_animation
+	
 
 func enemy_killed(money, xp):
 	check_level_up(xp)

@@ -16,6 +16,8 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
+[node name="Level" parent="." instance=ExtResource( 7 )]
+
 [node name="HealthBar" parent="." instance=ExtResource( 4 )]
 
 [node name="BulletCount" parent="." instance=ExtResource( 2 )]
@@ -27,5 +29,3 @@ visible = false
 
 [node name="Upgrades" parent="." instance=ExtResource( 6 )]
 visible = false
-
-[node name="Level" parent="." instance=ExtResource( 7 )]
