@@ -7,6 +7,7 @@ export var crouch_speed = 5
 onready var slide_movement_speed = GlobalGameHandler.player_slide_speed
 onready var slide_speed = slide_movement_speed
 var speed
+var is_player_on_floor
 
 export var crouching_speed = 20
 export var slide_treshhold = 15
@@ -94,6 +95,10 @@ func _physics_process(delta):
 	fire()
 	check_ads(delta)
 	check_interaction()
+	if is_on_floor():
+		is_player_on_floor = true
+	else:
+		is_player_on_floor = false
 
 func check_ads(delta):
 	if Input.is_action_pressed("fire_weapon_2") and !reload_timer.time_left > 0:

@@ -66,7 +66,7 @@ var scaling_b = 1.1
 var start_height = -.5
 var difficulty = 0
 
-var levels = ["res://Scenes/Worlds/MainMenu.tscn"]
+var levels = ["res://Scenes/Worlds/Levels/LevelFloatingislands.tscn"]
 
 
 #PLAYER

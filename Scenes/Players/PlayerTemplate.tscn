@@ -367,7 +367,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
 
 [node name="Camera" type="Camera" parent="Head"]
 current = true
-far = 200.0
+far = 1000.0
 
 [node name="RayCast" type="RayCast" parent="Head/Camera"]
 enabled = true

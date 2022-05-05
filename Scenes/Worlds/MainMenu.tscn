@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Scenes/Worlds/WorldTemplate.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Players/PlayerTemplate.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Resources/Materials/Prototype/RedMaterial.tres" type="Material" id=7]
 [ext_resource path="res://Scripts/World/Items/UpgradePole.gd" type="Script" id=8]
 [ext_resource path="res://Scripts/World/Items/BeginTeleporter.gd" type="Script" id=9]
+[ext_resource path="res://Scenes/Enemies/EnemySpawn.tscn" type="PackedScene" id=10]
 
 [sub_resource type="BoxShape" id=11]
 extents = Vector3( 0.5, 0.5, 0.5 )
@@ -496,6 +497,10 @@ visible = false
 [node name="EnemyAnimation" parent="Enemies/EnemyTemplate5" index="7"]
 anims/LaserShoot = SubResource( 7 )
 anims/RESET = SubResource( 8 )
+
+[node name="EnemySpawn" parent="Enemies" index="5" instance=ExtResource( 10 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -38.5, 2, 0 )
+enemy_count = 5
 
 [connection signal="body_entered" from="Enviroment/Items/BeginTeleporter/Area" to="Enviroment/Items/BeginTeleporter" method="_on_Area_body_entered"]
 
