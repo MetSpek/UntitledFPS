@@ -18,6 +18,7 @@ config/icon="res://icon.png"
 
 GlobalGameHandler="*res://Scripts/Game/GlobalGameHandler.gd"
 PlayerData="*res://Scripts/Player/PlayerData.gd"
+DamageNumber="*res://Scripts/UI/DamageNumber.gd"
 
 [display]
 

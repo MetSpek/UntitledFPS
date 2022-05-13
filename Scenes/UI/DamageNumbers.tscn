@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Resources/Themes/main_theme.tres" type="Theme" id=3]
+
+[sub_resource type="ViewportTexture" id=3]
+viewport_path = NodePath("Viewport")
+
+[sub_resource type="GDScript" id=2]
+script/source = "tool
+extends Viewport
+
+var rand_amount = 0.02
+var rand_x
+var rand_z
+
+func _ready():
+	rand_x = rand_range(-rand_amount, rand_amount)
+	rand_z = rand_range(-rand_amount, rand_amount)
+	set_label_size()
+
+func set_label_size():
+	size = $Label.rect_size
+
+func _process(delta):
+	get_parent().transform.origin.y += 0.02
+	get_parent().transform.origin.x += rand_x
+	get_parent().transform.origin.z += rand_z
+
+
+func _on_Timer_timeout():
+	get_parent().queue_free()
+"
+
+[node name="DamageNumbers" type="Sprite3D"]
+billboard = 1
+texture = SubResource( 3 )
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 36, 75 )
+transparent_bg = true
+render_target_v_flip = true
+script = SubResource( 2 )
+
+[node name="Label" type="Label" parent="Viewport"]
+modulate = Color( 1, 0.262745, 0.262745, 1 )
+margin_right = 40.0
+margin_bottom = 14.0
+rect_scale = Vector2( 0.5, 0.5 )
+theme = ExtResource( 3 )
+text = "5"
+align = 1
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="Viewport" method="_on_Timer_timeout"]

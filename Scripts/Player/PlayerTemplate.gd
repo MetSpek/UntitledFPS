@@ -173,6 +173,7 @@ func fire():
 					elif target.is_in_group("Enemy"):
 						if !target.is_dead:
 							target.health -= GlobalGameHandler.currently_holding.damage
+							DamageNumber.damage_number(GlobalGameHandler.currently_holding.damage, target.global_transform.origin, target)
 							hitmark.visible = true
 							hitmark_sound.play()
 							hitmark_timer.start()
