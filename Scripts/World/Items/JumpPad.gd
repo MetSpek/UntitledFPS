@@ -1,5 +1,10 @@
 extends Spatial
 
+enum {
+	NORMAL,
+	GLIDING
+}
+
 var player
 var velocity
 var standard_velocity
@@ -34,9 +39,8 @@ func _physics_process(delta):
 			elif move_z < 0:
 				move_z += slowdown
 		
-		print("x: " + str(move_x) + "  y: " + str(move_y) + "  z: " + str(move_z))
-		
 		if move_x == 0 and move_y == 0 and move_z == 0:
+			player.player_state = NORMAL
 			player = null
 			reset_values()
 
@@ -44,7 +48,11 @@ func reset_values():
 	move_x = standard_velocity.x
 	move_y = standard_velocity.y
 	move_z = standard_velocity.z
+	
 
 func _on_Area_body_entered(body):
 	if body.name == "PlayerTemplate" and !moved_child:
 		player = body
+		player.movement = Vector3(0,0,0)
+		print(player.movement)
+		player.player_state = GLIDING

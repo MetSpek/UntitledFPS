@@ -1,5 +1,12 @@
 extends KinematicBody
 
+enum {
+	NORMAL,
+	GLIDING
+}
+
+var player_state = NORMAL
+
 #MOVEMENT
 onready var walk_speed = GlobalGameHandler.player_walk_speed
 export var sprint_speed = 25
@@ -240,14 +247,15 @@ func move_player(delta):
 	if head_bonked:
 		gravity_vec.y = -2
 	
-	if Input.is_action_pressed("move_forward"):
-		direction -= transform.basis.z
-	elif Input.is_action_pressed("move_backward"):
-		direction += transform.basis.z
-	if Input.is_action_pressed("move_left"):
-		direction -= transform.basis.x
-	elif Input.is_action_pressed("move_right"):
-		direction += transform.basis.x
+	if player_state == NORMAL:
+		if Input.is_action_pressed("move_forward"):
+			direction -= transform.basis.z
+		elif Input.is_action_pressed("move_backward"):
+			direction += transform.basis.z
+		if Input.is_action_pressed("move_left"):
+			direction -= transform.basis.x
+		elif Input.is_action_pressed("move_right"):
+			direction += transform.basis.x
 	
 	if Input.is_action_just_pressed("sprint") and !Input.is_action_pressed("crouch"):
 		tween.interpolate_property(camera, "fov", normal_fov, sprint_fov, .1,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
