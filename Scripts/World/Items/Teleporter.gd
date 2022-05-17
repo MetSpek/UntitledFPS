@@ -10,4 +10,4 @@ func level_finished():
 
 func _on_Area_body_entered(body):
 	if can_teleport:
-		get_tree().reload_current_scene()
+		GlobalGameHandler.select_next_level()

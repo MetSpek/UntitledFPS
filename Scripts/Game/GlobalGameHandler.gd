@@ -58,6 +58,7 @@ var current_pistol_clip
 var current_smg_clip
 var current_assault_clip
 var current_sniper_clip
+var to_reload_ammo
 
 #LEVEL
 var level = 0
@@ -65,6 +66,7 @@ var scaling_a = 1
 var scaling_b = 1.1
 var start_height = -.5
 var difficulty = 0
+var enemies_left = 0
 
 var levels = ["res://Scenes/Worlds/Levels/LevelFloatingislands.tscn"]
 
@@ -117,6 +119,7 @@ func _physics_process(delta):
 		get_tree().quit()
 	elif Input.is_action_pressed("reload_scene"):
 		get_tree().reload_current_scene()
+		select_next_level()
 
 func set_difficulty():
 	difficulty = scaling_a*(pow(scaling_b, level) + start_height)
@@ -206,4 +209,5 @@ func level_up_player():
 func select_next_level():
 	get_tree().change_scene(levels[rand_range(0, levels.size() - 1)])
 	level += 1
+	set_difficulty()
 	get_tree().call_group("LevelHud", "update_label")

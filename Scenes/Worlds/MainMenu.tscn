@@ -413,7 +413,7 @@ anims/LaserShoot = SubResource( 17 )
 anims/RESET = SubResource( 18 )
 
 [node name="DamageNumbers" parent="." index="4" instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1173.09, 4909.31, 2475.42 )
 texture = SubResource( 12 )
 
 [connection signal="body_entered" from="Enviroment/Items/BeginTeleporter/Area" to="Enviroment/Items/BeginTeleporter" method="_on_Area_body_entered"]

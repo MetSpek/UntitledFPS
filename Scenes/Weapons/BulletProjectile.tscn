@@ -30,6 +30,7 @@ material/0 = null
 shape = SubResource( 3 )
 
 [node name="LifeTime" type="Timer" parent="."]
+wait_time = 5.0
 one_shot = true
 
 [node name="Area" type="Area" parent="."]

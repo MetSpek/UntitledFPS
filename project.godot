@@ -113,6 +113,7 @@ close_game={
 3d_physics/layer_5="Projectile"
 3d_physics/layer_6="PlayerFocus"
 3d_physics/layer_7="Interaction"
+3d_physics/layer_10="Crates"
 
 [physics]
 

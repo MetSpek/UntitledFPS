@@ -67,7 +67,7 @@ onready var reload_timer = $WeaponReloadTimer
 onready var raycast = $Head/Camera/RayCast
 onready var hand = $Head/Camera/Hand
 onready var bullet_hole = preload("res://Scenes/Weapons/BulletHole.tscn")
-export var bullet_hole_list = ["Walls", "Boxes"]
+export var bullet_hole_list = ["Walls", "Boxes", "Trees", "Rocks"]
 
 onready var hitmark = $Head/Camera/Hitmark
 onready var hitmark_sound = $HitmarkSound
@@ -172,6 +172,8 @@ func fire():
 						bullet_hole_instance.look_at(raycast.get_collision_point() + raycast.get_collision_normal(), Vector3.UP)
 					elif target.is_in_group("Enemy"):
 						if !target.is_dead:
+							if target.has_method("aggrevate"):
+								target.aggrevate()
 							target.health -= GlobalGameHandler.currently_holding.damage
 							DamageNumber.damage_number(GlobalGameHandler.currently_holding.damage, target.global_transform.origin, target)
 							hitmark.visible = true
@@ -206,17 +208,23 @@ func reload():
 	vertical_heatmap = 0
 	raycast.rotation_degrees.y = 0
 	if GlobalGameHandler.current_bullets > 0:
-		if GlobalGameHandler.clip_size_current > 0:
+		if GlobalGameHandler.current_bullets < GlobalGameHandler.clip_size_max:
+			GlobalGameHandler.to_reload_ammo = GlobalGameHandler.current_bullets
+			GlobalGameHandler.current_bullets = 0
+			
+		elif GlobalGameHandler.clip_size_current > 0:
+			GlobalGameHandler.to_reload_ammo = GlobalGameHandler.clip_size_max
 			GlobalGameHandler.current_bullets = GlobalGameHandler.current_bullets - (GlobalGameHandler.clip_size_max - GlobalGameHandler.clip_size_current)
 		else:
 			GlobalGameHandler.current_bullets -= GlobalGameHandler.clip_size_max
+			GlobalGameHandler.to_reload_ammo = GlobalGameHandler.clip_size_max
 		get_tree().call_group("HUD", "fired")
 		get_tree().call_group("HUD", "reloaded")
 		weap_anim_player.play(GlobalGameHandler.weapon_reload_animation)
 		reload_timer.start()
 
 func _on_ReloadTimer_timeout():
-	GlobalGameHandler.clip_size_current = GlobalGameHandler.clip_size_max
+	GlobalGameHandler.clip_size_current = GlobalGameHandler.to_reload_ammo
 	get_tree().call_group("HUD", "fired")
 
 func move_player(delta):
