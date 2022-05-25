@@ -283,6 +283,8 @@ func _on_JumpButton_pressed():
 
 func _on_StartAmmoButton_pressed():
 	purchase_upgrade("other_ammo", prices[11].value[PlayerData.starting_ammo_level])
+	GlobalGameHandler.current_bullets = GlobalGameHandler.starting_ammo_values[PlayerData.starting_ammo_level]
+	get_tree().call_group("HUD", "reloaded")
 
 func _on_XpMultiplierButton_pressed():
 	purchase_upgrade("other_xp", prices[12].value[PlayerData.xp_multiplier_level])

@@ -68,7 +68,8 @@ var start_height = -.5
 var difficulty = 0
 var enemies_left = 0
 
-var levels = ["res://Scenes/Worlds/Levels/LevelFloatingislands.tscn"]
+
+onready var levels = ["res://Scenes/Worlds/Levels/FloatingIsland/LevelFloatingislands.tscn"]
 
 
 #PLAYER
@@ -207,7 +208,10 @@ func level_up_player():
 		PlayerData.money += money_awarded[PlayerData.level - 1]
 	
 func select_next_level():
-	get_tree().change_scene(levels[rand_range(0, levels.size() - 1)])
+	var new_scene = levels[rand_range(0, levels.size() - 1)]
+	get_tree().change_scene(new_scene)
 	level += 1
 	set_difficulty()
 	get_tree().call_group("LevelHud", "update_label")
+	
+	

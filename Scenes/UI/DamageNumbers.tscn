@@ -32,11 +32,12 @@ func _on_Timer_timeout():
 "
 
 [node name="DamageNumbers" type="Sprite3D"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -39.8213, 215.489, -80.3392 )
 billboard = 1
 texture = SubResource( 3 )
 
 [node name="Viewport" type="Viewport" parent="."]
-size = Vector2( 36, 75 )
+size = Vector2( 73, 151 )
 transparent_bg = true
 render_target_v_flip = true
 script = SubResource( 2 )

@@ -22,13 +22,32 @@ __meta__ = {
 [node name="HealthBar" parent="." instance=ExtResource( 4 )]
 
 [node name="BulletCount" parent="." instance=ExtResource( 2 )]
+anchor_left = 1.0
+anchor_top = 1.0
+margin_left = -1280.0
+margin_top = -720.0
 
 [node name="PlayerData" parent="." instance=ExtResource( 3 )]
+visible = false
+anchor_left = 1.0
+anchor_bottom = 0.0
+margin_left = -1280.0
+margin_bottom = 720.0
 
 [node name="Interacting" parent="." instance=ExtResource( 5 )]
+
+[node name="EnemiesLeft" parent="." instance=ExtResource( 8 )]
 visible = false
 
 [node name="Upgrades" parent="." instance=ExtResource( 6 )]
 visible = false
 
-[node name="EnemiesLeft" parent="." instance=ExtResource( 8 )]
+[node name="Version" type="Label" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -208.0
+margin_top = 16.0
+margin_right = 737.0
+margin_bottom = 167.0
+rect_scale = Vector2( 0.2, 0.2 )
+text = "Version 0.0.1.19"

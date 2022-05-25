@@ -110,11 +110,9 @@ func _physics_process(delta):
 func check_ads(delta):
 	if Input.is_action_pressed("fire_weapon_2") and !reload_timer.time_left > 0:
 		ads_zoom(delta, ads_weapon_position, normal_fov, ads_fov)
-		crosshair.visible = false
 		
 	else:
 		ads_zoom(delta, default_weapon_position, ads_fov, normal_fov)
-		crosshair.visible = true
 
 func check_interaction():
 	if interaction_raycast.is_colliding():

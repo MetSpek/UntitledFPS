@@ -3,10 +3,10 @@ extends Control
 onready var label = $InteractingLabel
 
 func show_text():
-	label.show()
+	label.visible = true
 
 func hide_text():
-	label.hide()
+	label.visible = false
 	
 
 func set_text(interaction):
