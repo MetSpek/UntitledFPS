@@ -16,24 +16,24 @@ export (float, 0, 1, 0.05) var caution_zone = 0.6
 export (float, 0, 1, 0.05) var danger_zone = 0.3
 
 func _ready():
-	player = get_node("/root").find_node("PlayerTemplate", true, false)
+	player = get_node("/root").find_node("Player", true, false)
 
 func set_max_health():
-	health_over.max_value = player.health
-	health_under.max_value = player.health
-	health_over.value = player.health
-	health_under.value = player.health
-	health_current.text = str(player.health)
-	health_max.text = "/" + str(player.health)
-	assign_color(player.health)
+	health_over.max_value = GlobalGameHandler.player_max_health
+	health_under.max_value = GlobalGameHandler.player_max_health
+	health_over.value = GlobalGameHandler.player_health
+	health_under.value = GlobalGameHandler.player_health
+	health_current.text = str(GlobalGameHandler.player_health)
+	health_max.text = "/" + str(GlobalGameHandler.player_max_health)
+	assign_color(GlobalGameHandler.player_health)
 
 
 func set_health():
-	health_over.value = player.health
-	health_current.text = str(stepify(player.health, 1))
-	update_tween.interpolate_property(health_under, "value", player.health, player.health, 1, Tween.TRANS_SINE, Tween.EASE_IN_OUT, .4)
+	health_over.value = GlobalGameHandler.player_health
+	health_current.text = str(stepify(GlobalGameHandler.player_health, 1))
+	update_tween.interpolate_property(health_under, "value", GlobalGameHandler.player_health, GlobalGameHandler.player_health, 1, Tween.TRANS_SINE, Tween.EASE_IN_OUT, .4)
 	update_tween.start()
-	assign_color(player.health)
+	assign_color(GlobalGameHandler.player_health)
 
 func assign_color(health):
 	if health < health_over.max_value * danger_zone:

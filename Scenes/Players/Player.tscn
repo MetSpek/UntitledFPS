@@ -1,32 +1,26 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=32 format=2]
 
-[ext_resource path="res://Scripts/Player/PlayerTemplate.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Player/PlayerController.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Textures/UITextures/Crosshair.png" type="Texture" id=2]
-[ext_resource path="res://Scenes/UI/HUD.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Resources/Textures/UITextures/Hitmark.png" type="Texture" id=4]
-[ext_resource path="res://Resources/Sounds/Guns/Misc/Hitmark.wav" type="AudioStream" id=5]
-[ext_resource path="res://Scripts/Player/Hand.gd" type="Script" id=6]
-[ext_resource path="res://Resources/Sounds/Guns/Misc/Kill.wav" type="AudioStream" id=7]
-[ext_resource path="res://Scripts/Player/KillSound.gd" type="Script" id=8]
-[ext_resource path="res://Resources/Materials/Weapons/Shotgun/ShotgunGray.tres" type="Material" id=9]
-[ext_resource path="res://Resources/Materials/Weapons/Shotgun/ShotgunBrown.tres" type="Material" id=10]
-[ext_resource path="res://Resources/Materials/Weapons/Shotgun/ShotgunBlack.tres" type="Material" id=11]
-[ext_resource path="res://Resources/Materials/Weapons/Shotgun/ShotgunDarkGray.tres" type="Material" id=12]
-[ext_resource path="res://Resources/Models/Guns/ShotGunNew.obj" type="ArrayMesh" id=13]
-[ext_resource path="res://Resources/Models/Guns/Smg.obj" type="ArrayMesh" id=14]
-[ext_resource path="res://Resources/Materials/Weapons/LowPolyGunMaterial.tres" type="Material" id=15]
-[ext_resource path="res://Resources/Models/Guns/Smg Clip.obj" type="ArrayMesh" id=16]
+[ext_resource path="res://Resources/Textures/UITextures/Hitmark.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/Player/Hand.gd" type="Script" id=4]
+[ext_resource path="res://Resources/Materials/Weapons/Shotgun/ShotgunGray.tres" type="Material" id=5]
+[ext_resource path="res://Resources/Materials/Weapons/Shotgun/ShotgunBrown.tres" type="Material" id=6]
+[ext_resource path="res://Resources/Materials/Weapons/Shotgun/ShotgunBlack.tres" type="Material" id=7]
+[ext_resource path="res://Resources/Materials/Weapons/LowPolyGunMaterial.tres" type="Material" id=8]
+[ext_resource path="res://Resources/Materials/Weapons/Shotgun/ShotgunDarkGray.tres" type="Material" id=9]
+[ext_resource path="res://Resources/Models/Guns/ShotGunNew.obj" type="ArrayMesh" id=10]
+[ext_resource path="res://Resources/Models/Guns/Smg.obj" type="ArrayMesh" id=11]
+[ext_resource path="res://Resources/Models/Guns/Smg Clip.obj" type="ArrayMesh" id=12]
+[ext_resource path="res://Scenes/UI/HUD.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scripts/Player/KillSound.gd" type="Script" id=14]
+[ext_resource path="res://Resources/Sounds/Guns/Misc/Kill.wav" type="AudioStream" id=15]
+[ext_resource path="res://Resources/Sounds/Guns/Misc/Hitmark.wav" type="AudioStream" id=16]
 
-[sub_resource type="CapsuleMesh" id=1]
-mid_height = 3.0
-
-[sub_resource type="CapsuleShape" id=2]
+[sub_resource type="CapsuleShape" id=1]
 height = 3.0
 
-[sub_resource type="CylinderShape" id=3]
-height = 0.5
-
-[sub_resource type="SpatialMaterial" id=22]
+[sub_resource type="SpatialMaterial" id=2]
 flags_transparent = true
 albedo_color = Color( 1, 0, 0, 0.392157 )
 emission_enabled = true
@@ -35,19 +29,19 @@ emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="CubeMesh" id=17]
+[sub_resource type="CubeMesh" id=3]
 size = Vector3( 0.1, 0.15, 0.5 )
 
-[sub_resource type="SpatialMaterial" id=18]
+[sub_resource type="SpatialMaterial" id=4]
 albedo_color = Color( 0.235294, 0.235294, 0.235294, 1 )
 
-[sub_resource type="CubeMesh" id=13]
+[sub_resource type="CubeMesh" id=5]
 size = Vector3( 0.1, 0.15, 1.5 )
 
-[sub_resource type="SpatialMaterial" id=14]
+[sub_resource type="SpatialMaterial" id=6]
 albedo_color = Color( 0.0901961, 0.101961, 0.85098, 1 )
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=7]
 resource_name = "AssaultFire"
 length = 0.08
 step = 0.01
@@ -64,7 +58,7 @@ tracks/0/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0.01, 0.1 ), Vector3( 0, 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=8]
 resource_name = "AssaultReload"
 length = 0.8
 tracks/0/type = "value"
@@ -92,7 +86,7 @@ tracks/1/keys = {
 "values": [ Vector3( 0, -0.2, 0.15 ), Vector3( 0, -0.5, -0.05 ), Vector3( 0, -0.5, -0.05 ), Vector3( 0, -0.2, 0.15 ) ]
 }
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=9]
 resource_name = "PistolFire"
 length = 0.4
 step = 0.02
@@ -109,7 +103,7 @@ tracks/0/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0.01, 0.1 ), Vector3( 0, 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=10]
 resource_name = "PistolReload"
 length = 0.8
 tracks/0/type = "value"
@@ -125,7 +119,7 @@ tracks/0/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( 360, 0, 0 ), Vector3( 720, 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=11]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath("Head/Camera/Hand/Shotgun:translation")
@@ -248,7 +242,7 @@ tracks/9/keys = {
 "values": [ Vector3( 0, 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=12]
 resource_name = "ShotgunFire"
 length = 0.3
 step = 0.01
@@ -265,7 +259,7 @@ tracks/0/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 0.05 ), Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=13]
 resource_name = "ShotgunReload"
 length = 0.8
 tracks/0/type = "value"
@@ -281,7 +275,7 @@ tracks/0/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( 180, 0, 0 ), Vector3( 360, 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=14]
 resource_name = "SmgFire"
 length = 0.04
 step = 0.01
@@ -298,7 +292,7 @@ tracks/0/keys = {
 "values": [ Vector3( 0.2, -0.1, 0.1 ), Vector3( 0.2, -0.1, 0.14 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=15]
 resource_name = "SmgReload"
 length = 0.8
 tracks/0/type = "value"
@@ -326,59 +320,31 @@ tracks/1/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( 0, -0.5, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ) ]
 }
 
-[sub_resource type="SphereShape" id=21]
-radius = 0.01
-
-[node name="PlayerTemplate" type="KinematicBody"]
+[node name="Player" type="KinematicBody"]
 collision_layer = 2
 script = ExtResource( 1 )
 default_weapon_position = Vector3( 0.1, -0.2, -0.85 )
 ads_weapon_position = Vector3( 0, -0.1, -0.8 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-visible = false
-mesh = SubResource( 1 )
-material/0 = null
-
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
-[node name="Knee" type="RayCast" parent="CollisionShape"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.28735e-09, 0.0523283 )
-enabled = true
-cast_to = Vector3( 0, -2, 0 )
-
-[node name="Foot" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.23908, 0 )
-shape = SubResource( 3 )
-
-[node name="Foot" type="RayCast" parent="Foot"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.227631, 0 )
-enabled = true
-cast_to = Vector3( 0, 0, -1.5 )
-
-[node name="Head" type="Spatial" parent="."]
+[node name="YawAxis" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
 
-[node name="Camera" type="Camera" parent="Head"]
+[node name="Camera" type="Camera" parent="YawAxis"]
 current = true
 far = 1000.0
 
-[node name="RayCast" type="RayCast" parent="Head/Camera"]
-enabled = true
-cast_to = Vector3( 0, 0, -200 )
-collision_mask = 13
-collide_with_areas = true
+[node name="UI" type="Control" parent="YawAxis/Camera"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
-[node name="Interaction" type="RayCast" parent="Head/Camera"]
-enabled = true
-cast_to = Vector3( 0, 0, -5 )
-collision_mask = 64
-collide_with_areas = true
-
-[node name="Crosshair" type="TextureRect" parent="Head/Camera"]
+[node name="Crosshair" type="TextureRect" parent="YawAxis/Camera/UI"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -389,7 +355,7 @@ margin_right = 20.0
 margin_bottom = 20.0
 texture = ExtResource( 2 )
 
-[node name="Hitmark" type="TextureRect" parent="Head/Camera"]
+[node name="Hitmark" type="TextureRect" parent="YawAxis/Camera/UI"]
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
@@ -399,103 +365,99 @@ margin_left = -20.0
 margin_top = -20.0
 margin_right = 20.0
 margin_bottom = 20.0
-texture = ExtResource( 4 )
+texture = ExtResource( 3 )
 
-[node name="HitmarkTimer" type="Timer" parent="Head/Camera/Hitmark"]
+[node name="HitmarkTimer" type="Timer" parent="YawAxis/Camera/UI/Hitmark"]
 wait_time = 0.1
 
-[node name="Hand" type="Spatial" parent="Head/Camera"]
-script = ExtResource( 6 )
+[node name="HUD" parent="YawAxis/Camera/UI" instance=ExtResource( 13 )]
+
+[node name="Hand" type="Spatial" parent="YawAxis/Camera"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.808674 )
+script = ExtResource( 4 )
 sway_left = Vector3( 0, -0.1, 0 )
 sway_right = Vector3( 0, 0.1, 0 )
 
-[node name="Shotgun" type="MeshInstance" parent="Head/Camera/Hand"]
+[node name="Shotgun" type="MeshInstance" parent="YawAxis/Camera/Hand"]
 transform = Transform( 0.12, 0, 0, 0, 0.12, 0, 0, 0, 0.12, 0, 0, 0 )
 visible = false
-mesh = ExtResource( 13 )
-material/0 = ExtResource( 9 )
-material/1 = ExtResource( 10 )
-material/2 = ExtResource( 11 )
-material/3 = ExtResource( 11 )
-material/4 = ExtResource( 11 )
-material/5 = ExtResource( 12 )
-material/6 = ExtResource( 12 )
-material/7 = ExtResource( 12 )
-material/8 = ExtResource( 9 )
-material/9 = ExtResource( 9 )
-material/10 = SubResource( 22 )
+mesh = ExtResource( 10 )
+material/0 = ExtResource( 5 )
+material/1 = ExtResource( 6 )
+material/2 = ExtResource( 7 )
+material/3 = ExtResource( 7 )
+material/4 = ExtResource( 7 )
+material/5 = ExtResource( 9 )
+material/6 = ExtResource( 9 )
+material/7 = ExtResource( 9 )
+material/8 = ExtResource( 5 )
+material/9 = ExtResource( 5 )
+material/10 = SubResource( 2 )
 
-[node name="Pistol" type="MeshInstance" parent="Head/Camera/Hand"]
+[node name="Pistol" type="MeshInstance" parent="YawAxis/Camera/Hand"]
 visible = false
-mesh = SubResource( 17 )
-material/0 = SubResource( 18 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
 
-[node name="Assault" type="MeshInstance" parent="Head/Camera/Hand"]
+[node name="Assault" type="MeshInstance" parent="YawAxis/Camera/Hand"]
 visible = false
-mesh = SubResource( 13 )
-material/0 = SubResource( 14 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
 
-[node name="Clip" type="MeshInstance" parent="Head/Camera/Hand/Assault"]
+[node name="Clip" type="MeshInstance" parent="YawAxis/Camera/Hand/Assault"]
 transform = Transform( 1, 0, 0, 0, 2.89778, -0.0258819, 0, 0.776457, 0.0965926, -0.00126702, -0.191548, 0.152911 )
-mesh = SubResource( 13 )
+mesh = SubResource( 5 )
 skeleton = NodePath("../..")
-material/0 = SubResource( 14 )
+material/0 = SubResource( 6 )
 
-[node name="Smg" type="MeshInstance" parent="Head/Camera/Hand"]
+[node name="Smg" type="MeshInstance" parent="YawAxis/Camera/Hand"]
 transform = Transform( 1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0.2, -0.1, 0.1 )
-mesh = ExtResource( 14 )
-material/0 = ExtResource( 15 )
+mesh = ExtResource( 11 )
+material/0 = ExtResource( 8 )
 
-[node name="Clip" type="MeshInstance" parent="Head/Camera/Hand/Smg"]
-mesh = ExtResource( 16 )
-material/0 = ExtResource( 15 )
+[node name="Clip" type="MeshInstance" parent="YawAxis/Camera/Hand/Smg"]
+mesh = ExtResource( 12 )
+material/0 = ExtResource( 8 )
 
-[node name="HUD" parent="Head/Camera" instance=ExtResource( 3 )]
-
-[node name="HeadCheck" type="RayCast" parent="Head"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0931909, 0 )
+[node name="Interaction" type="RayCast" parent="YawAxis/Camera"]
 enabled = true
-cast_to = Vector3( 0, 1, 0 )
+cast_to = Vector3( 0, 0, -5 )
+collision_mask = 64
+collide_with_areas = true
 
-[node name="GroundCheck" type="RayCast" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0 )
+[node name="Shooting" type="RayCast" parent="YawAxis/Camera"]
 enabled = true
-cast_to = Vector3( 0, -1.5, 0 )
+cast_to = Vector3( 0, 0, -200 )
+collision_mask = 13
+collide_with_areas = true
 
 [node name="Tween" type="Tween" parent="."]
 
-[node name="HitmarkSound" type="AudioStreamPlayer3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
-stream = ExtResource( 5 )
-max_db = -5.0
-
-[node name="KillSound" type="AudioStreamPlayer3D" parent="." groups=["KillSound"]]
-stream = ExtResource( 7 )
-max_db = -5.0
-script = ExtResource( 8 )
+[node name="WeaponAnimations" type="AnimationPlayer" parent="."]
+anims/AssaultFire = SubResource( 7 )
+anims/AssaultReload = SubResource( 8 )
+anims/PistolFire = SubResource( 9 )
+anims/PistolReload = SubResource( 10 )
+anims/RESET = SubResource( 11 )
+anims/ShotgunFire = SubResource( 12 )
+anims/ShotgunReload = SubResource( 13 )
+anims/SmgFire = SubResource( 14 )
+anims/SmgReload = SubResource( 15 )
 
 [node name="WeaponReloadTimer" type="Timer" parent="."]
 wait_time = 0.8
 one_shot = true
 
-[node name="WeaponAnimations" type="AnimationPlayer" parent="."]
-anims/AssaultFire = SubResource( 15 )
-anims/AssaultReload = SubResource( 16 )
-anims/PistolFire = SubResource( 19 )
-anims/PistolReload = SubResource( 20 )
-anims/RESET = SubResource( 6 )
-anims/ShotgunFire = SubResource( 5 )
-anims/ShotgunReload = SubResource( 7 )
-anims/SmgFire = SubResource( 11 )
-anims/SmgReload = SubResource( 12 )
+[node name="HitmarkSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
+stream = ExtResource( 16 )
+max_db = -5.0
 
-[node name="LaserFocus" type="Area" parent="."]
-collision_layer = 32
-collision_mask = 0
+[node name="KillSound" type="AudioStreamPlayer3D" parent="." groups=["KillSound"]]
+stream = ExtResource( 15 )
+max_db = -5.0
+script = ExtResource( 14 )
 
-[node name="CollisionShape" type="CollisionShape" parent="LaserFocus"]
-shape = SubResource( 21 )
-
-[connection signal="timeout" from="Head/Camera/Hitmark/HitmarkTimer" to="." method="_on_HitmarkTimer_timeout"]
-[connection signal="timeout" from="WeaponReloadTimer" to="." method="_on_ReloadTimer_timeout"]
-[connection signal="animation_finished" from="WeaponAnimations" to="." method="_on_WeaponAnimationPlayer_animation_finished"]
+[connection signal="timeout" from="YawAxis/Camera/UI/Hitmark/HitmarkTimer" to="." method="_on_HitmarkTimer_timeout"]
+[connection signal="animation_finished" from="WeaponAnimations" to="." method="_on_WeaponAnimations_animation_finished"]
+[connection signal="timeout" from="WeaponReloadTimer" to="." method="_on_WeaponReloadTimer_timeout"]

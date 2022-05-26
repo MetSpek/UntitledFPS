@@ -20,7 +20,7 @@ use_collision = true
 
 [node name="Items" type="Spatial" parent="Enviroment"]
 
-[node name="Player" type="Spatial" parent="."]
+[node name="Players" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.50941, 0 )
 
 [node name="Lights" type="Spatial" parent="."]

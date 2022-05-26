@@ -76,6 +76,7 @@ onready var levels = ["res://Scenes/Worlds/Levels/FloatingIsland/LevelFloatingis
 var xp_required = [100,200,300,400,500,600,700,800,900,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000]
 var money_awarded = [10,20,30,40,50,60,70,80,90,100,120,140,160,180,200,220,240,260,280,300]
 
+var player_max_health
 var player_health
 var player_walk_speed
 var player_slide_speed
@@ -95,8 +96,8 @@ var pistol_damage_values = [7,10,13,16,19,22,25,28,31,34,37]
 var pistol_ammo_values = [7,10,13,16,19,22,25,28,31,34,37]
 
 var health_values = [100,150,200,250,300,350,400,450,500,550,600]
-var walk_speed_values = [20,21,22,23,24,25,26,27,28,29,30]
-var slide_speed_values = [30,32,34,36,38,40,42,44,46,48,50]
+var walk_speed_values = [10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0,18.0,19.0,20.0]
+var slide_speed_values = [20.0,22.0,24.0,26.0,28.0,20.0,22.0,24.0,26.0,28.0,20.0]
 var jump_values = [8,9,10,11,12,13,14,15,16,17,18]
 
 var starting_ammo_values = [250,500,750,1000,1250,1500,1750,2000,2250,2500,2750]
@@ -137,8 +138,10 @@ func set_weapon_values():
 	set_weapon_variables()
 
 func set_player_values():
-	player_health = health_values[PlayerData.health_level]
+	player_max_health = health_values[PlayerData.health_level]
+	player_health = player_max_health
 	player_walk_speed = walk_speed_values[PlayerData.walk_speed_level]
+	print(player_walk_speed)
 	player_slide_speed = slide_speed_values[PlayerData.slide_speed_level]
 	player_jump = jump_values[PlayerData.jump_level]
 	player_starting_ammo = starting_ammo_values[PlayerData.starting_ammo_level]

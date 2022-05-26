@@ -1,10 +1,9 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scenes/Worlds/WorldTemplate.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scenes/Players/PlayerTemplate.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Players/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Resources/Materials/Prototype/DarkMaterial.tres" type="Material" id=3]
 [ext_resource path="res://Resources/Materials/Prototype/PurpleMaterial.tres" type="Material" id=4]
-[ext_resource path="res://Scenes/Enemies/EnemyTemplate.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Resources/Materials/Prototype/OrangeMaterial.tres" type="Material" id=6]
 [ext_resource path="res://Resources/Materials/Prototype/RedMaterial.tres" type="Material" id=7]
 [ext_resource path="res://Scripts/World/Items/UpgradePole.gd" type="Script" id=8]
@@ -25,101 +24,6 @@ emission = Color( 1, 0, 0, 1 )
 emission_energy = 5.38
 emission_operator = 0
 emission_on_uv2 = false
-
-[sub_resource type="Skin" id=19]
-
-[sub_resource type="Animation" id=13]
-resource_name = "LaserShoot"
-step = 0.01
-tracks/0/type = "value"
-tracks/0/path = NodePath("Laser/Laser/LaserCylinder:radius")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.02, 1 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ 0.05, 0.7, 0.05 ]
-}
-
-[sub_resource type="Animation" id=14]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("Laser/Laser/LaserCylinder:radius")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.05 ]
-}
-
-[sub_resource type="Animation" id=15]
-resource_name = "LaserShoot"
-step = 0.01
-tracks/0/type = "value"
-tracks/0/path = NodePath("Laser/Laser/LaserCylinder:radius")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.02, 1 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ 0.05, 0.7, 0.05 ]
-}
-
-[sub_resource type="Animation" id=16]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("Laser/Laser/LaserCylinder:radius")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.05 ]
-}
-
-[sub_resource type="Animation" id=17]
-resource_name = "LaserShoot"
-step = 0.01
-tracks/0/type = "value"
-tracks/0/path = NodePath("Laser/Laser/LaserCylinder:radius")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.02, 1 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ 0.05, 0.7, 0.05 ]
-}
-
-[sub_resource type="Animation" id=18]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("Laser/Laser/LaserCylinder:radius")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.05 ]
-}
 
 [node name="MainMenu" instance=ExtResource( 1 )]
 
@@ -360,64 +264,6 @@ radius = 2.0
 height = 7.0
 material = SubResource( 10 )
 
-[node name="PlayerTemplate" parent="Player" index="0" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 13.5 )
-
-[node name="Smg" parent="Player/PlayerTemplate/Head/Camera/Hand" index="3"]
-skin = SubResource( 19 )
-
-[node name="EnemyTemplate" parent="Enemies" index="0" instance=ExtResource( 5 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 34, 4.5, -8.5 )
-able_to_shoot = false
-able_to_move = false
-can_die = false
-
-[node name="RightEye" parent="Enemies/EnemyTemplate/Head/HeadMesh" index="0"]
-visible = false
-
-[node name="EnemyTemplate2" parent="Enemies" index="1" instance=ExtResource( 5 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 55.5, 7, -4 )
-able_to_shoot = false
-able_to_move = false
-can_die = false
-
-[node name="RightEye" parent="Enemies/EnemyTemplate2/Head/HeadMesh" index="0"]
-visible = false
-
-[node name="EnemyAnimation" parent="Enemies/EnemyTemplate2" index="7"]
-anims/LaserShoot = SubResource( 13 )
-anims/RESET = SubResource( 14 )
-
-[node name="EnemyTemplate3" parent="Enemies" index="2" instance=ExtResource( 5 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 88.5, 4, 1.5 )
-able_to_shoot = false
-able_to_move = false
-can_die = false
-
-[node name="RightEye" parent="Enemies/EnemyTemplate3/Head/HeadMesh" index="0"]
-visible = false
-
-[node name="EnemyAnimation" parent="Enemies/EnemyTemplate3" index="7"]
-anims/LaserShoot = SubResource( 15 )
-anims/RESET = SubResource( 16 )
-
-[node name="EnemyTemplate4" parent="Enemies" index="3" instance=ExtResource( 5 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 54, 3, 9 )
-able_to_shoot = false
-able_to_move = false
-can_die = false
-
-[node name="RightEye" parent="Enemies/EnemyTemplate4/Head/HeadMesh" index="0"]
-visible = false
-
-[node name="EnemyAnimation" parent="Enemies/EnemyTemplate4" index="7"]
-anims/LaserShoot = SubResource( 17 )
-anims/RESET = SubResource( 18 )
+[node name="Player" parent="Players" index="0" instance=ExtResource( 2 )]
 
 [connection signal="body_entered" from="Enviroment/Items/BeginTeleporter/Area" to="Enviroment/Items/BeginTeleporter" method="_on_Area_body_entered"]
-
-[editable path="Player/PlayerTemplate"]
-[editable path="Enemies/EnemyTemplate"]
-[editable path="Enemies/EnemyTemplate2"]
-[editable path="Enemies/EnemyTemplate3"]
-[editable path="Enemies/EnemyTemplate4"]

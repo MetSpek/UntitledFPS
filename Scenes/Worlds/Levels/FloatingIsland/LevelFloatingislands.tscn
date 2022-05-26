@@ -6,7 +6,7 @@
 [ext_resource path="res://Scenes/Worlds/WorldTemplate.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Worlds/Items/JumpPad.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Worlds/Items/Teleporter.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/Players/PlayerTemplate.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Players/Player.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Resources/Materials/Prototype/GreenMaterial.tres" type="Material" id=8]
 [ext_resource path="res://Resources/Materials/Prototype/DarkMaterial.tres" type="Material" id=9]
 
@@ -715,63 +715,39 @@ material = ExtResource( 9 )
 [node name="JumpPad" type="Spatial" parent="Enviroment/Items" index="0"]
 
 [node name="JumpPadWM" parent="Enviroment/Items/JumpPad" index="0" instance=ExtResource( 5 )]
-move_y = 40.0
-move_z = -54.0
-slowdown = 2.0
 
 [node name="JumpPadMW" parent="Enviroment/Items/JumpPad" index="1" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -79.2981, -293.787 )
-move_y = 95.0
-move_z = 40.0
-slowdown = 5.0
 
 [node name="JumpPadMN" parent="Enviroment/Items/JumpPad" index="2" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -111, -79.2981, -389.787 )
 visible = false
-move_x = -35.0
-move_y = 110.0
-slowdown = 5.0
 
 [node name="JumpPadME" parent="Enviroment/Items/JumpPad" index="3" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 49, -79.2981, -524.787 )
 visible = false
-move_y = 85.0
-move_z = -40.0
-slowdown = 5.0
 
 [node name="JumpPadEM" parent="Enviroment/Items/JumpPad" index="4" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -27.2981, -695.787 )
 visible = false
-move_y = 50.0
-move_z = 50.0
-slowdown = 5.0
 
 [node name="JumpPadNM" parent="Enviroment/Items/JumpPad" index="5" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -291, 43.7019, -405.787 )
 visible = false
-move_x = 45.0
-move_y = 40.0
-slowdown = 5.0
 
 [node name="JumpPadMS" parent="Enviroment/Items/JumpPad" index="6" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 95, -79.2981, -293.787 )
 visible = false
-move_x = 45.0
-move_y = 95.0
-slowdown = 5.0
 
 [node name="JumpPadSM" parent="Enviroment/Items/JumpPad" index="7" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 313, -15.2981, -325.787 )
 visible = false
-move_x = -52.0
-move_y = 50.0
-slowdown = 2.0
 
 [node name="Teleporter" parent="Enviroment/Items" index="1" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -78.5, -401 )
 
-[node name="PlayerTemplate" parent="Player" index="0" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 8, 102.013 )
+[node name="Player" parent="Players" index="0" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.763953, 2.18971, 78.6733 )
 
 [node name="DirectionalLight" parent="Lights" index="0"]
 transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 42.5, 85 )

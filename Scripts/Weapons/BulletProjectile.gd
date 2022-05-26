@@ -13,7 +13,7 @@ func _on_LifeTime_timeout():
 
 
 func _on_Area_body_entered(body):
-	if body.name == "PlayerTemplate":
-		body.health -= damage
+	if body.name == "Player":
+		GlobalGameHandler.player_health -= damage
 		get_tree().call_group("HealthBar", "set_health")
 	queue_free()

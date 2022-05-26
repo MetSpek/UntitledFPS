@@ -55,9 +55,9 @@ var health_crate = preload("res://Scenes/Weapons/HealthCrate.tscn")
 func _ready():
 	current_state = IDLE
 	rage_threshold = health / 3
-	if get_node("/root").find_node("PlayerTemplate", true, false):
-		player = get_node("/root").find_node("PlayerTemplate", true, false)
-		player_head = player.find_node("Head", true, false)
+	if get_node("/root").find_node("Player", true, false):
+		player = get_node("/root").find_node("Player", true, false)
+		player_head = player.find_node("YawAxis", true, false)
 
 func _process(delta):
 	if health <= 0:
@@ -118,7 +118,7 @@ func shoot():
 	can_shoot = false
 	shoot_timer.wait_time = fire_speed
 	shoot_timer.start()
-	var velocity = global_transform.origin.direction_to(player.global_transform.origin)
+	var velocity = global_transform.origin.direction_to(player.global_transform.origin + player.velocity * (global_transform.origin.distance_to(player.global_transform.origin) / 40))
 	var bullet_instance = bullet.instance()
 	bullet_instance.global_transform.origin = fire_hole.global_transform.origin
 	bullet_instance.damage = damage
@@ -128,7 +128,7 @@ func shoot():
 func check_los():
 	los.look_at_from_position(global_transform.origin, player_head.global_transform.origin, Vector3.UP)
 	if los.is_colliding():
-		if los.get_collider().name == "PlayerTemplate":
+		if los.get_collider().name == "Player":
 			return true
 
 func look_at_player():
