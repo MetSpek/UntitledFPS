@@ -16,7 +16,9 @@ export var groundSpeedCrouch = 2.0
 var groundSpeed = 10
 export var airAcceleration = 500.0
 export var airSpeedLimit = 1
-export var groundFriction = 0.9
+export var groundFrictionNormal = 0.7
+export var groundFrictionSliding = 0.99
+var groundFriction = groundFrictionNormal
 
 export var mouseSensitivity = 0.1
 
@@ -141,9 +143,11 @@ func move_player(delta):
 	if Input.is_action_just_pressed("crouch"):
 		scale.y = crouch_height
 		groundSpeed = groundSpeedCrouch
+		groundFriction = groundFrictionSliding
 	elif Input.is_action_just_released("crouch"):
 		scale.y = normal_height
 		groundSpeed = groundSpeedWalk
+		groundFriction = groundFrictionNormal
 	
 	pass
 
@@ -178,15 +182,16 @@ func show_right_weapon():
 			gun.visible = false
 
 func switch_weapon(to):
-	GlobalGameHandler.currently_holding_index += to
-	if GlobalGameHandler.currently_holding_index < 0:
-		GlobalGameHandler.currently_holding_index = GlobalGameHandler.weapons.size() - 1
-	elif GlobalGameHandler.currently_holding_index >= GlobalGameHandler.weapons.size():
-		GlobalGameHandler.currently_holding_index = 0
-	GlobalGameHandler.switch_weapon()
-	show_right_weapon()
-	get_tree().call_group("HUD", "fired")
-	get_tree().call_group("HUD", "reloaded")
+	if reload_timer.time_left == 0:
+		GlobalGameHandler.currently_holding_index += to
+		if GlobalGameHandler.currently_holding_index < 0:
+			GlobalGameHandler.currently_holding_index = GlobalGameHandler.weapons.size() - 1
+		elif GlobalGameHandler.currently_holding_index >= GlobalGameHandler.weapons.size():
+			GlobalGameHandler.currently_holding_index = 0
+		GlobalGameHandler.switch_weapon()
+		show_right_weapon()
+		get_tree().call_group("HUD", "fired")
+		get_tree().call_group("HUD", "reloaded")
 
 func fire():
 	if Input.is_action_pressed("fire_weapon") and !weap_anim_player.is_playing():
@@ -232,7 +237,7 @@ func fire():
 			vertical_heatmap = 0
 			raycast.rotation_degrees.y = 0
 	
-	if Input.is_action_pressed("reload_weapon") and !weap_anim_player.is_playing():
+	if Input.is_action_pressed("reload_weapon") and !weap_anim_player.is_playing() and GlobalGameHandler.clip_size_current < GlobalGameHandler.clip_size_max:
 		reload()
 
 func reload():
