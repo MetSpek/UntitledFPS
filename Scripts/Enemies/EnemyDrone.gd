@@ -172,7 +172,7 @@ func _on_MoveTimer_timeout():
 
 func _on_ExplosionRange_body_entered(body):
 	if current_state == RAGE:
-		body.health -= explosion_damage
+		GlobalGameHandler.player_health -= explosion_damage
 		get_tree().call_group("HealthBar", "set_health")
 		queue_free()
 

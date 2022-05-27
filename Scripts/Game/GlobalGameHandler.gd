@@ -5,10 +5,15 @@ var clip_size_max
 var clip_size_current
 
 var max_bullets
-var current_bullets
+var currentBullets
 var weapon_damage
 var weapon_fire_animation
 var weapon_reload_animation
+
+const SUBMACHINEGUN = preload("res://Scenes/Weapons/Smg.tscn")
+var smgDamageLevel = 0
+var smgAmmoLevel = 0
+var currentSmgClip
 
 var sniper = {
 	"name" : "Shotgun",
@@ -18,6 +23,7 @@ var sniper = {
 	"horizontal_recoil" : .01,
 	"fire_animation" : "ShotgunFire",
 	"reload_animation" : "ShotgunReload",
+	"fire_sound" : null
 }
 
 var smg ={
@@ -27,7 +33,8 @@ var smg ={
 	"vertical_recoil" : .5,
 	"horizontal_recoil" : .05,
 	"fire_animation" : "SmgFire",
-	"reload_animation" : "SmgReload"
+	"reload_animation" : "SmgReload",
+	"fire_sound" : preload("res://Resources/Sounds/Guns/Guns/SmgFire.wav")
 }
 
 var assault ={
@@ -37,7 +44,8 @@ var assault ={
 	"vertical_recoil" : .5,
 	"horizontal_recoil" : .01,
 	"fire_animation" : "AssaultFire",
-	"reload_animation" : "AssaultReload"
+	"reload_animation" : "AssaultReload",
+	"fire_sound" : preload("res://Resources/Sounds/Guns/Guns/AssaultFire.wav")
 }
 
 var pistol ={
@@ -47,15 +55,18 @@ var pistol ={
 	"vertical_recoil" : .0001,
 	"horizontal_recoil" : 0,
 	"fire_animation" : "PistolFire",
-	"reload_animation" : "PistolReload"
+	"reload_animation" : "PistolReload",
+	"fire_sound" : null
 }
 
-var weapons = [assault, smg, sniper, pistol]
+var weapons = []
 
 var currently_holding_index = 0
-var currently_holding = weapons[currently_holding_index]
+var currently_holding
+
+
 var current_pistol_clip
-var current_smg_clip
+
 var current_assault_clip
 var current_sniper_clip
 var to_reload_ammo
@@ -86,6 +97,9 @@ var player_starting_ammo
 var player_xp_multiplier
 var player_money_multiplier
 
+
+
+
 var smg_damage_values = [2,3,4,5,6,7,8,9,10,11,12]
 var smg_ammo_values = [20,25,30,35,40,45,50,55,60,65,70]
 var assault_damage_values = [5,7,9,11,13,15,17,19,21,23,25]
@@ -105,15 +119,16 @@ var xp_multiplier_values = [1,1.2,1.4,1.6,1.8,2,2.2,2.4,2.6,2.8,3]
 var money_multiplier_values = [1,1.2,1.4,1.6,1.8,2,2.2,2.4,2.6,2.8,3]
 
 func _ready():
+	add_weapon(SUBMACHINEGUN)
+
 	current_pistol_clip = pistol_ammo_values[PlayerData.pistol_ammo_level]
-	current_smg_clip = smg_ammo_values[PlayerData.smg_ammo_level]
 	current_assault_clip = assault_ammo_values[PlayerData.assault_ammo_level]
 	current_sniper_clip = sniper_ammo_values[PlayerData.sniper_ammo_level]
-	set_weapon_variables()
+#	set_weapon_variables()
 	set_difficulty()
-	set_weapon_values()
+#	set_weapon_values()
 	set_player_values()
-	current_bullets = player_starting_ammo
+	currentBullets = player_starting_ammo
 	
 
 func _physics_process(delta):
@@ -135,7 +150,7 @@ func set_weapon_values():
 	assault.clip_size = assault_ammo_values[PlayerData.assault_ammo_level]
 	pistol.damage = assault_damage_values[PlayerData.pistol_damage_level]
 	pistol.clip_size = pistol_ammo_values[PlayerData.pistol_ammo_level]
-	set_weapon_variables()
+#	set_weapon_variables()
 
 func set_player_values():
 	player_max_health = health_values[PlayerData.health_level]
@@ -148,38 +163,12 @@ func set_player_values():
 	player_xp_multiplier = xp_multiplier_values[PlayerData.xp_multiplier_level]
 	player_money_multiplier = money_multiplier_values[PlayerData.money_multiplier_level]
 
-func switch_weapon():
-	store_ammo_values(currently_holding)
-	currently_holding = weapons[currently_holding_index]
-	set_weapon_variables()
 
-func store_ammo_values(current):
-	match current:
-		assault:
-			current_assault_clip = clip_size_current
-		smg:
-			current_smg_clip = clip_size_current
-		sniper:
-			current_sniper_clip = clip_size_current
-		pistol:
-			current_pistol_clip = clip_size_current
+func add_weapon(weapon):
+	weapons.append(weapon)
 
-func set_weapon_variables():
-	clip_size_max = currently_holding.clip_size
-	match currently_holding:
-		assault:
-			clip_size_current = current_assault_clip
-		smg:
-			clip_size_current = current_smg_clip
-		sniper:
-			clip_size_current = current_sniper_clip
-		pistol:
-			clip_size_current = current_pistol_clip
-	
-	weapon_damage = currently_holding.damage
-	weapon_fire_animation = currently_holding.fire_animation
-	weapon_reload_animation = currently_holding.reload_animation
-	
+func remove_weapon(weapon):
+	weapons.remove(weapon)
 
 func enemy_killed(money, xp):
 	check_level_up(xp)

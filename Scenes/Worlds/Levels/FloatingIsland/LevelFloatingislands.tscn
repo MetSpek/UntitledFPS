@@ -715,6 +715,8 @@ material = ExtResource( 9 )
 [node name="JumpPad" type="Spatial" parent="Enviroment/Items" index="0"]
 
 [node name="JumpPadWM" parent="Enviroment/Items/JumpPad" index="0" instance=ExtResource( 5 )]
+speedUp = 30
+speedForward = -100
 
 [node name="JumpPadMW" parent="Enviroment/Items/JumpPad" index="1" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -79.2981, -293.787 )

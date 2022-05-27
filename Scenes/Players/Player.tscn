@@ -1,123 +1,31 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scripts/Player/PlayerController.gd" type="Script" id=1]
-[ext_resource path="res://Resources/Textures/UITextures/Crosshair.png" type="Texture" id=2]
-[ext_resource path="res://Resources/Textures/UITextures/Hitmark.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/Player/Hand.gd" type="Script" id=4]
-[ext_resource path="res://Resources/Materials/Weapons/Shotgun/ShotgunGray.tres" type="Material" id=5]
-[ext_resource path="res://Resources/Materials/Weapons/Shotgun/ShotgunBrown.tres" type="Material" id=6]
-[ext_resource path="res://Resources/Materials/Weapons/Shotgun/ShotgunBlack.tres" type="Material" id=7]
-[ext_resource path="res://Resources/Materials/Weapons/LowPolyGunMaterial.tres" type="Material" id=8]
-[ext_resource path="res://Resources/Materials/Weapons/Shotgun/ShotgunDarkGray.tres" type="Material" id=9]
-[ext_resource path="res://Resources/Models/Guns/ShotGunNew.obj" type="ArrayMesh" id=10]
-[ext_resource path="res://Resources/Models/Guns/Smg.obj" type="ArrayMesh" id=11]
-[ext_resource path="res://Resources/Models/Guns/Smg Clip.obj" type="ArrayMesh" id=12]
 [ext_resource path="res://Scenes/UI/HUD.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scripts/Player/KillSound.gd" type="Script" id=14]
 [ext_resource path="res://Resources/Sounds/Guns/Misc/Kill.wav" type="AudioStream" id=15]
-[ext_resource path="res://Resources/Sounds/Guns/Misc/Hitmark.wav" type="AudioStream" id=16]
 
 [sub_resource type="CapsuleShape" id=1]
 height = 3.0
-
-[sub_resource type="SpatialMaterial" id=2]
-flags_transparent = true
-albedo_color = Color( 1, 0, 0, 0.392157 )
-emission_enabled = true
-emission = Color( 1, 0, 0, 1 )
-emission_energy = 1.0
-emission_operator = 0
-emission_on_uv2 = false
-
-[sub_resource type="CubeMesh" id=3]
-size = Vector3( 0.1, 0.15, 0.5 )
-
-[sub_resource type="SpatialMaterial" id=4]
-albedo_color = Color( 0.235294, 0.235294, 0.235294, 1 )
-
-[sub_resource type="CubeMesh" id=5]
-size = Vector3( 0.1, 0.15, 1.5 )
-
-[sub_resource type="SpatialMaterial" id=6]
-albedo_color = Color( 0.0901961, 0.101961, 0.85098, 1 )
 
 [sub_resource type="Animation" id=7]
 resource_name = "AssaultFire"
 length = 0.08
 step = 0.01
-tracks/0/type = "value"
-tracks/0/path = NodePath("YawAxis/Camera/Hand/Assault:translation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.04, 0.08 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0.199528, -0.0650443, 0 ), Vector3( 0.2, -0.055, 0.1 ), Vector3( 0.2, -0.065, 0 ) ]
-}
 
 [sub_resource type="Animation" id=8]
 resource_name = "AssaultReload"
 length = 0.8
-tracks/0/type = "value"
-tracks/0/path = NodePath("YawAxis/Camera/Hand/Assault:rotation_degrees")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.6, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0, 0, 0 ), Vector3( 30, 0, 0 ), Vector3( 30, 0, 0 ), Vector3( 0, 0, 0 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("YawAxis/Camera/Hand/Assault/Clip:translation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0.2, 0.3, 0.5, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( -0.00126702, -0.191548, 0.152911 ), Vector3( -0.001, -0.5, 0.109 ), Vector3( -0.001, -0.5, 0.109 ), Vector3( -0.00126702, -0.191548, 0.152911 ) ]
-}
 
 [sub_resource type="Animation" id=9]
 resource_name = "PistolFire"
 length = 0.4
 step = 0.02
-tracks/0/type = "value"
-tracks/0/path = NodePath("YawAxis/Camera/Hand/Pistol:translation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0.195133, -0.0958085, 0 ), Vector3( 0.195, -0.075, 0.1 ), Vector3( 0.195133, -0.0958085, 0 ) ]
-}
 
 [sub_resource type="Animation" id=10]
 resource_name = "PistolReload"
 length = 0.8
-tracks/0/type = "value"
-tracks/0/path = NodePath("YawAxis/Camera/Hand/Pistol:rotation_degrees")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0, 0, 0 ), Vector3( 360, 0, 0 ), Vector3( 720, 0, 0 ) ]
-}
 
 [sub_resource type="Animation" id=11]
 length = 0.001
@@ -241,210 +149,28 @@ tracks/9/keys = {
 "update": 0,
 "values": [ Vector3( 0, 0, 0 ) ]
 }
-tracks/10/type = "value"
-tracks/10/path = NodePath("YawAxis/Camera/Hand/Shotgun:translation")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector3( 0.201107, -0.112509, 0 ) ]
-}
-tracks/11/type = "value"
-tracks/11/path = NodePath("YawAxis/Camera/Hand/Shotgun:rotation_degrees")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector3( 0, 0, 0 ) ]
-}
-tracks/12/type = "value"
-tracks/12/path = NodePath("YawAxis/Camera/Hand/Assault:translation")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector3( 0.199528, -0.0650443, 0 ) ]
-}
-tracks/13/type = "value"
-tracks/13/path = NodePath("YawAxis/Camera/Hand/Assault:rotation_degrees")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector3( 0, 0, 0 ) ]
-}
-tracks/14/type = "value"
-tracks/14/path = NodePath("YawAxis/Camera/Hand/Assault/Clip:translation")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/imported = false
-tracks/14/enabled = true
-tracks/14/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector3( -0.00126702, -0.191548, 0.152911 ) ]
-}
-tracks/15/type = "value"
-tracks/15/path = NodePath("YawAxis/Camera/Hand/Pistol:translation")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector3( 0.195133, -0.0958085, 0 ) ]
-}
-tracks/16/type = "value"
-tracks/16/path = NodePath("YawAxis/Camera/Hand/Pistol:rotation_degrees")
-tracks/16/interp = 1
-tracks/16/loop_wrap = true
-tracks/16/imported = false
-tracks/16/enabled = true
-tracks/16/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector3( 0, 0, 0 ) ]
-}
-tracks/17/type = "value"
-tracks/17/path = NodePath("YawAxis/Camera/Hand/Smg:translation")
-tracks/17/interp = 1
-tracks/17/loop_wrap = true
-tracks/17/imported = false
-tracks/17/enabled = true
-tracks/17/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector3( 0.2, -0.1, 0.1 ) ]
-}
-tracks/18/type = "value"
-tracks/18/path = NodePath("YawAxis/Camera/Hand/Smg:rotation_degrees")
-tracks/18/interp = 1
-tracks/18/loop_wrap = true
-tracks/18/imported = false
-tracks/18/enabled = true
-tracks/18/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector3( 0, 0, 0 ) ]
-}
-tracks/19/type = "value"
-tracks/19/path = NodePath("YawAxis/Camera/Hand/Smg/Clip:translation")
-tracks/19/interp = 1
-tracks/19/loop_wrap = true
-tracks/19/imported = false
-tracks/19/enabled = true
-tracks/19/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector3( 0, 0, 0 ) ]
-}
 
 [sub_resource type="Animation" id=12]
 resource_name = "ShotgunFire"
 length = 0.3
 step = 0.01
-tracks/0/type = "value"
-tracks/0/path = NodePath("YawAxis/Camera/Hand/Shotgun:translation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.12, 0.24, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0.201107, -0.112509, 0 ), Vector3( 0.201, -0.113, 0.05 ), Vector3( 0.201, -0.113, 0 ), Vector3( 0.201, -0.113, 0 ) ]
-}
 
 [sub_resource type="Animation" id=13]
 resource_name = "ShotgunReload"
 length = 0.8
-tracks/0/type = "value"
-tracks/0/path = NodePath("YawAxis/Camera/Hand/Shotgun:rotation_degrees")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0, 0, 0 ), Vector3( 180, 0, 0 ), Vector3( 360, 0, 0 ) ]
-}
 
 [sub_resource type="Animation" id=14]
 resource_name = "SmgFire"
 length = 0.04
 step = 0.01
-tracks/0/type = "value"
-tracks/0/path = NodePath("YawAxis/Camera/Hand/Smg:translation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.04 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0.2, -0.1, 0.1 ), Vector3( 0.2, -0.1, 0.14 ) ]
-}
 
 [sub_resource type="Animation" id=15]
 resource_name = "SmgReload"
 length = 0.8
-tracks/0/type = "value"
-tracks/0/path = NodePath("YawAxis/Camera/Hand/Smg:rotation_degrees")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.6, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0, 0, 0 ), Vector3( 50, 0, -10 ), Vector3( 50, 0, -10 ), Vector3( 0, 0, 0 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("YawAxis/Camera/Hand/Smg/Clip:translation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.3, 0.5, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0, 0, 0 ), Vector3( 0, -0.5, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ) ]
-}
 
 [node name="Player" type="KinematicBody"]
 collision_layer = 2
 script = ExtResource( 1 )
-default_weapon_position = Vector3( 0.1, -0.2, -0.85 )
-ads_weapon_position = Vector3( 0, -0.1, -0.8 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
@@ -464,97 +190,18 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="Crosshair" type="TextureRect" parent="YawAxis/Camera/UI"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-texture = ExtResource( 2 )
-
-[node name="Hitmark" type="TextureRect" parent="YawAxis/Camera/UI"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-texture = ExtResource( 3 )
-
-[node name="HitmarkTimer" type="Timer" parent="YawAxis/Camera/UI/Hitmark"]
-wait_time = 0.1
-
 [node name="HUD" parent="YawAxis/Camera/UI" instance=ExtResource( 13 )]
 
 [node name="Hand" type="Spatial" parent="YawAxis/Camera"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.808674 )
 script = ExtResource( 4 )
 sway_left = Vector3( 0, -0.1, 0 )
 sway_right = Vector3( 0, 0.1, 0 )
-
-[node name="Shotgun" type="MeshInstance" parent="YawAxis/Camera/Hand"]
-transform = Transform( 0.12, 0, 0, 0, 0.12, 0, 0, 0, 0.12, 0.201107, -0.112509, 0 )
-visible = false
-mesh = ExtResource( 10 )
-material/0 = ExtResource( 5 )
-material/1 = ExtResource( 6 )
-material/2 = ExtResource( 7 )
-material/3 = ExtResource( 7 )
-material/4 = ExtResource( 7 )
-material/5 = ExtResource( 9 )
-material/6 = ExtResource( 9 )
-material/7 = ExtResource( 9 )
-material/8 = ExtResource( 5 )
-material/9 = ExtResource( 5 )
-material/10 = SubResource( 2 )
-
-[node name="Pistol" type="MeshInstance" parent="YawAxis/Camera/Hand"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.195133, -0.0958085, 0 )
-visible = false
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
-
-[node name="Assault" type="MeshInstance" parent="YawAxis/Camera/Hand"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.199528, -0.0650443, 0 )
-visible = false
-mesh = SubResource( 5 )
-material/0 = SubResource( 6 )
-
-[node name="Clip" type="MeshInstance" parent="YawAxis/Camera/Hand/Assault"]
-transform = Transform( 1, 0, 0, 0, 2.89778, -0.0258819, 0, 0.776457, 0.0965926, -0.00126702, -0.191548, 0.152911 )
-mesh = SubResource( 5 )
-skeleton = NodePath("../..")
-material/0 = SubResource( 6 )
-
-[node name="Smg" type="MeshInstance" parent="YawAxis/Camera/Hand"]
-transform = Transform( 1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0.2, -0.1, 0.1 )
-mesh = ExtResource( 11 )
-material/0 = ExtResource( 8 )
-
-[node name="Clip" type="MeshInstance" parent="YawAxis/Camera/Hand/Smg"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-mesh = ExtResource( 12 )
-material/0 = ExtResource( 8 )
 
 [node name="Interaction" type="RayCast" parent="YawAxis/Camera"]
 enabled = true
 cast_to = Vector3( 0, 0, -5 )
 collision_mask = 64
 collide_with_areas = true
-
-[node name="Shooting" type="RayCast" parent="YawAxis/Camera"]
-enabled = true
-cast_to = Vector3( 0, 0, -200 )
-collision_mask = 13
-collide_with_areas = true
-
-[node name="Tween" type="Tween" parent="."]
 
 [node name="WeaponAnimations" type="AnimationPlayer" parent="."]
 anims/AssaultFire = SubResource( 7 )
@@ -571,16 +218,12 @@ anims/SmgReload = SubResource( 15 )
 wait_time = 0.79
 one_shot = true
 
-[node name="HitmarkSound" type="AudioStreamPlayer3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
-stream = ExtResource( 16 )
-max_db = -5.0
-
 [node name="KillSound" type="AudioStreamPlayer3D" parent="." groups=["KillSound"]]
 stream = ExtResource( 15 )
 max_db = -5.0
 script = ExtResource( 14 )
 
-[connection signal="timeout" from="YawAxis/Camera/UI/Hitmark/HitmarkTimer" to="." method="_on_HitmarkTimer_timeout"]
+[node name="Tween" type="Tween" parent="."]
+
 [connection signal="animation_finished" from="WeaponAnimations" to="." method="_on_WeaponAnimations_animation_finished"]
 [connection signal="timeout" from="WeaponReloadTimer" to="." method="_on_WeaponReloadTimer_timeout"]

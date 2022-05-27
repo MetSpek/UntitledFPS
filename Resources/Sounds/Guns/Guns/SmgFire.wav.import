@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SmgFire.wav-50452c8389842356e8f8db1d8beb61ff.sample"
+
+[deps]
+
+source_file="res://Resources/Sounds/Guns/Guns/SmgFire.wav"
+dest_files=[ "res://.import/SmgFire.wav-50452c8389842356e8f8db1d8beb61ff.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0

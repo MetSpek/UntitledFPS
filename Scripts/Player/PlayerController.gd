@@ -37,26 +37,10 @@ onready var tween = $Tween
 
 
 #SHOOTING
-export var default_weapon_position : Vector3
-export var ads_weapon_position : Vector3
-const ADS_LERP = 20
-onready var vertical_recoil = GlobalGameHandler.currently_holding.vertical_recoil
-var vertical_heatmap =0
-onready var horizontal_recoil = GlobalGameHandler.currently_holding.horizontal_recoil
-var horizontal_heatmap = 0
-
-onready var weap_anim_player = $WeaponAnimations
-
-onready var reload_timer = $WeaponReloadTimer
-onready var raycast = $YawAxis/Camera/Shooting
+onready var weaponList = GlobalGameHandler.weapons
+var currentlyHolding
 onready var hand = $YawAxis/Camera/Hand
-onready var bullet_hole = preload("res://Scenes/Weapons/BulletHole.tscn")
-export var bullet_hole_list = ["Walls", "Boxes", "Trees", "Rocks"]
 
-onready var hitmark = $YawAxis/Camera/UI/Hitmark
-onready var hitmark_sound = $HitmarkSound
-onready var hitmark_timer = $YawAxis/Camera/UI/Hitmark/HitmarkTimer
-onready var crosshair = $YawAxis/Camera/UI/Crosshair
 onready var interaction_raycast = $YawAxis/Camera/Interaction
 var is_interacting = false
 var ads_fov = 50
@@ -65,8 +49,8 @@ var ads_fov = 50
 onready var health = GlobalGameHandler.player_health
 
 func _ready():
+	add_weapons_to_player_at_start()
 	get_tree().call_group("HealthBar", "set_max_health")
-	show_right_weapon()
 	restartTransform = self.global_transform
 	restartVelocity = self.velocity
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -79,7 +63,8 @@ func _physics_process(delta):
 	if playerState == NORMAL:
 		move_player(delta)
 	fire()
-	check_ads(delta)
+	reload()
+	zoom()
 	check_interaction()
 
 func _input(event):
@@ -151,12 +136,7 @@ func move_player(delta):
 	
 	pass
 
-func check_ads(delta):
-	if Input.is_action_pressed("fire_weapon_2") and !reload_timer.time_left > 0:
-		ads_zoom(delta, ads_weapon_position, normal_fov, ads_fov)
-		
-	else:
-		ads_zoom(delta, default_weapon_position, ads_fov, normal_fov)
+
 
 func check_interaction():
 	if interaction_raycast.is_colliding():
@@ -169,107 +149,59 @@ func check_interaction():
 	if is_interacting and Input.is_action_just_pressed("interacting"):
 		get_tree().call_group("UpgradePole", "interact")
 
-func ads_zoom(delta, vision, fov_from, fov_to):
-	hand.transform.origin = hand.transform.origin.linear_interpolate(vision, ADS_LERP * delta)
-	tween.interpolate_property(camera, "fov", camera.fov, fov_to, .1,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	tween.start()
+
+func add_weapons_to_player_at_start():
+	for weapon in weaponList:
+		add_weapon_to_player(weapon)
+
+func add_weapon_to_player(weapon):
+	var weap = weapon.instance()
+	hand.add_child(weap)
+	currentlyHolding = weap
+
+func switch_weapon(to):
+	if currentlyHolding.reload != null:
+		if currentlyHolding.reload.time_left == 0:
+			if currentlyHolding.has_method("save_bullets"):
+				currentlyHolding.save_bullets()
+				print(GlobalGameHandler.currentSmgClip)
+			GlobalGameHandler.currently_holding_index += to
+			if GlobalGameHandler.currently_holding_index < 0:
+				GlobalGameHandler.currently_holding_index = GlobalGameHandler.weapons.size() - 1
+			elif GlobalGameHandler.currently_holding_index >= GlobalGameHandler.weapons.size():
+				GlobalGameHandler.currently_holding_index = 0
+	show_right_weapon()
 
 func show_right_weapon():
 	for gun in hand.get_children():
-		if gun.name == GlobalGameHandler.currently_holding.name:
+		if gun.name == currentlyHolding.name:
 			gun.visible = true
 		else:
 			gun.visible = false
 
-func switch_weapon(to):
-	if reload_timer.time_left == 0:
-		GlobalGameHandler.currently_holding_index += to
-		if GlobalGameHandler.currently_holding_index < 0:
-			GlobalGameHandler.currently_holding_index = GlobalGameHandler.weapons.size() - 1
-		elif GlobalGameHandler.currently_holding_index >= GlobalGameHandler.weapons.size():
-			GlobalGameHandler.currently_holding_index = 0
-		GlobalGameHandler.switch_weapon()
-		show_right_weapon()
-		get_tree().call_group("HUD", "fired")
-		get_tree().call_group("HUD", "reloaded")
-
 func fire():
-	if Input.is_action_pressed("fire_weapon") and !weap_anim_player.is_playing():
-		if GlobalGameHandler.clip_size_current > 0:
-			if not weap_anim_player.is_playing(): 
-				vertical_heatmap += vertical_recoil
-				raycast.rotation_degrees.x = clamp(vertical_heatmap, 0 , 10)
-				
-				horizontal_heatmap = -horizontal_heatmap
-				horizontal_recoil = -horizontal_recoil
-				horizontal_heatmap += horizontal_recoil
-				raycast.rotation_degrees.y = horizontal_heatmap
-				GlobalGameHandler.clip_size_current -= 1
-				get_tree().call_group("HUD", "fired")
-				if raycast.get_collider():
-					var target = raycast.get_collider()
-					if bullet_hole_list.has(target.name):
-						var bullet_hole_instance = bullet_hole.instance()
-						raycast.get_collider().add_child(bullet_hole_instance)
-						bullet_hole_instance.global_transform.origin = raycast.get_collision_point()
-						bullet_hole_instance.look_at(raycast.get_collision_point() + raycast.get_collision_normal(), Vector3.UP)
-					elif target.is_in_group("Enemy"):
-						if !target.is_dead:
-							if target.has_method("aggrevate"):
-								target.aggrevate()
-							target.health -= GlobalGameHandler.currently_holding.damage
-							DamageNumber.damage_number(GlobalGameHandler.currently_holding.damage, target.global_transform.origin, target)
-							hitmark.visible = true
-							hitmark_sound.play()
-							hitmark_timer.start()
-							target.impact_point = raycast.get_collision_normal()
-			weap_anim_player.play(GlobalGameHandler.currently_holding.fire_animation)
-		elif !weap_anim_player.is_playing():
-			reload()
-			
-	elif Input.is_action_just_released("fire_weapon") and !weap_anim_player.is_playing():
-		weap_anim_player.stop()
-
-	elif !Input.is_action_pressed("fire_weapon"):
-		if raycast.rotation_degrees.x > 0:
-			raycast.rotation_degrees.x -= vertical_recoil
-			horizontal_heatmap = 0
-			vertical_heatmap = 0
-			raycast.rotation_degrees.y = 0
-	
-	if Input.is_action_pressed("reload_weapon") and !weap_anim_player.is_playing() and GlobalGameHandler.clip_size_current < GlobalGameHandler.clip_size_max:
-		reload()
+	if Input.is_action_pressed("fire_weapon"):
+		if currentlyHolding.has_method("fire"):
+			currentlyHolding.fire()
+	elif Input.is_action_just_released("fire_weapon"):
+		if currentlyHolding.has_method("release"):
+			currentlyHolding.release()
 
 func reload():
-	raycast.rotation_degrees.x = 0
-	hand.rotation_degrees.x = 0
-	horizontal_heatmap = 0
-	vertical_heatmap = 0
-	raycast.rotation_degrees.y = 0
-	if GlobalGameHandler.current_bullets > 0:
-		if GlobalGameHandler.current_bullets < GlobalGameHandler.clip_size_max:
-			GlobalGameHandler.to_reload_ammo = GlobalGameHandler.current_bullets
-			GlobalGameHandler.current_bullets = 0
-		elif GlobalGameHandler.clip_size_current > 0:
-			GlobalGameHandler.to_reload_ammo = GlobalGameHandler.clip_size_max
-			GlobalGameHandler.current_bullets = GlobalGameHandler.current_bullets - (GlobalGameHandler.clip_size_max - GlobalGameHandler.clip_size_current)
-		else:
-			GlobalGameHandler.current_bullets -= GlobalGameHandler.clip_size_max
-			GlobalGameHandler.to_reload_ammo = GlobalGameHandler.clip_size_max
-		get_tree().call_group("HUD", "fired")
-		get_tree().call_group("HUD", "reloaded")
-		weap_anim_player.play(GlobalGameHandler.weapon_reload_animation)
-		reload_timer.start()
+	if Input.is_action_just_pressed("reload_weapon"):
+		if currentlyHolding.has_method("reload"):
+			currentlyHolding.reload()
 
-func _on_HitmarkTimer_timeout():
-	hitmark.visible = false
+func reload_weapon():
+	if currentlyHolding.has_method("reload"):
+		currentlyHolding.reload()
 
+func zoom():
+	if Input.is_action_pressed("fire_weapon_2") and currentlyHolding.reload.time_left == 0:
+		ads_zoom(normal_fov, ads_fov)
+	elif Input.is_action_just_released("fire_weapon_2") or currentlyHolding.reload.time_left != 0:
+		ads_zoom(ads_fov, normal_fov)
 
-func _on_WeaponReloadTimer_timeout():
-	GlobalGameHandler.clip_size_current = GlobalGameHandler.to_reload_ammo
-	get_tree().call_group("HUD", "fired")
-
-
-func _on_WeaponAnimations_animation_finished(anim_name):
-	if GlobalGameHandler.clip_size_current == 0:
-		reload()
+func ads_zoom(fov_from, fov_to):
+	tween.interpolate_property(camera, "fov", camera.fov, fov_to, .1,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.start()

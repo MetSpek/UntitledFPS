@@ -1,0 +1,163 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Resources/Models/Guns/Smg.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://Scripts/Weapons/Smg/Smg.gd" type="Script" id=2]
+[ext_resource path="res://Resources/Models/Guns/Smg Clip.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://Resources/Materials/Weapons/LowPolyGunMaterial.tres" type="Material" id=4]
+[ext_resource path="res://Resources/Sounds/Guns/Guns/SmgFire.wav" type="AudioStream" id=5]
+
+[sub_resource type="Animation" id=1]
+length = 0.04
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Gun/Barrel:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.04 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.2, -0.1, 0.1 ), Vector3( 0.2, -0.1, 0.15 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Gun/Barrel:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Gun/Barrel/Clip:translation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Gun/MuzzleFlash:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "SmgFire"
+length = 0.06
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.03, 0.06 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 0.02 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Gun/MuzzleFlash:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.03, 0.06 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "SmgReload"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Gun/Barrel:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 1.2, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 50, 0, -20 ), Vector3( 50, 0, -20 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Gun/Barrel/Clip:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 0.8, 1.1, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, -1, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ) ]
+}
+
+[node name="Smg" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="Gun" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, -0.1, -0.6 )
+
+[node name="Barrel" type="MeshInstance" parent="Gun"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, -0.1, 0.1 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = ExtResource( 4 )
+
+[node name="Clip" type="MeshInstance" parent="Gun/Barrel"]
+mesh = ExtResource( 3 )
+skeleton = NodePath("../../..")
+material/0 = ExtResource( 4 )
+
+[node name="MuzzleFlash" type="Spatial" parent="Gun"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00106259, 0.0506255, -0.500641 )
+visible = false
+
+[node name="Flash" type="OmniLight" parent="Gun/MuzzleFlash"]
+light_color = Color( 1, 0, 0, 1 )
+light_energy = 5.0
+omni_range = 1.0
+
+[node name="Animations" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 1 )
+anims/SmgFire = SubResource( 2 )
+anims/SmgReload = SubResource( 3 )
+
+[node name="Raycasts" type="Spatial" parent="."]
+
+[node name="RayCast" type="RayCast" parent="Raycasts"]
+enabled = true
+cast_to = Vector3( 0, 0, -200 )
+collision_mask = 13
+
+[node name="Audio" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 5 )
+
+[node name="Reload" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="timeout" from="Reload" to="." method="_on_Reload_timeout"]
