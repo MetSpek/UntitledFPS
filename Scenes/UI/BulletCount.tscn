@@ -17,10 +17,9 @@ margin_left = 1080.0
 margin_top = 592.0
 margin_right = 1372.0
 margin_bottom = 743.0
-rect_scale = Vector2( 0.3, 0.3 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_x = 5
-custom_constants/shadow_offset_y = 5
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
 text = "9999"
 
 [node name="TotalBullets" type="Label" parent="."]
@@ -29,9 +28,8 @@ margin_top = 627.0
 margin_right = 1386.0
 margin_bottom = 778.0
 grow_horizontal = 2
-rect_scale = Vector2( 0.25, 0.25 )
 custom_colors/font_color = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_x = 5
-custom_constants/shadow_offset_y = 5
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
 text = "9999"

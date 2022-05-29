@@ -1,0 +1,91 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Resources/Themes/main_theme.tres" type="Theme" id=1]
+[ext_resource path="res://Scripts/UI/PauseMenu.gd" type="Script" id=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec4 color: hint_color;
+uniform float multiplier = 0.2;
+uniform float softness = 0.2;
+
+void fragment()
+{
+	float value = distance(UV, vec2(0.5));
+	COLOR = vec4(color.rgb, smoothstep(multiplier, softness, value));
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/color = null
+shader_param/multiplier = 0.0
+shader_param/softness = 1.446
+
+[node name="PauseMenu" type="Control"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.101961, 0.101961, 0.101961, 0.301961 )
+
+[node name="ColorRect" type="ColorRect" parent="ColorRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -175.0
+margin_top = -150.0
+margin_right = 175.0
+margin_bottom = 150.0
+color = Color( 0.105882, 0.105882, 0.105882, 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/ColorRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -150.0
+margin_top = -115.0
+margin_right = 150.0
+margin_bottom = 115.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_constants/separation = 20
+
+[node name="Label" type="Label" parent="ColorRect/ColorRect/VBoxContainer"]
+margin_right = 300.0
+margin_bottom = 38.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
+text = "Pause Menu"
+align = 1
+
+[node name="ResumeButton" type="Button" parent="ColorRect/ColorRect/VBoxContainer"]
+margin_top = 58.0
+margin_right = 300.0
+margin_bottom = 102.0
+text = " Resume"
+
+[node name="MainMenuButton" type="Button" parent="ColorRect/ColorRect/VBoxContainer"]
+margin_top = 122.0
+margin_right = 300.0
+margin_bottom = 166.0
+text = "Exit to main menu"
+
+[node name="ExitGameButton" type="Button" parent="ColorRect/ColorRect/VBoxContainer"]
+margin_top = 186.0
+margin_right = 300.0
+margin_bottom = 230.0
+text = "Exit Game"
+
+[connection signal="pressed" from="ColorRect/ColorRect/VBoxContainer/ResumeButton" to="." method="_on_ResumeButton_pressed"]
+[connection signal="pressed" from="ColorRect/ColorRect/VBoxContainer/MainMenuButton" to="." method="_on_MainMenuButton_pressed"]
+[connection signal="pressed" from="ColorRect/ColorRect/VBoxContainer/ExitGameButton" to="." method="_on_ExitGameButton_pressed"]

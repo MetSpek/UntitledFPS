@@ -266,4 +266,22 @@ material = SubResource( 10 )
 
 [node name="Player" parent="Players" index="0" instance=ExtResource( 2 )]
 
+[node name="Level" parent="Players/Player/YawAxis/Camera/UI/HUD" index="0"]
+visible = false
+
+[node name="Hitmark" parent="Players/Player/YawAxis/Camera/UI/HUD" index="1"]
+visible = false
+
+[node name="HealthBar" parent="Players/Player/YawAxis/Camera/UI/HUD" index="2"]
+visible = false
+
+[node name="BulletCount" parent="Players/Player/YawAxis/Camera/UI/HUD" index="3"]
+visible = false
+
+[node name="TextureRect" parent="Players/Player/YawAxis/Camera/UI/HUD" index="9"]
+visible = false
+
 [connection signal="body_entered" from="Enviroment/Items/BeginTeleporter/Area" to="Enviroment/Items/BeginTeleporter" method="_on_Area_body_entered"]
+
+[editable path="Players/Player"]
+[editable path="Players/Player/YawAxis/Camera/UI/HUD"]

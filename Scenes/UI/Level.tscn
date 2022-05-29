@@ -50,20 +50,25 @@ color = Color( 0.0745098, 0.0745098, 0.0745098, 0.392157 )
 [node name="LevelLabel" type="Label" parent="ColorRect"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -72.0
+margin_left = -62.0
 margin_top = 16.0
-margin_right = 402.0
-margin_bottom = 167.0
-rect_scale = Vector2( 0.3, 0.3 )
+margin_right = 55.0
+margin_bottom = 54.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
 text = "Level : 0"
 
 [node name="NameLabel" type="Label" parent="ColorRect"]
 anchor_right = 1.0
-margin_left = 56.0
-margin_top = 71.3124
-margin_right = 702.0
-margin_bottom = 222.312
-rect_scale = Vector2( 0.2, 0.2 )
+margin_left = 24.0
+margin_top = 64.0
+margin_right = -40.0
+margin_bottom = 102.0
+grow_horizontal = 2
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
 text = "[PLACEHOLDER]"
 align = 1
 

@@ -6,36 +6,35 @@ onready var animations = $Animations
 onready var audio = $Audio
 onready var reload = $Reload
 
-const NAME = "Smg"
+const NAME = "Start Pistol"
 
-var clipSizes = [20,25,30,35,40,45,50,55,60,65,70]
-var clipSizeMax = clipSizes[GlobalGameHandler.smgAmmoLevel] * (Upgrades.smgAmmo.procentile / 100.0)
+var clipSizes = [7,10,13,16,19,22,25,28,31,34,37]
+var clipSizeMax = clipSizes[GlobalGameHandler.startPistolAmmoLevel]
 var currentBullets
 
 var damageList = [4,5,6,7,8,9,10,11,12,13,14]
-var damage = damageList[GlobalGameHandler.smgDamageLevel] * (Upgrades.smgDamage.procentile / 100.0)
+var damage = damageList[GlobalGameHandler.startPistolDamageLevel]
 
 onready var bullet_hole = preload("res://Scenes/Weapons/BulletHole.tscn")
 export var bullet_hole_list = ["Walls", "Boxes", "Trees", "Rocks"]
 
 
 func _ready():
-	if GlobalGameHandler.currentSmgClip == null:
+	if GlobalGameHandler.currentStartPistolClip == null:
 		currentBullets = clipSizeMax
-		GlobalGameHandler.currentSmgClip = currentBullets
+		GlobalGameHandler.currentStartPistolClip= currentBullets
 	else:
-		currentBullets = GlobalGameHandler.currentSmgClip
+		currentBullets = GlobalGameHandler.currentStartPistolClip
 	update_hud()
 
 func selected():
-	get_tree().call_group("HUD", "pistol_unequip")
 	update_hud()
 
 func fire():
 	if !animations.is_playing():
 		if currentBullets > 0:
 			currentBullets -= 1
-			animations.play("SmgFire")
+			animations.play("PistolFire")
 			if !audio.playing:
 				audio.play()
 			check_if_hit()
@@ -69,25 +68,23 @@ func hit_enemy(target):
 func release():
 	audio.stop()
 
+
 func reload():
-	if GlobalGameHandler.currentBullets > 0:
-		release()
-		if reload.time_left == 0:
-			animations.play("SmgReload")
-			reload.start()
+	release()
+	if reload.time_left == 0:
+		animations.play("PistolReload")
+		reload.start()
 
 func save_bullets():
-	GlobalGameHandler.currentSmgClip = currentBullets
-
+	GlobalGameHandler.currentStartPistolClip = currentBullets
 
 func _on_Reload_timeout():
-	var toReload = currentBullets
-	currentBullets = clamp(GlobalGameHandler.currentBullets, 0, clipSizeMax)
-	GlobalGameHandler.currentBullets -= (clipSizeMax - toReload)
+	currentBullets = clipSizeMax
 	update_hud()
 	save_bullets()
 
 func update_hud():
 	get_tree().call_group("HUD", "fired", currentBullets)
-	get_tree().call_group("HUD", "reloaded")
+	get_tree().call_group("HUD", "start_pistol")
 	
+ 

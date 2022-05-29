@@ -128,8 +128,9 @@ func shoot():
 func check_los():
 	los.look_at_from_position(global_transform.origin, player_head.global_transform.origin, Vector3.UP)
 	if los.is_colliding():
-		if los.get_collider().name == "Player":
-			return true
+		if los.get_collider():
+			if los.get_collider().name == "Player":
+				return true
 
 func look_at_player():
 	if player:

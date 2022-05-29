@@ -10,6 +10,12 @@ var weapon_damage
 var weapon_fire_animation
 var weapon_reload_animation
 
+const STARTPISTOL = preload("res://Scenes/Weapons/Pistol.tscn")
+var startPistolDamageLevel = 0
+var startPistolAmmoLevel = 0
+var currentStartPistolClip
+
+
 const SUBMACHINEGUN = preload("res://Scenes/Weapons/Smg.tscn")
 var smgDamageLevel = 0
 var smgAmmoLevel = 0
@@ -119,7 +125,6 @@ var xp_multiplier_values = [1,1.2,1.4,1.6,1.8,2,2.2,2.4,2.6,2.8,3]
 var money_multiplier_values = [1,1.2,1.4,1.6,1.8,2,2.2,2.4,2.6,2.8,3]
 
 func _ready():
-	add_weapon(SUBMACHINEGUN)
 
 	current_pistol_clip = pistol_ammo_values[PlayerData.pistol_ammo_level]
 	current_assault_clip = assault_ammo_values[PlayerData.assault_ammo_level]
@@ -137,9 +142,16 @@ func _physics_process(delta):
 	elif Input.is_action_pressed("reload_scene"):
 		get_tree().reload_current_scene()
 		select_next_level()
+	elif Input.is_action_just_pressed("finish_level"):
+		finish_level()
+
+func start_game():
+	add_weapon(SUBMACHINEGUN)
+	GlobalGameHandler.select_next_level()
 
 func set_difficulty():
 	difficulty = scaling_a*(pow(scaling_b, level) + start_height)
+
 
 func set_weapon_values():
 	sniper.damage = sniper_damage_values[PlayerData.sniper_damage_level]
@@ -156,7 +168,6 @@ func set_player_values():
 	player_max_health = health_values[PlayerData.health_level]
 	player_health = player_max_health
 	player_walk_speed = walk_speed_values[PlayerData.walk_speed_level]
-	print(player_walk_speed)
 	player_slide_speed = slide_speed_values[PlayerData.slide_speed_level]
 	player_jump = jump_values[PlayerData.jump_level]
 	player_starting_ammo = starting_ammo_values[PlayerData.starting_ammo_level]
@@ -198,8 +209,14 @@ func level_up_player():
 		PlayerData.money += money_awarded[money_awarded.size() - 1]
 	else:
 		PlayerData.money += money_awarded[PlayerData.level - 1]
-	
+
+func finish_level():
+	get_tree().paused = true
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	get_tree().call_group("HUD", "switch_upgrades_visibility")
+
 func select_next_level():
+	get_tree().paused = false
 	var new_scene = levels[rand_range(0, levels.size() - 1)]
 	get_tree().change_scene(new_scene)
 	level += 1

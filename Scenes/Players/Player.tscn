@@ -168,7 +168,7 @@ step = 0.01
 resource_name = "SmgReload"
 length = 0.8
 
-[node name="Player" type="KinematicBody"]
+[node name="Player" type="KinematicBody" groups=["Player"]]
 collision_layer = 2
 script = ExtResource( 1 )
 

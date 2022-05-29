@@ -2,7 +2,7 @@ extends KinematicBody
 
 enum {
 	NORMAL,
-	SURFING
+	SURFING,
 }
 
 var playerState
@@ -10,7 +10,7 @@ var playerState
 export var jumpImpulse = 6.0
 export var gravity = -15.0
 export var groundAcceleration = 300.0
-onready var groundSpeedWalk = GlobalGameHandler.player_walk_speed
+onready var groundSpeedWalk = GlobalGameHandler.player_walk_speed * (Upgrades.moveSpeed.procentile / 100.0)
 onready var groundSpeedRun = GlobalGameHandler.player_slide_speed
 export var groundSpeedCrouch = 2.0
 var groundSpeed = 10
@@ -153,6 +153,7 @@ func check_interaction():
 func add_weapons_to_player_at_start():
 	for weapon in weaponList:
 		add_weapon_to_player(weapon)
+	switch_weapon(0)
 
 func add_weapon_to_player(weapon):
 	var weap = weapon.instance()
@@ -160,17 +161,22 @@ func add_weapon_to_player(weapon):
 	currentlyHolding = weap
 
 func switch_weapon(to):
-	if currentlyHolding.reload != null:
-		if currentlyHolding.reload.time_left == 0:
-			if currentlyHolding.has_method("save_bullets"):
-				currentlyHolding.save_bullets()
-				print(GlobalGameHandler.currentSmgClip)
-			GlobalGameHandler.currently_holding_index += to
-			if GlobalGameHandler.currently_holding_index < 0:
-				GlobalGameHandler.currently_holding_index = GlobalGameHandler.weapons.size() - 1
-			elif GlobalGameHandler.currently_holding_index >= GlobalGameHandler.weapons.size():
-				GlobalGameHandler.currently_holding_index = 0
-	show_right_weapon()
+	if currentlyHolding:
+		if currentlyHolding.reload != null:
+			if currentlyHolding.reload.time_left == 0:
+				if not currentlyHolding.animations.is_playing() and not Input.is_action_pressed("fire_weapon"):
+					if currentlyHolding.has_method("save_bullets"):
+						currentlyHolding.save_bullets()
+					GlobalGameHandler.currently_holding_index += to
+					if GlobalGameHandler.currently_holding_index < 0:
+						GlobalGameHandler.currently_holding_index = GlobalGameHandler.weapons.size() - 1
+					elif GlobalGameHandler.currently_holding_index >= GlobalGameHandler.weapons.size():
+						GlobalGameHandler.currently_holding_index = 0
+					if hand.get_children()[GlobalGameHandler.currently_holding_index]:
+						currentlyHolding = hand.get_children()[GlobalGameHandler.currently_holding_index]
+					if currentlyHolding.has_method("selected"):
+						currentlyHolding.selected()
+		show_right_weapon()
 
 func show_right_weapon():
 	for gun in hand.get_children():
@@ -180,12 +186,13 @@ func show_right_weapon():
 			gun.visible = false
 
 func fire():
-	if Input.is_action_pressed("fire_weapon"):
-		if currentlyHolding.has_method("fire"):
-			currentlyHolding.fire()
-	elif Input.is_action_just_released("fire_weapon"):
-		if currentlyHolding.has_method("release"):
-			currentlyHolding.release()
+	if currentlyHolding:
+		if Input.is_action_pressed("fire_weapon"):
+			if currentlyHolding.has_method("fire"):
+				currentlyHolding.fire()
+		elif Input.is_action_just_released("fire_weapon"):
+			if currentlyHolding.has_method("release"):
+				currentlyHolding.release()
 
 func reload():
 	if Input.is_action_just_pressed("reload_weapon"):
@@ -197,10 +204,11 @@ func reload_weapon():
 		currentlyHolding.reload()
 
 func zoom():
-	if Input.is_action_pressed("fire_weapon_2") and currentlyHolding.reload.time_left == 0:
-		ads_zoom(normal_fov, ads_fov)
-	elif Input.is_action_just_released("fire_weapon_2") or currentlyHolding.reload.time_left != 0:
-		ads_zoom(ads_fov, normal_fov)
+	if currentlyHolding:
+		if Input.is_action_pressed("fire_weapon_2") and currentlyHolding.reload.time_left == 0:
+			ads_zoom(normal_fov, ads_fov)
+		elif Input.is_action_just_released("fire_weapon_2"):
+			ads_zoom(ads_fov, normal_fov)
 
 func ads_zoom(fov_from, fov_to):
 	tween.interpolate_property(camera, "fov", camera.fov, fov_to, .1,Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)

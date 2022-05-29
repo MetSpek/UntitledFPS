@@ -3,6 +3,5 @@
 [ext_resource path="res://Resources/Themes/Fonts/Roboto-Medium.ttf" type="DynamicFontData" id=1]
 
 [resource]
-size = 128
-use_filter = true
+size = 32
 font_data = ExtResource( 1 )
