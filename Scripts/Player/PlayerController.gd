@@ -3,6 +3,7 @@ extends KinematicBody
 enum {
 	NORMAL,
 	SURFING,
+	DEAD
 }
 
 var playerState
@@ -59,27 +60,35 @@ func _ready():
 	pass # Replace with function body.
 
 func _physics_process(delta):
-	health = GlobalGameHandler.player_health
-	if playerState == NORMAL:
-		move_player(delta)
-	fire()
-	reload()
-	zoom()
-	check_interaction()
+	if playerState != DEAD:
+		health = GlobalGameHandler.player_health
+		if playerState == NORMAL:
+			move_player(delta)
+		fire()
+		reload()
+		zoom()
+		check_interaction()
+		if GlobalGameHandler.player_health <= 0:
+			playerState = DEAD
+			get_tree().call_group("HUD", "game_over")
+		else:
+			if playerState != NORMAL:
+				playerState = NORMAL
 
 func _input(event):
-	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		$YawAxis.rotate_x(deg2rad(event.relative.y * mouseSensitivity * -1))
-		self.rotate_y(deg2rad(event.relative.x * mouseSensitivity * -1))
+	if playerState != DEAD:
+		if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+			$YawAxis.rotate_x(deg2rad(event.relative.y * mouseSensitivity * -1))
+			self.rotate_y(deg2rad(event.relative.x * mouseSensitivity * -1))
 
-		# Clamp yaw to [-89, 89] degrees so you can't flip over
-		var yaw = $YawAxis.rotation_degrees.x
-		$YawAxis.rotation_degrees.x = clamp(yaw, -89, 89)    
-	
-	if Input.is_action_pressed("next_weapon"):
-		switch_weapon(1)
-	elif Input.is_action_pressed("previous_weapon"):
-		switch_weapon(-1)
+			# Clamp yaw to [-89, 89] degrees so you can't flip over
+			var yaw = $YawAxis.rotation_degrees.x
+			$YawAxis.rotation_degrees.x = clamp(yaw, -89, 89)    
+		
+		if Input.is_action_pressed("next_weapon"):
+			switch_weapon(1)
+		elif Input.is_action_pressed("previous_weapon"):
+			switch_weapon(-1)
 
 func move_player(delta):
 	# Apply gravity, jumping, and ground friction to velocity

@@ -4,30 +4,35 @@
 [ext_resource path="res://Scripts/Player/PLayerDataHud.gd" type="Script" id=2]
 
 [node name="PlayerData" type="Control"]
+anchor_left = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
+margin_left = -160.0
+margin_top = 80.0
+margin_right = -160.0
+margin_bottom = 80.0
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": true
-}
 
 [node name="Control" type="Control" parent="."]
-anchor_left = 0.478
+anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 0.478
+anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 327.16
-margin_top = -322.0
-margin_right = 627.16
-margin_bottom = -172.0
+margin_left = -150.0
+margin_top = -75.0
+margin_right = 150.0
+margin_bottom = 75.0
 rect_min_size = Vector2( 300, 150 )
 
 [node name="ColorRect" type="ColorRect" parent="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = -20.0
-margin_bottom = -20.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -140.0
+margin_top = -65.0
+margin_right = 140.0
+margin_bottom = 65.0
 color = Color( 0.0745098, 0.0745098, 0.0745098, 0.192157 )
 
 [node name="MoneyLabel" type="Label" parent="Control/ColorRect"]
@@ -36,7 +41,6 @@ margin_left = 16.0
 margin_top = 16.0
 margin_right = 89.0
 margin_bottom = 167.0
-rect_scale = Vector2( 0.25, 0.25 )
 text = "$"
 
 [node name="Money" type="Label" parent="Control/ColorRect"]
@@ -44,7 +48,6 @@ margin_left = 40.0
 margin_top = 16.0
 margin_right = 113.0
 margin_bottom = 167.0
-rect_scale = Vector2( 0.25, 0.25 )
 text = "0"
 
 [node name="LevelLabel" type="Label" parent="Control/ColorRect"]
@@ -52,7 +55,6 @@ margin_left = 16.0
 margin_top = 64.0
 margin_right = 385.0
 margin_bottom = 215.0
-rect_scale = Vector2( 0.25, 0.25 )
 text = "Level :"
 
 [node name="Level" type="Label" parent="Control/ColorRect"]
@@ -60,7 +62,6 @@ margin_left = 112.0
 margin_top = 64.0
 margin_right = 481.0
 margin_bottom = 215.0
-rect_scale = Vector2( 0.25, 0.25 )
 text = "0"
 
 [node name="ProgressBar" type="ProgressBar" parent="Control/ColorRect"]

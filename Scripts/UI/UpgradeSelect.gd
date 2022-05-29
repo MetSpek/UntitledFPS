@@ -16,9 +16,13 @@ onready var amount = $Cards/Amount
 
 onready var cards = [[Title1, Desc1],[Title2, Desc2],[Title3, Desc3]]
 var rarity : int
+var selectedUpgrade
 var upgrades  = []
 
+var allUpgrades
+
 var canSelectUpgrades = 0
+var selectingWeapon = false
 
 var rng = RandomNumberGenerator.new()
 
@@ -29,6 +33,8 @@ export (Color) var epic_color = Color.purple
 export (Color) var legendary_color = Color.orangered
 
 func _ready():
+	Upgrades.set_all_upgrades()
+	allUpgrades = Upgrades.allUpgrades
 	upgrades = []
 	visible = false
 
@@ -50,7 +56,6 @@ func switch_upgrades_visibility():
 	check_for_amount_of_upgrades()
 	set_cards()
 	visible = true
-	print(upgrades)
 
 func set_cards():
 	for card in cards:
@@ -89,12 +94,14 @@ func choose_rarity():
 func choose_upgrade():
 	rng.randomize()
 	if Upgrades.allUpgrades[rarity] != []:
-		var randomUpgrade = int(rng.randi_range(0,Upgrades.allUpgrades[rarity].size() - 1))
-		if upgrades.has(Upgrades.allUpgrades[rarity][randomUpgrade]):
-			choose_upgrade()
+		var randomUpgrade = rng.randi_range(0,Upgrades.allUpgrades[rarity].size() - 1)
+		if allUpgrades[rarity][randomUpgrade].type == "weapon":
+			selectedUpgrade = allUpgrades[rarity][randomUpgrade]
 		else:
-			return Upgrades.allUpgrades[rarity][randomUpgrade]
-		
+			selectedUpgrade = allUpgrades[rarity][randomUpgrade]
+		if selectedUpgrade:
+			allUpgrades[rarity].remove(allUpgrades[rarity].find(selectedUpgrade))
+			return selectedUpgrade
 
 func choose_color(text, upgrade):
 	match upgrade.rarity:
@@ -108,13 +115,26 @@ func choose_color(text, upgrade):
 			text.set("custom_colors/font_color", legendary_color)
 
 func apply_upgrade(upgrade, card):
+	print(upgrade.type)
 	if upgrade:
-		Upgrades.apply_upgrade(upgrade)
 		canSelectUpgrades -= 1
 		set_amount_text()
 		card.visible = false
-		if canSelectUpgrades == 0:
-			GlobalGameHandler.select_next_level()
+		if upgrade.type == "weapon" and GlobalGameHandler.weapons.size() >= 3:
+			selectingWeapon = true
+			get_tree().call_group("HUD", "switch_weapon", upgrade)
+		else:
+			Upgrades.apply_upgrade(upgrade)
+		check_to_continue()
+
+func check_to_continue():
+	if canSelectUpgrades == 0 and selectingWeapon == false:
+		GlobalGameHandler.select_next_level()
+
+
+func stop_selecting_weapon():
+	selectingWeapon = false
+	check_to_continue()
 
 func _on_Button1_pressed():
 	apply_upgrade(upgrades[0], card1)

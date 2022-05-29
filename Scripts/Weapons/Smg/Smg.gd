@@ -6,7 +6,7 @@ onready var animations = $Animations
 onready var audio = $Audio
 onready var reload = $Reload
 
-const NAME = "Smg"
+const NAME = "UDM-20"
 
 var clipSizes = [20,25,30,35,40,45,50,55,60,65,70]
 var clipSizeMax = clipSizes[GlobalGameHandler.smgAmmoLevel] * (Upgrades.smgAmmo.procentile / 100.0)

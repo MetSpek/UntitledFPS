@@ -1,0 +1,124 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Resources/Themes/main_theme.tres" type="Theme" id=1]
+[ext_resource path="res://Scripts/UI/SwitchWeapon.gd" type="Script" id=2]
+
+[sub_resource type="Shader" id=5]
+code = "shader_type canvas_item;
+
+uniform vec4 color: hint_color;
+uniform float multiplier = 0.2;
+uniform float softness = 0.2;
+
+void fragment()
+{
+	float value = distance(UV, vec2(0.5));
+	COLOR = vec4(color.rgb, smoothstep(multiplier, softness, value));
+}"
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 5 )
+shader_param/color = null
+shader_param/multiplier = 0.0
+shader_param/softness = 1.446
+
+[node name="SwitchWeapon" type="Control" groups=["HUD"]]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource( 4 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.101961, 0.101961, 0.101961, 0.301961 )
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -325.0
+margin_top = -200.0
+margin_right = 325.0
+margin_bottom = 160.0
+color = Color( 0.113725, 0.113725, 0.113725, 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+custom_constants/separation = 30
+
+[node name="Label" type="Label" parent="ColorRect2/VBoxContainer"]
+margin_right = 630.0
+margin_bottom = 79.0
+text = "You have to many weapons!
+Select 1 to remove or keep your weapons"
+align = 1
+
+[node name="WeaponToDecide" type="Label" parent="ColorRect2/VBoxContainer"]
+margin_top = 109.0
+margin_right = 630.0
+margin_bottom = 147.0
+text = "[Weapon to decide]"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect2/VBoxContainer"]
+margin_top = 177.0
+margin_right = 630.0
+margin_bottom = 263.0
+grow_horizontal = 2
+custom_constants/separation = 100
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect2/VBoxContainer/HBoxContainer"]
+margin_left = 65.0
+margin_right = 265.0
+margin_bottom = 86.0
+
+[node name="Weapon1" type="Label" parent="ColorRect2/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_right = 200.0
+margin_bottom = 38.0
+text = "[weapon 1]"
+align = 1
+
+[node name="SwitchWeapon1" type="Button" parent="ColorRect2/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 42.0
+margin_right = 200.0
+margin_bottom = 86.0
+rect_min_size = Vector2( 200, 0 )
+text = "Switch"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="ColorRect2/VBoxContainer/HBoxContainer"]
+margin_left = 365.0
+margin_right = 565.0
+margin_bottom = 86.0
+
+[node name="Weapon2" type="Label" parent="ColorRect2/VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_right = 200.0
+margin_bottom = 38.0
+text = "[weapon 1]"
+align = 1
+
+[node name="SwitchWeapon2" type="Button" parent="ColorRect2/VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_top = 42.0
+margin_right = 200.0
+margin_bottom = 86.0
+rect_min_size = Vector2( 200, 0 )
+text = "Switch"
+
+[node name="KeepWeapons" type="Button" parent="ColorRect2/VBoxContainer"]
+margin_top = 293.0
+margin_right = 630.0
+margin_bottom = 337.0
+text = "Keep current weapons"
+
+[connection signal="pressed" from="ColorRect2/VBoxContainer/HBoxContainer/VBoxContainer/SwitchWeapon1" to="." method="_on_SwitchWeapon1_pressed"]
+[connection signal="pressed" from="ColorRect2/VBoxContainer/HBoxContainer/VBoxContainer2/SwitchWeapon2" to="." method="_on_SwitchWeapon2_pressed"]
+[connection signal="pressed" from="ColorRect2/VBoxContainer/KeepWeapons" to="." method="_on_KeepWeapons_pressed"]

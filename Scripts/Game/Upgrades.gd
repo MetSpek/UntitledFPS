@@ -54,8 +54,14 @@ var epicUpgrades = []
 
 var legendaryUpgrades = []
 
-var allUpgrades = [basicUpgrades, rareUpgrades, epicUpgrades, legendaryUpgrades]
+var allUpgrades
 
+func set_all_upgrades():
+	basicUpgrades = [moveSpeed, smgAmmo, smgDamage]
+	rareUpgrades = [udm20]
+	epicUpgrades = []
+	legendaryUpgrades = []
+	allUpgrades = [basicUpgrades, rareUpgrades, epicUpgrades, legendaryUpgrades]
 
 func apply_upgrade(upgrade):
 	match upgrade.type:
@@ -65,3 +71,11 @@ func apply_upgrade(upgrade):
 		"weapon":
 			GlobalGameHandler.add_weapon(upgrade.weapon)
 			print("Gave the " + upgrade.title)
+	set_all_upgrades()
+
+func reset_upgrades():
+	for list in allUpgrades:
+		for upgrade in list:
+			match upgrade.type:
+				"stat":
+					upgrade.procentile = 100

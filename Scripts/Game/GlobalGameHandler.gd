@@ -146,8 +146,13 @@ func _physics_process(delta):
 		finish_level()
 
 func start_game():
-	add_weapon(SUBMACHINEGUN)
+	add_weapon(STARTPISTOL)
 	GlobalGameHandler.select_next_level()
+
+func reset_values():
+	set_player_values()
+	weapons = []
+	difficulty = 0
 
 func set_difficulty():
 	difficulty = scaling_a*(pow(scaling_b, level) + start_height)
@@ -179,7 +184,7 @@ func add_weapon(weapon):
 	weapons.append(weapon)
 
 func remove_weapon(weapon):
-	weapons.remove(weapon)
+	weapons.erase(weapon)
 
 func enemy_killed(money, xp):
 	check_level_up(xp)
