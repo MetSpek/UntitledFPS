@@ -44,7 +44,15 @@ var udm20 = {
 	"weapon": preload("res://Scenes/Weapons/Smg.tscn")
 }
 
-var rareUpgrades = [udm20]
+var pauper45 = {
+	"title": "Pauper-45",
+	"description": "A big heavy hitting light machine gun",
+	"rarity": "rare",
+	"type": "weapon",
+	"weapon": preload("res://Scenes/Weapons/Lmg/Lmg.tscn")
+}
+
+var rareUpgrades = [udm20, pauper45]
 
 #Epic
 
@@ -58,7 +66,7 @@ var allUpgrades
 
 func set_all_upgrades():
 	basicUpgrades = [moveSpeed, smgAmmo, smgDamage]
-	rareUpgrades = [udm20]
+	rareUpgrades = [udm20, pauper45]
 	epicUpgrades = []
 	legendaryUpgrades = []
 	allUpgrades = [basicUpgrades, rareUpgrades, epicUpgrades, legendaryUpgrades]

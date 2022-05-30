@@ -13,9 +13,10 @@
 [ext_resource path="res://Resources/Materials/Weapons/Shotgun/ShotgunBlack.tres" type="Material" id=11]
 [ext_resource path="res://Resources/Materials/Weapons/Shotgun/ShotgunDarkGray.tres" type="Material" id=12]
 [ext_resource path="res://Resources/Models/Guns/ShotGunNew.obj" type="ArrayMesh" id=13]
-[ext_resource path="res://Resources/Models/Guns/Smg.obj" type="ArrayMesh" id=14]
+[ext_resource path="res://Resources/Models/Guns/Smg/Smg.obj" type="ArrayMesh" id=14]
 [ext_resource path="res://Resources/Materials/Weapons/LowPolyGunMaterial.tres" type="Material" id=15]
-[ext_resource path="res://Resources/Models/Guns/Smg Clip.obj" type="ArrayMesh" id=16]
+[ext_resource path="res://Resources/Models/Guns/Smg/Smg Clip.obj" type="ArrayMesh" id=16]
+
 
 [sub_resource type="CapsuleMesh" id=1]
 mid_height = 3.0

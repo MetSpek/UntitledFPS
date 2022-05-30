@@ -6,25 +6,25 @@ onready var animations = $Animations
 onready var audio = $Audio
 onready var reload = $Reload
 
-const NAME = "UDM-20"
+const NAME = "Pauper-45"
 
-var clipSizes = [20,25,30,35,40,45,50,55,60,65,70]
-var clipSizeMax = clipSizes[GlobalGameHandler.smgAmmoLevel] * (Upgrades.smgAmmo.procentile / 100.0)
+var clipSizes = [50,60,70,80,90,100,110,120,130,140,150]
+var clipSizeMax = clipSizes[GlobalGameHandler.lmgAmmoLevel]
 var currentBullets
 
-var damageList = [4,5,6,7,8,9,10,11,12,13,14]
-var damage = damageList[GlobalGameHandler.smgDamageLevel] * (Upgrades.smgDamage.procentile / 100.0)
+var damageList = [6,8,10,12,14,16,18,20,22,24,26]
+var damage = damageList[GlobalGameHandler.lmgDamageLevel]
 
 onready var bullet_hole = preload("res://Scenes/Weapons/BulletHole.tscn")
 export var bullet_hole_list = ["Walls", "Boxes", "Trees", "Rocks"]
 
 
 func _ready():
-	if GlobalGameHandler.currentSmgClip == null:
+	if GlobalGameHandler.currentLmgClip == null:
 		currentBullets = clipSizeMax
-		GlobalGameHandler.currentSmgClip = currentBullets
+		GlobalGameHandler.currentLmgClip = currentBullets
 	else:
-		currentBullets = GlobalGameHandler.currentSmgClip
+		currentBullets = GlobalGameHandler.currentLmgClip
 	update_hud()
 
 func selected():
@@ -35,7 +35,7 @@ func fire():
 	if !animations.is_playing():
 		if currentBullets > 0:
 			currentBullets -= 1
-			animations.play("SmgFire")
+			animations.play("LmgFire")
 			if !audio.playing:
 				audio.play()
 			check_if_hit()
@@ -73,11 +73,11 @@ func reload():
 	if GlobalGameHandler.currentBullets > 0:
 		release()
 		if reload.time_left == 0:
-			animations.play("SmgReload")
+			animations.play("LmgReload")
 			reload.start()
 
 func save_bullets():
-	GlobalGameHandler.currentSmgClip = currentBullets
+	GlobalGameHandler.currentLmgClip = currentBullets
 
 
 func _on_Reload_timeout():

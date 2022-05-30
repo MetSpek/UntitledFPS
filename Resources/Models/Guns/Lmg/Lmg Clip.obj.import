@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Lmg Clip.obj-1df96aa2607eefe90bf0a40fd87037aa.mesh"
+
+[deps]
+
+files=[ "res://.import/Lmg Clip.obj-1df96aa2607eefe90bf0a40fd87037aa.mesh" ]
+
+source_file="res://Resources/Models/Guns/Lmg/Lmg Clip.obj"
+dest_files=[ "res://.import/Lmg Clip.obj-1df96aa2607eefe90bf0a40fd87037aa.mesh", "res://.import/Lmg Clip.obj-1df96aa2607eefe90bf0a40fd87037aa.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

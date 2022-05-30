@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Resources/Textures/Guns/LowPoly.png" type="Texture" id=2]
-[ext_resource path="res://Resources/Models/Guns/Pistol.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://Resources/Models/Guns/Pistol/Pistol.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://Scripts/Weapons/Pistol/Pistol.gd" type="Script" id=4]
 
 [sub_resource type="SpatialMaterial" id=1]

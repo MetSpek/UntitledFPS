@@ -12,7 +12,7 @@ var clipSizes = [7,10,13,16,19,22,25,28,31,34,37]
 var clipSizeMax = clipSizes[GlobalGameHandler.startPistolAmmoLevel]
 var currentBullets
 
-var damageList = [4,5,6,7,8,9,10,11,12,13,14]
+var damageList = [6,7,8,9,10,11,12,13,14,15,16]
 var damage = damageList[GlobalGameHandler.startPistolDamageLevel]
 
 onready var bullet_hole = preload("res://Scenes/Weapons/BulletHole.tscn")

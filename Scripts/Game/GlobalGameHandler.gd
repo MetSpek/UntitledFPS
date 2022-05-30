@@ -21,6 +21,10 @@ var smgDamageLevel = 0
 var smgAmmoLevel = 0
 var currentSmgClip
 
+var lmgDamageLevel = 0
+var lmgAmmoLevel = 0
+var currentLmgClip
+
 var sniper = {
 	"name" : "Shotgun",
 	"damage" : 20,
