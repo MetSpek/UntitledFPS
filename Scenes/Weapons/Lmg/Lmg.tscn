@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Resources/Models/Guns/Lmg/Lmg.obj" type="ArrayMesh" id=1]
-[ext_resource path="res://Scripts/Weapons/Smg/Smg.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/Weapons/Lmg/Lmg.gd" type="Script" id=2]
 [ext_resource path="res://Resources/Models/Guns/Lmg/Lmg Clip.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://Resources/Materials/Weapons/LowPolyGunMaterial.tres" type="Material" id=4]
 [ext_resource path="res://Resources/Sounds/Guns/Guns/SmgFire.wav" type="AudioStream" id=5]
